@@ -34,3 +34,14 @@ Effective Kafka cluster management involves tuning various configurations to ens
 - **Description**: Allows topics to be deleted. When enabled, topics can be deleted, and their resources reclaimed.
 - **Default Value**: True in newer versions of Kafka.
 - **Impact**: Provides flexibility in managing topics but requires careful consideration to avoid accidental data loss. Ensuring this is enabled allows for better topic lifecycle management.
+
+### Default Ports
+
+- **Broker**: 9092
+- **REST Proxy**: 8082
+- **Schema Registry**: 8081
+- **KSQL**: 8088
+  
+- **Zookeeper Client Port**: 2181
+- **Zookeeper Leader Port**: 3888
+- **Zookeeper Election Port**: 2888

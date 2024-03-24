@@ -123,14 +123,3 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 ### Security Considerations
 
 - **Encryption and Authentication**: Secure consumer connections to Kafka brokers using SSL/TLS for encryption and SASL for authentication to protect data in transit and ensure that only authorized consumers can access topic data.
-
-### Default Ports
-
-- **Broker**: 9092
-- **REST Proxy**: 8082
-- **Schema Registry**: 8081
-- **KSQL**: 8088
-  
-- **Zookeeper Client Port**: 2181
-- **Zookeeper Leader Port**: 3888
-- **Zookeeper Election Port**: 2888

@@ -26,3 +26,42 @@ Kafka topics are categorized into partitions for scalability and replicated acro
 - **Description**: Determines the number of partitions within a topic. Partitions are the basic unit of parallelism in Kafka, with each partition being independently consumed.
 - **Default Value**: This is set at the time of topic creation and typically defaults to the cluster's `num.partitions` setting.
 - **Impact**: More partitions allow greater parallel processing of data but can increase the overhead on the Kafka cluster and Zookeeper. Finding the right balance is key to optimizing performance and resource utilization.
+
+### Essential Kafka Topic Configuration Parameters
+
+#### Durability and Fault Tolerance
+
+- **`replication.factor`**: Defines the number of replicated copies of a topic across the cluster, enhancing data availability and fault tolerance. The actual number can be set per topic and is crucial for maintaining data integrity in the event of broker failures.
+
+#### Scalability Through Partitioning
+
+- **`partitions`**: Controls the partition count for a topic, directly influencing data distribution and parallel processing capabilities across consumers. More partitions support higher parallelism but may increase cluster management overhead.
+
+#### Data Consistency and Throughput
+
+- **`acks`**: Configures acknowledgment requirements from brokers to producers, balancing between data consistency and throughput. Values range from `0` (fire and forget), `1` (leader acknowledgment), to `all` (full ISR acknowledgment).
+
+### Advanced Topic Configurations for Fine-Tuning
+
+#### Log Compaction and Retention
+
+- **`cleanup.policy`**: Supports log compaction (`"compact"`) to retain at least the last known value for each key within a topic, crucial for stateful applications.
+- **`min.cleanable.dirty.ratio`**: Determines the ratio of log segments eligible for compaction. Lower values trigger compaction sooner, helping maintain a cleaner log with less overhead.
+
+#### Segment Management and Efficiency
+
+- **`segment.ms`**: Configures the time Kafka waits before closing the current log segment and starting a new one. Segment management affects storage and can impact log compaction and retention behavior.
+
+#### Timestamps and Ordering
+
+- **`message.timestamp.type`**: Defines whether Kafka should use the message creation time (`CreateTime`) or the time of log append (`LogAppendTime`). This setting can impact message ordering and log retention policies.
+
+### Key Considerations for Message Key and Size
+
+#### Message Key Usage
+
+- Utilizing a message key (`key!=null`) ensures that messages with the same key are always sent to the same partition, facilitating message ordering per key. However, modifying the partition count can disrupt this consistency.
+
+#### Managing Message Sizes
+
+- Kafka's default message size limit is 1MB. Exceeding this without proper configuration adjustments (`message.max.bytes`, `replica.fetch.max.bytes`, `fetch.message.max.bytes`) will result in a `MessageSizeTooLargeException`.

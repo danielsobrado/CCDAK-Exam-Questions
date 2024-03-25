@@ -1,4 +1,4 @@
-Question 1:
+### Question 1:
 Assuming a Kafka topic is configured with the following settings:
 - `log.segment.bytes` = 1073741824 (1GB)
 - `log.retention.ms` = 86400000 (1 day)
@@ -27,7 +27,7 @@ Explanation:
 
 4. **Incorrect**. The statement that logs are retained indefinitely is wrong because `log.retention.ms` is explicitly set to a finite duration (86400000 ms or 1 day), dictating a time-based retention policy. The `-1` value for `log.retention.bytes` means there is no size limit on log retention, but it does not affect or override the time-based retention set by `log.retention.ms`.
 
-Question 2:
+### Question 2:
 Consider a Kafka topic with the following configuration:
 - `cleanup.policy` = "compact,delete"
 - `min.cleanable.dirty.ratio` = 0.5
@@ -57,7 +57,7 @@ Explanation:
 
 4. **Incorrect**. `segment.ms` specifies the time after which Kafka will close the current log segment and create a new one. It does not dictate the maximum lifespan of any record in the log. Record lifespan is determined by the `cleanup.policy` and associated configurations like `log.retention.ms` for deletion and `min.cleanable.dirty.ratio` for compaction.
 
-Question 3:
+### Question 3:
 In a Kafka cluster, the Controller is a critical component for managing cluster state. Which of the following statements accurately describe the role and election of the Controller? (Select two)
 
 1. Elected by broker majority.
@@ -84,7 +84,7 @@ Explanation:
 
 5. **Incorrect**. Automatically assigning replicas to brokers based on load is not directly managed by the Controller. Replica assignment is typically done at topic creation time or during manual rebalancing operations. While the Controller does manage some aspects of replica management, such as initiating reassignment tasks, the automatic balancing of load is not a direct responsibility of the Controller but can be achieved through tools like Kafka's built-in partition reassignment tool or third-party solutions.
 
-Question 4:
+### Question 4:
 In the context of Kafka's distributed architecture, broker elections are vital for cluster health and stability. Consider the following advanced scenarios where Kafka's internal mechanisms must decide on leadership roles:
 
 1. If a broker acting as the Controller goes down, what mechanism is responsible for the election of a new Controller?
@@ -117,7 +117,7 @@ Response:
 
 D and E are incorrect options based on Kafka's current architecture and leader election protocols.
 
-Question 5:
+### Question 5:
 A Kafka producer is configured to use the `acks=all` setting while publishing messages to a topic partition that has a replication factor of 3. Broker A hosts the current leader for this partition, while Brokers B and C host the replicas. Due to unforeseen circumstances, both Broker B and Broker C go offline simultaneously. What is the impact on the producer's ability to successfully publish messages to this partition?
 
 1. The producer will be able to publish messages, but with potential data loss.
@@ -135,11 +135,7 @@ Explanation:
 
 1. **Incorrect**. With `acks=all`, the producer requires acknowledgments from the leader and all in-sync replicas (ISRs) to consider a message write successful. If Brokers B and C are offline, it's not a matter of potential data loss but rather that the producer cannot achieve the required acknowledgments from all replicas, as they are not available to replicate the data.
 
-2. **Correct**. The `acks=all` setting ensures that the producer receives acknowledgments from the partition leader and all replicas before considering a message successfully published. If Brokers B and C, hosting the replicas, go offline, the condition for `acks=all` cannot be met because these replicas cannot acknowledge the message replication. As a result, the producer will be unable to publish new messages to this partition until at least one of the replicas (Broker B or C) becomes available again and can acknowledge the message replication alongside the leader (Broker A). 
-
-If Brokers B and C were considered part of the ISR list before going down, the producer would be unable to publish messages because it expects acknowledgments from all ISRs, which now includes unavailable brokers. This state creates a temporary inability to publish new messages, as the producer cannot satisfy its acknowledgment requirements.
-
-However, the immediate effect of brokers going offline is that they are removed from the ISR for that partition. If the leader (Broker A) remains online but all replicas are offline, the ISR shrinks to include only the leader. In real-time operation, Kafka aims to maintain availability and durability, so the producer can still publish messages, but only if at least one replica comes back online to fulfill the acks=all requirement of replicating to all in-sync replicas. This detail was overlooked in the initial explanation.
+2. **Correct**. The `acks=all` setting ensures that the producer receives acknowledgments from the partition leader and all replicas before considering a message successfully published. If Brokers B and C, hosting the replicas, go offline, the condition for `acks=all` cannot be met because these replicas cannot acknowledge the message replication. As a result, the producer will be unable to publish new messages to this partition until at least one of the replicas (Broker B or C) becomes available again and can acknowledge the message replication alongside the leader (Broker A). If Brokers B and C were considered part of the ISR list before going down, the producer would be unable to publish messages because it expects acknowledgments from all ISRs, which now includes unavailable brokers. This state creates a temporary inability to publish new messages, as the producer cannot satisfy its acknowledgment requirements. However, the immediate effect of brokers going offline is that they are removed from the ISR for that partition. If the leader (Broker A) remains online but all replicas are offline, the ISR shrinks to include only the leader. In real-time operation, Kafka aims to maintain availability and durability, so the producer can still publish messages, but only if at least one replica comes back online to fulfill the acks=all requirement of replicating to all in-sync replicas. This detail was overlooked in the initial explanation.
 
 3. **Incorrect**. The `acks=all` configuration means that the producer expects acknowledgments from all replicas to ensure data durability. If the replicas are down, the producer won't be able to receive acknowledgments from all required parties, impacting its ability to successfully publish messages. It's not about continuing without impact; the producer will face a temporary blockade in publishing messages.
 

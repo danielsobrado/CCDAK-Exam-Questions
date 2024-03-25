@@ -54,6 +54,24 @@ Critical configurations for Kafka Streams applications include the application I
 #### Join Operations
 Detailing how different data streams or tables can be joined, including windowed joins (KStream-to-KStream) and non-windowed joins (e.g., KTable-to-KTable).
 
+### Co-Partitioning
+
+Co-partitioning is a concept in Kafka where two or more topics have their partitions aligned in such a way that the same partition numbers across these topics contain related data. This alignment is crucial for operations that involve joining data streams, ensuring that related data from different topics can be processed together efficiently. Here are the key rules and considerations for achieving co-partitioning in Kafka:
+
+1. **Same Number of Partitions**: Co-partitioned topics must have the same number of partitions. This ensures that data which is logically related and keyed similarly ends up in the corresponding partition across these topics.
+
+2. **Consistent Partitioning Strategy**: To ensure that related messages from different topics land in the corresponding partitions, a consistent partitioning strategy must be used. This often involves ensuring that messages are produced with the same key and that the default partitioner or a custom partitioner is used consistently across these topics.
+
+3. **Parallel Consumer Processing**: When consuming from co-partitioned topics, ensure that the consumer groups are configured to consume in parallel from all the related partitions. This is typically handled naturally by Kafka's consumer group mechanism when the topics are consumed together.
+
+4. **Kafka Streams and KTable**: In Kafka Streams, co-partitioning is essential when performing join operations between KStreams and KTables or between KStreams themselves. Kafka Streams applications will automatically co-partition the data of joined streams by repartitioning them as needed, which may introduce additional processing steps and topics.
+
+5. **Use Case for Co-Partitioning**: Co-partitioning is often used in scenarios requiring data aggregation or join operations across different data streams that share a logical relationship, such as aggregating user click events with user profile information for real-time analytics.
+
+6. **Management and Maintenance**: When scaling out (adding more partitions to topics), ensure that all co-partitioned topics are scaled consistently. This might require manual intervention or custom tooling, as Kafka does not automatically manage the partition count across topics to maintain co-partitioning.
+
+7. **Producing to Co-Partitioned Topics**: When producing messages to co-partitioned topics, ensure that the keys used for partitioning are consistent and that messages destined to be joined together use the same keys.
+
 ### Best Practices for Kafka Streams
 
 - **State Management**: Leverage state stores and interactive queries efficiently to manage state.

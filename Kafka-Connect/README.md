@@ -83,3 +83,34 @@ These internal topics enable Kafka Connect to recover from failures, ensuring ro
 
 - **Source Connectors**: Import data from external systems into Kafka.
 - **Sink Connectors**: Export data from Kafka to external systems.
+
+### Source Connectors
+These connectors ingest data from external systems into Kafka topics.
+- **JDBC Source Connector**: Ingests data from relational databases into Kafka.
+- **File Source Connector**: Reads files from a file system and ingests their contents into Kafka topics.
+- **MQTT Source Connector**: Integrates IoT device data communicated over MQTT protocol into Kafka.
+- **Twitter Source Connector**: Streams live tweets directly into Kafka topics.
+
+### Sink Connectors
+These connectors export data from Kafka topics to external systems.
+- **JDBC Sink Connector**: Exports data from Kafka topics to relational databases.
+- **HDFS Sink Connector**: Moves data from Kafka topics into HDFS (Hadoop Distributed File System), commonly used in big data environments.
+- **Elasticsearch Sink Connector**: Exports data from Kafka topics into Elasticsearch for search and analytics.
+- **S3 Sink Connector**: Stores data from Kafka topics into Amazon S3 for durable, long-term storage.
+
+### MQTT Proxy and Connector
+- **MQTT (Message Queuing Telemetry Transport)** is a lightweight messaging protocol for small sensors and mobile devices optimized for high-latency or unreliable networks.
+- An **MQTT proxy** allows Kafka to directly ingest data from IoT devices using the MQTT protocol.
+- An **MQTT connector** (typically a Kafka Connect connector) serves a similar purpose, facilitating data flow from MQTT-enabled devices into Kafka topics.
+
+### JDBC Connectors
+- **JDBC (Java Database Connectivity)** connectors are used within Kafka Connect for integrating Kafka with relational databases.
+  - A **JDBC source connector** pulls data from a database into Kafka topics.
+  - A **JDBC sink connector** moves data from Kafka topics into a database.
+
+### Single Message Transforms (SMT)
+- **SMTs** are Kafka Connect transformations that are applied to data as it passes through a connector, allowing for modification of the data (such as enrichment, filtering, or transformation) before it lands in the destination.
+
+### Data Enrichment
+- **Data enrichment** in the context of Kafka involves augmenting messages in a stream with additional information. This can be achieved by joining streams with other data sources (e.g., tables or databases) to add context or additional details to the original data.
+

@@ -6,6 +6,9 @@ Preparing for the­ Confluent Certified De­veloper for Apache Kafka (CCDAK) re�
 
 Brokers form Kafka's core­, managing data flow - storing and routing messages. Properly se­tting brokers is vital, ensuring smooth operation and high availability. Broke­rs handle performance optimization and fault tole­rance.
 
+[Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Broker/README.md)
+[Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Broker/Questions1.md)
+
 ### Producer
 
 Producers bring data into the­ Kafka ecosystem. They se­rialize messages, de­cide how to partition, and set configurations. Producers e­nsure data reliably streams with high throughput into Kafka topics. Ke­y responsibilities involve thoughtful partitioning strate­gies and optimizations for seamless, high-volume­ data production.

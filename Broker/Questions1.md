@@ -286,3 +286,152 @@ Explanation:
 3. **Incorrect**. The log segment creation policy is partially correct, but it ignores the time-based limit specified by `log.segment.ms`. Additionally, the retention policy is incorrect, as `log.retention.bytes=-1` means that there is no size-based retention limit.
 
 4. **Incorrect**. The log segment creation policy is incorrect, as it ignores the size-based limit specified by `log.segment.bytes`. The retention policy is also incorrect, as `log.retention.bytes=-1` means that there is no size-based retention limit.
+### Question 11:
+A Kafka cluster is configured with the following settings:
+- `default.replication.factor=2`
+- `min.insync.replicas=2`
+
+What is the minimum number of brokers required in the cluster to ensure that the cluster can tolerate at least one broker failure without losing the ability to serve write requests?
+
+1. 1
+2. 2
+3. 3
+4. 4
+
+Choose the correct answer.
+
+Response:
+
+The correct answer is **3. 3**.
+
+Explanation:
+To tolerate at least one broker failure without losing the ability to serve write requests, the cluster must have enough brokers to satisfy the `min.insync.replicas` requirement even when one broker is down.
+
+With `default.replication.factor=2`, each partition will have two replicas (one leader and one follower). To ensure that writes can succeed even if one broker fails, there must be at least one in-sync replica (ISR) available to acknowledge the write.
+
+Since `min.insync.replicas=2`, a minimum of two replicas (including the leader) must be in-sync for a write to be considered successful. Therefore, the cluster needs at least three brokers to guarantee that there will always be at least two replicas available, even if one broker fails.
+
+If the cluster had only two brokers and one failed, the remaining broker would not be able to satisfy the `min.insync.replicas` requirement, and writes would fail.
+
+### Question 12:
+A Kafka cluster has the following configuration:
+- `num.partitions=6`
+- `default.replication.factor=3`
+
+How many replicas will be created in total across all brokers for a newly created topic that uses the default settings?
+
+1. 6
+2. 9
+3. 12
+4. 18
+
+Choose the correct answer.
+
+Response:
+
+The correct answer is **4. 18**.
+
+Explanation:
+The total number of replicas created for a topic is determined by the number of partitions multiplied by the replication factor.
+
+In this case, the cluster is configured with `num.partitions=6`, which means that a newly created topic using the default settings will have 6 partitions.
+
+The `default.replication.factor` is set to 3, indicating that each partition will have 3 replicas (one leader and two followers).
+
+To calculate the total number of replicas, we multiply the number of partitions by the replication factor:
+- Total replicas = `num.partitions` × `default.replication.factor`
+- Total replicas = 6 × 3 = 18
+
+Therefore, a newly created topic with the default settings will have a total of 18 replicas distributed across the brokers in the cluster.
+
+### Question 13:
+A Kafka cluster has the following configuration:
+- `unclean.leader.election.enable=false`
+
+What is the implication of this setting when a partition leader fails and there are no in-sync replicas (ISRs) available?
+
+1. The partition will remain unavailable until the failed leader recovers.
+2. The partition will elect a new leader from the out-of-sync replicas to maintain availability.
+3. The partition will automatically create a new replica to replace the failed leader.
+4. The partition will be reassigned to another broker in the cluster.
+
+Choose the correct answer.
+
+Response:
+
+The correct answer is **1. The partition will remain unavailable until the failed leader recovers.**
+
+Explanation:
+When `unclean.leader.election.enable` is set to `false`, Kafka enforces a strict consistency model and does not allow the election of a leader from out-of-sync replicas.
+
+In the event of a partition leader failure, Kafka will first attempt to elect a new leader from the set of in-sync replicas (ISRs). ISRs are replicas that are fully caught up with the leader and have all the latest messages.
+
+However, if there are no ISRs available when the leader fails, Kafka has two options:
+1. If `unclean.leader.election.enable` is set to `true`, Kafka will elect a new leader from the out-of-sync replicas to maintain availability, potentially resulting in data loss or inconsistency.
+2. If `unclean.leader.election.enable` is set to `false`, Kafka will not elect a leader from the out-of-sync replicas and will instead keep the partition unavailable until the failed leader recovers or a new ISR becomes available.
+
+In this scenario, since `unclean.leader.election.enable` is set to `false`, and there are no ISRs available, the partition will remain unavailable until the failed leader recovers. This ensures data consistency but may impact availability until the leader is back online.
+
+### Question 14:
+A Kafka broker is configured with the following settings:
+- `num.replication.fetchers=4`
+- `replica.fetch.max.bytes=1048576`
+
+What is the maximum amount of data that can be fetched by the broker for replication purposes in a single request?
+
+1. 1 MB
+2. 4 MB
+3. 1048576 bytes
+4. 4194304 bytes
+
+Choose the correct answer.
+
+Response:
+
+The correct answer is **1. 1 MB**.
+
+Explanation:
+The maximum amount of data that can be fetched by the broker for replication purposes in a single request is determined by the `replica.fetch.max.bytes` configuration.
+
+In this case, `replica.fetch.max.bytes` is set to 1048576, which is equal to 1 MB (1024 * 1024 bytes).
+
+The `num.replication.fetchers` setting specifies the number of fetcher threads used to replicate messages from the leader. However, it does not directly impact the maximum amount of data that can be fetched in a single request.
+
+Each fetcher thread can fetch up to `replica.fetch.max.bytes` of data in a single request. So, even though there are 4 fetcher threads (`num.replication.fetchers=4`), each thread is still limited by the `replica.fetch.max.bytes` value.
+
+Therefore, the maximum amount of data that can be fetched by the broker for replication purposes in a single request is 1 MB, as specified by `replica.fetch.max.bytes`.
+
+### Question 15:
+A Kafka cluster is configured with the following settings:
+- `log.retention.hours=48`
+- `log.retention.bytes=1073741824`
+- `log.segment.bytes=536870912`
+
+Assuming a topic has a constant message production rate, which of the following factors will trigger a log segment to be eligible for deletion?
+
+1. The log segment is older than 48 hours.
+2. The log segment size exceeds 536870912 bytes (512 MB).
+3. The total size of all log segments for the topic exceeds 1073741824 bytes (1 GB).
+4. All of the above.
+
+Choose the correct answer.
+
+Response:
+
+The correct answer is **4. All of the above**.
+
+Explanation:
+In Kafka, log retention is controlled by a combination of time-based and size-based policies. The configuration properties `log.retention.hours`, `log.retention.bytes`, and `log.segment.bytes` work together to determine when a log segment is eligible for deletion.
+
+1. `log.retention.hours=48`: This setting specifies the maximum time a log segment can be retained before it becomes eligible for deletion. In this case, any log segment older than 48 hours will be eligible for deletion, regardless of its size.
+
+2. `log.segment.bytes=536870912`: This setting determines the maximum size of a single log segment. When a log segment reaches this size (512 MB in this case), Kafka will close the current segment and start a new one. The old segment will be eligible for deletion based on the retention policies.
+
+3. `log.retention.bytes=1073741824`: This setting specifies the maximum total size of all log segments for a topic. If the total size of all log segments exceeds this value (1 GB in this case), Kafka will start deleting the oldest segments to free up space, even if they haven't reached the time-based retention limit.
+
+Therefore, a log segment will be eligible for deletion if any of the following conditions are met:
+- The log segment is older than the retention time specified by `log.retention.hours`.
+- The log segment size exceeds the size specified by `log.segment.bytes`.
+- The total size of all log segments for the topic exceeds the size specified by `log.retention.bytes`.
+
+All three factors independently contribute to the eligibility of a log segment for deletion.

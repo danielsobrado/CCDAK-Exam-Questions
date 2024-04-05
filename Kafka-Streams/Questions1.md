@@ -136,3 +136,20 @@ The correct answer is **1. state.store.replication.factor = 3.**
 
 **Explanation:**
 For stateful operations such as windowed aggregation (`ordersPerHour`), ensuring that the state store (`orders-per-hour-metrics`) is replicated across multiple brokers is crucial for both performance and fault tolerance. Setting `state.store.replication.factor = 3` increases the resilience of the state store, allowing for faster recovery in the event of a broker failure and ensuring that real-time metrics calculations are less likely to be interrupted. While log compaction (`state.store.log.compaction = true`) is not a valid configuration for state stores, and reducing the commit interval (`commit.interval.ms = 100`) could improve throughput, it is the replication factor of the state store that most directly impacts its performance and reliability in a production environment.
+
+### Question 7
+
+Is Kafka Streams DSL ANSI SQL compliant?
+
+A. Yes
+B. No
+C. Partially
+D. It depends on the version
+
+**Answer:** B
+
+**Explanation:**
+Kafka Streams DSL, which is used for writing stream processing applications, is not ANSI SQL compliant. It uses a fluent Java API that is inspired by SQL but does not aim for full compliance.
+
+- A is incorrect as Kafka Streams DSL is not designed to be ANSI SQL compliant.
+- C and D are incorrect because the non-compliance is not partial or version-dependent. It's a design choice.

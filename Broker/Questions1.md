@@ -435,3 +435,39 @@ Therefore, a log segment will be eligible for deletion if any of the following c
 - The total size of all log segments for the topic exceeds the size specified by `log.retention.bytes`.
 
 All three factors independently contribute to the eligibility of a log segment for deletion.
+
+## Question 16
+
+A client connects to a broker in a Kafka cluster and sends a produce request for a topic partition. The broker responds with a 'Not Enough Replicas' error. What does the client do next?
+
+A. Retries sending the produce request to the same broker
+B. Sends metadata request to the same broker to refresh its metadata
+C. Sends produce request to the controller broker
+D. Sends metadata request to the Zookeeper to find the controller broker
+
+**Answer:** B
+
+**Explanation:**
+When a Kafka client receives a 'Not Enough Replicas' error from a broker, it means the broker doesn't have enough in-sync replicas to satisfy the request. The client's next step is to refresh its metadata by sending a metadata request to the same broker. This will provide the client with the most up-to-date information about the cluster, including the current leader for the partition.
+
+- A is incorrect because retrying the same request without refreshing metadata is likely to result in the same error.
+- C is incorrect because the client doesn't directly send requests to the controller broker.
+- D is incorrect because the client communicates with Zookeeper only for the initial bootstrap, not for regular operations.
+
+## Question 17
+
+A Kafka consumer is consuming from a topic partition. It sends a fetch request to the broker and receives a 'Replica Not Available' error. What is the consumer's next action?
+
+A. Backs off and retries the fetch request after a short delay
+B. Sends an offset commit request to trigger partition rebalancing
+C. Sends a metadata request to refresh its view of the cluster
+D. Closes the connection and tries connecting to a different broker
+
+**Answer:** C
+
+**Explanation:**
+When a consumer receives a 'Replica Not Available' error, it means the broker it's connected to doesn't have a replica of the partition available to serve the request. The consumer's next step is to send a metadata request to refresh its view of the cluster. This will provide updated information about which brokers are currently hosting the partition replicas.
+
+- A is incorrect because simply retrying after a delay may not resolve the issue if the consumer's metadata is stale.
+- B is incorrect because committing offsets is not directly related to handling this error and doesn't trigger rebalancing.
+- D is incorrect because closing the connection is not necessary. The consumer can refresh metadata over the existing connection.

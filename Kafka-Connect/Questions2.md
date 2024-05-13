@@ -148,3 +148,20 @@ The correct answer is **b. Utilize log-based Change Data Capture (CDC) connector
 - **c.** Custom producers offer flexibility but require additional development and maintenance effort. Compressing messages addresses bandwidth concerns but doesn't reduce the volume of data sent as effectively as streaming only changes.
 - **d.** This approach shifts towards batch processing, which does not meet the requirement for real-time analysis and fails to leverage
 
+## Question 21
+
+What information about Kafka Connect tasks is NOT stored in the `connect-status` topic?
+
+A. The connector and task configurations
+B. The current status of each connector and task (running, failed, paused, etc.)
+C. The offsets processed by each connector
+D. The worker node each task is assigned to
+
+**Answer:** A
+
+**Explanation:**
+The `connect-status` topic in Kafka is used by Kafka Connect to store status information about connectors and tasks. However, it does not store the actual configurations of the connectors and tasks.
+
+- A: Connector and task configurations are stored in the `connect-configs` topic, not in `connect-status`.
+- B, D: The current status and worker assignment for each connector and task are indeed stored in `connect-status`.
+- C: The offsets processed by each connector are stored in `connect-status` to facilitate monitoring and resuming from failures.

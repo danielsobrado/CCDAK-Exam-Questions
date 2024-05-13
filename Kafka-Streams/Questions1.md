@@ -186,8 +186,6 @@ Kafka Streams is a Java library for building real-time, highly scalable, fault-t
 
 - A, C, D are incorrect because while Kafka Streams integrates with other JVM languages like Scala, and there are some Python wrappers available, the native and primary language is Java.
 
-**Related Area:** Kafka-Streams
-
 ## Question 10
 
 What is the role of RocksDB in Kafka Streams?
@@ -205,5 +203,3 @@ In Kafka Streams, RocksDB is used as the default local state store for storing i
 - A is incorrect because output topics are stored in Kafka, not RocksDB.
 - C is incorrect as application code is not stored in RocksDB.
 - D is incorrect because RocksDB is indeed used in Kafka Streams for state management.
-
-**Related Area:** Kafka-Streams

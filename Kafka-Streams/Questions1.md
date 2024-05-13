@@ -153,3 +153,57 @@ Kafka Streams DSL, which is used for writing stream processing applications, is 
 
 - A is incorrect as Kafka Streams DSL is not designed to be ANSI SQL compliant.
 - C and D are incorrect because the non-compliance is not partial or version-dependent. It's a design choice.
+
+## Question 8
+
+What is the primary language used for writing Kafka Streams applications?
+
+A. Python
+B. Java
+C. Scala
+D. SQL
+
+**Answer:** B
+
+**Explanation:**
+Kafka Streams is a Java library for building real-time, highly scalable, fault-tolerant, distributed applications for stream processing. The primary language for writing Kafka Streams applications is Java.
+
+- A, C, D are incorrect because while Kafka Streams integrates with other JVM languages like Scala, and there are some Python wrappers available, the native and primary language is Java.
+
+## Question 9
+
+What is the primary language used for writing Kafka Streams applications?
+
+A. Python
+B. Java
+C. Scala
+D. SQL
+
+**Answer:** B
+
+**Explanation:**
+Kafka Streams is a Java library for building real-time, highly scalable, fault-tolerant, distributed applications for stream processing. The primary language for writing Kafka Streams applications is Java.
+
+- A, C, D are incorrect because while Kafka Streams integrates with other JVM languages like Scala, and there are some Python wrappers available, the native and primary language is Java.
+
+**Related Area:** Kafka-Streams
+
+## Question 10
+
+What is the role of RocksDB in Kafka Streams?
+
+A. It is used for storing output topics.
+B. It is used for storing intermediate processing state.
+C. It is used for storing the Kafka Streams application code.
+D. It is not used in Kafka Streams.
+
+**Answer:** B
+
+**Explanation:**
+In Kafka Streams, RocksDB is used as the default local state store for storing intermediate processing state. This state represents the computed results of the stream processing that need to be maintained between processing cycles.
+
+- A is incorrect because output topics are stored in Kafka, not RocksDB.
+- C is incorrect as application code is not stored in RocksDB.
+- D is incorrect because RocksDB is indeed used in Kafka Streams for state management.
+
+**Related Area:** Kafka-Streams

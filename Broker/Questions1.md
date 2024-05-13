@@ -471,3 +471,61 @@ When a consumer receives a 'Replica Not Available' error, it means the broker it
 - A is incorrect because simply retrying after a delay may not resolve the issue if the consumer's metadata is stale.
 - B is incorrect because committing offsets is not directly related to handling this error and doesn't trigger rebalancing.
 - D is incorrect because closing the connection is not necessary. The consumer can refresh metadata over the existing connection.
+
+## Question 18
+
+What happens if you produce to a topic that does not exist, and the broker setting `auto.create.topics.enable` is set to `false`?
+
+A. The broker will create the topic with default configurations
+B. The broker will reject the produce request and the producer will throw an exception
+C. The producer will automatically create the topic
+D. The producer will wait until the topic is created
+
+**Answer:** B
+
+**Explanation:**
+When `auto.create.topics.enable` is set to `false` on the Kafka brokers, they will not automatically create a topic if a producer tries to produce to a non-existent topic. Instead, the broker will reject the produce request, and the producer will throw a `TopicExistsException`.
+
+- A is incorrect because the broker will not create the topic when `auto.create.topics.enable` is `false`.
+- C is incorrect because the producer does not have the ability to create topics, only the broker does.
+- D is incorrect because the producer will not wait, it will immediately throw an exception.
+
+## Question 19
+
+What is the default value of `auto.create.topics.enable` in Kafka?
+
+A. `true`
+B. `false`
+C. It is not set by default
+D. It depends on the Kafka version
+
+**Answer:** A
+
+**Explanation:**
+In Kafka, `auto.create.topics.enable` is set to `true` by default. This means that by default, when a producer tries to produce to a non-existent topic or a consumer tries to consume from a non-existent topic, Kafka will automatically create the topic with default configurations.
+
+- B is incorrect because `false` is not the default value.
+- C is incorrect because the property does have a default value.
+- D is incorrect because the default value is consistent across Kafka versions.
+
+## Question 20
+
+When a topic is automatically created due to `auto.create.topics.enable` being `true`, what configurations are used for the new topic?
+
+A. The configurations specified by the producer or consumer
+B. The default configurations set on the broker
+C. A combination of producer/consumer configurations and broker defaults
+D. No configurations are set, the topic is created with empty configuration
+
+**Answer:** B
+
+**Explanation:**
+When Kafka automatically creates a topic due to `auto.create.topics.enable` being `true`, it uses the default topic configurations set on the broker. These defaults are defined by the following broker settings:
+
+- `num.partitions`: The default number of partitions for automatically created topics.
+- `default.replication.factor`: The default replication factor for automatically created topics.
+
+Any topic-level configurations set by the producer or consumer are ignored during automatic topic creation.
+
+- A and C are incorrect because the producer/consumer configurations are not used for automatic topic creation.
+- D is incorrect because the topic is not created with empty configuration, but with the broker's default configurations.

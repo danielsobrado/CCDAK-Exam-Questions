@@ -109,3 +109,86 @@ Statement C is incorrect because the instances do not compete for messages. Each
 
 Statement D is incorrect because the instances do not consume messages in a round-robin fashion. Each instance is assigned specific partitions and consumes messages only from those partitions.
 
+## Question 5
+
+How can you create a topic named "test" with 3 partitions and a replication factor of 2 using the Kafka CLI?
+
+A. kafka-topics.sh --create --zookeeper localhost:2181 --topic test --partitions 3 --replication-factor 2
+B. kafka-topics.sh --create --bootstrap-server localhost:9092 --topic test --partitions 3 --replication-factor 2
+C. kafka-console-producer.sh --broker-list localhost:9092 --topic test --partitions 3 --replication-factor 2
+D. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --partitions 3 --replication-factor 2
+
+**Answer:** B
+
+**Explanation:**
+To create a topic using the Kafka CLI, you should use the `kafka-topics.sh` command with the `--create` option. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, while `--zookeeper` is deprecated. The `--partitions` and `--replication-factor` options are used to set the desired number of partitions and replication factor for the topic.
+
+## Question 6
+
+Which command can you use to list all the topics in a Kafka cluster?
+
+A. kafka-topics.sh --list --zookeeper localhost:2181
+B. kafka-topics.sh --list --bootstrap-server localhost:9092
+C. kafka-console-producer.sh --list --broker-list localhost:9092
+D. kafka-console-consumer.sh --list --bootstrap-server localhost:9092
+
+**Answer:** B
+
+**Explanation:**
+To list all the topics in a Kafka cluster, you should use the `kafka-topics.sh` command with the `--list` option. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to. The `--zookeeper` option is deprecated in newer versions of Kafka.
+
+## Question 7
+
+How can you describe the configuration of a topic named "test" using the Kafka CLI?
+
+A. kafka-topics.sh --describe --topic test --zookeeper localhost:2181
+B. kafka-topics.sh --describe --topic test --bootstrap-server localhost:9092
+C. kafka-configs.sh --describe --entity-type topics --entity-name test --zookeeper localhost:2181
+D. kafka-configs.sh --describe --entity-type topics --entity-name test --bootstrap-server localhost:9092
+
+**Answer:** D
+
+**Explanation:**
+To describe the configuration of a topic, you should use the `kafka-configs.sh` command with the `--describe` option. The `--entity-type` option should be set to "topics", and the `--entity-name` option should be set to the name of the topic. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, while `--zookeeper` is deprecated.
+
+## Question 8
+
+Which Kafka CLI command is used to produce messages to a topic?
+
+A. kafka-console-producer.sh
+B. kafka-console-consumer.sh
+C. kafka-topics.sh
+D. kafka-configs.sh
+
+**Answer:** A
+
+**Explanation:**
+To produce messages to a topic using the Kafka CLI, you should use the `kafka-console-producer.sh` command. This command reads input from the console and publishes it to the specified Kafka topic. You need to provide the `--bootstrap-server` or `--broker-list` option to specify the Kafka broker(s) to connect to, and the `--topic` option to specify the topic to produce messages to.
+
+## Question 9
+
+How can you consume messages from the beginning of a topic named "test" using the Kafka CLI?
+
+A. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+B. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test
+C. kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+D. kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test
+
+**Answer:** A
+
+**Explanation:**
+To consume messages from the beginning of a topic using the Kafka CLI, you should use the `kafka-console-consumer.sh` command with the `--from-beginning` option. This option tells the consumer to start consuming from the earliest available offset in the topic. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, and the `--topic` option is used to specify the topic to consume from.
+
+## Question 10
+
+What is the purpose of the `--group` option in the `kafka-console-consumer.sh` command?
+
+A. To specify the consumer group ID for the console consumer
+B. To specify the number of consumer instances in the group
+C. To specify the list of topics to consume from
+D. To specify the bootstrap server for the consumer
+
+**Answer:** A
+
+**Explanation:**
+The `--group` option in the `kafka-console-consumer.sh` command is used to specify the consumer group ID for the console consumer. If not specified, the console consumer will join a random consumer group. Specifying a group ID allows multiple consumer instances to coordinate and distribute the partitions of a topic among themselves for parallel consumption.

@@ -93,3 +93,61 @@ The replication factor and the number of brokers do not directly affect the part
 - B is a valid distribution but does not provide any additional throughput compared to A.
 - C is suboptimal because it leaves some partitions unassigned, reducing total throughput.
 - D is incorrect because it assigns all partitions to a single consumer, eliminating the benefits of parallel consumption.
+
+## Question 5
+
+Which of the following statements about Kafka topic configurations is true?
+
+A. Topic configurations can only be set when a topic is first created and cannot be changed later
+B. Topic configurations can be changed dynamically using the `kafka-configs.sh` tool
+C. Topic configurations are stored in Zookeeper and are not accessible through the Kafka broker
+D. Topic configurations are stored in the Kafka broker's configuration file and require a broker restart to take effect
+
+**Answer:** B
+
+**Explanation:**
+In Kafka, topic configurations can be changed dynamically using the `kafka-configs.sh` tool without requiring a broker restart.
+
+Kafka provides a way to modify topic configurations on the fly through the `kafka-configs.sh` command-line tool. This tool allows you to alter topic configurations such as retention policy, replication factor, and other topic-level settings.
+
+When you modify a topic configuration using `kafka-configs.sh`:
+
+1. The updated configuration is stored in Zookeeper.
+2. The Kafka brokers read the updated configuration from Zookeeper and apply the changes to the topic.
+3. The changes take effect immediately without requiring a restart of the Kafka brokers.
+
+This dynamic configuration capability allows for flexibility in managing topic settings without impacting the availability of the Kafka cluster.
+
+Statement A is incorrect because topic configurations can be changed after a topic is created. You don't have to define all configurations upfront and stick with them permanently.
+
+Statement C is partially correct but incomplete. Topic configurations are indeed stored in Zookeeper, but they are also accessible through the Kafka brokers. The brokers read the configurations from Zookeeper and apply them to the topics.
+
+Statement D is incorrect because topic configurations are not stored in the broker's configuration file. They are stored in Zookeeper, and changes do not require a broker restart.
+
+## Question 6
+
+What is the default cleanup policy for Kafka topics?
+
+A. Delete
+B. Compact
+C. Delete and Compact
+D. None
+
+**Answer:** A
+
+**Explanation:**
+The default cleanup policy for Kafka topics is "Delete".
+
+In Kafka, the cleanup policy determines how Kafka handles old log segments when the retention time or size limit is reached. There are two cleanup policies available:
+
+1. Delete: This is the default policy. When the retention time or size limit is reached, Kafka deletes old log segments to free up space. This means that old messages are permanently removed based on the retention configuration.
+
+2. Compact: With the compact policy, Kafka periodically compacts the log by removing obsolete records based on the message key. If a key appears multiple times in the log, only the latest value is retained, and the older duplicates are discarded. This is useful for maintaining a changelog or snapshot of the latest state for each key.
+
+By default, when you create a new topic in Kafka, the cleanup policy is set to "Delete". This means that Kafka will automatically delete old log segments based on the retention time or size limit configured for the topic.
+
+If you want to use the "Compact" policy for a topic, you need to explicitly set it using the topic configuration `cleanup.policy=compact`. This can be done when creating the topic or by modifying the topic configuration later.
+
+Statements B and C are incorrect because they do not represent the default cleanup policy. "Compact" is not the default, and "Delete and Compact" is not a valid cleanup policy option.
+
+Statement D is incorrect because Kafka does have a default cleanup policy, which is "Delete". It is not the case that no cleanup policy is set by default.

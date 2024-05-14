@@ -112,3 +112,166 @@ The other options are not correct:
 
 - A: `key.deserializer=JsonDeserializer` would be correct if the message keys were also in JSON format. However, the question doesn't specify the key format.
 - C and D: `StringDeserializer` is not appropriate because the message values are in JSON format, not plain strings.
+
+## Question 7
+
+A consumer wants to read messages from a specific partition of a topic. Which of the following methods should be used?
+
+A. `KafkaConsumer.subscribe(String topic, int partition)`
+B. `KafkaConsumer.assign(Collection<TopicPartition> partitions)`
+C. `KafkaConsumer.subscribe(Collection<TopicPartition> partitions)`
+D. `KafkaConsumer.assign(String topic, int partition)`
+
+**Answer:** B
+
+**Explanation:**
+To read messages from a specific partition of a topic, a consumer should use the `assign` method of the `KafkaConsumer` class.
+
+The `assign` method takes a collection of `TopicPartition` objects as a parameter. Each `TopicPartition` represents a specific partition of a topic. By passing a collection of `TopicPartition` objects to `assign`, the consumer is explicitly assigned to those specific partitions.
+
+The other options are incorrect:
+
+- A and D are incorrect because `KafkaConsumer` does not have a method that takes a topic and partition as separate parameters.
+- C is incorrect because `subscribe` is used for subscribing to entire topics, not specific partitions. When you subscribe to a topic, Kafka automatically assigns partitions to the consumer.
+
+Using `assign` allows for fine-grained control over which partitions a consumer reads from. It's useful in scenarios where you want to manually balance partitions across consumers or implement a custom partition assignment strategy.
+
+## Question 8
+
+What happens when a consumer is assigned a partition that does not exist in the Kafka cluster?
+
+A. The consumer will ignore the non-existent partition and continue processing other assigned partitions
+B. The consumer will throw an exception and stop processing
+C. The consumer will create the partition automatically
+D. The consumer will wait until the partition is created
+
+**Answer:** B
+
+**Explanation:**
+When a consumer is assigned a partition that does not exist in the Kafka cluster, it will throw an exception and stop processing.
+
+In Kafka, partitions are created administratively before data is produced to them. Consumers do not have the ability to create partitions automatically. If a consumer tries to read from a non-existent partition, it is considered an error condition.
+
+When a consumer encounters a non-existent partition in its assignment:
+
+- It will throw a `InvalidTopicException` or `UnknownTopicOrPartitionException`.
+- The consumer will stop processing and will not continue reading from other assigned partitions.
+- The application will need to handle the exception and decide how to proceed (e.g., logging an error, retrying with a valid assignment, etc.).
+
+Therefore, statements A, C, and D are incorrect. The consumer will not ignore the non-existent partition, create it automatically, or wait for it to be created. It will throw an exception and stop processing.
+
+To avoid this error, ensure that the partitions assigned to a consumer actually exist in the Kafka cluster. Double-check the topic names and partition numbers in your consumer configuration or application code.
+
+## Question 9
+
+Can a consumer dynamically change the partitions it is assigned to without stopping and restarting?
+
+A. Yes, by calling `KafkaConsumer.subscribe()` with a new set of topics
+B. Yes, by calling `KafkaConsumer.assign()` with a new set of partitions
+C. No, partition assignment can only be changed when the consumer is first started
+D. No, partition assignment is fixed for the entire lifecycle of the consumer
+
+**Answer:** B
+
+**Explanation:**
+A Kafka consumer can dynamically change the partitions it is assigned to without stopping and restarting by calling the `KafkaConsumer.assign()` method with a new set of partitions.
+
+The `assign` method allows a consumer to explicitly specify which partitions it should consume from. By calling `assign` with a different set of partitions, the consumer can dynamically change its assignment.
+
+Here's how it works:
+
+1. The consumer calls `assign` with a new collection of `TopicPartition` objects representing the desired partitions to consume from.
+2. Kafka updates the consumer's assignment to the specified partitions.
+3. The consumer will stop consuming from its previous assignment and start consuming from the newly assigned partitions.
+4. The consumer can continue processing messages from the new partitions without needing to restart.
+
+This dynamic partition assignment is useful in scenarios where you want to implement custom partition load balancing, respond to partition rebalances, or adjust consumer workload at runtime.
+
+Statement A is incorrect because `subscribe` is used for subscribing to entire topics, not changing partition assignments. When you call `subscribe`, Kafka will automatically assign partitions to the consumer based on the configured partition assignment strategy.
+
+Statements C and D are incorrect because partition assignment is not fixed for the entire lifecycle of a consumer. It can be changed dynamically using the `assign` method.
+
+## Question 10
+
+A consumer is part of a consumer group and is currently processing messages. If the consumer crashes and is restarted, what will happen?
+
+A. The consumer will resume processing from the last committed offset
+B. The consumer will start processing from the earliest available offset
+C. The consumer will start processing from the latest available offset
+D. The consumer will be assigned a new set of partitions
+
+**Answer:** A
+
+**Explanation:**
+When a consumer in a consumer group crashes and is restarted, it will resume processing from the last committed offset.
+
+In Kafka, each consumer in a consumer group maintains its own offset position for each partition it is assigned to. Periodically, the consumer commits its offsets to Kafka to mark its progress. If a consumer crashes or is shut down, its offsets remain committed in Kafka.
+
+When the consumer is restarted:
+
+1. It will rejoin the consumer group.
+2. Kafka will reassign partitions to the consumers in the group, including the restarted consumer.
+3. For each assigned partition, the consumer will resume processing from the last committed offset.
+
+This behavior ensures that the consumer does not miss any messages and avoids duplicating message processing.
+
+Statement B is incorrect because the consumer will not start from the earliest available offset unless it is explicitly configured to do so (e.g., by setting `auto.offset.reset=earliest`).
+
+Statement C is incorrect because the consumer will not start from the latest available offset unless it is explicitly configured to do so (e.g., by setting `auto.offset.reset=latest`).
+
+Statement D is incorrect because the consumer will not necessarily be assigned a new set of partitions. Kafka will reassign partitions based on the consumer group's partition assignment strategy, which may or may not result in the same assignments as before.
+
+## Question 11
+
+What happens when a new consumer joins an existing consumer group?
+
+A. The new consumer will start consuming from the earliest available offset for all partitions
+B. The new consumer will start consuming from the latest available offset for all partitions
+C. The new consumer will be assigned a subset of partitions and start consuming from the last committed offset for each partition
+D. The new consumer will wait until the next rebalance before starting to consume
+
+**Answer:** C
+
+**Explanation:**
+When a new consumer joins an existing consumer group, Kafka will trigger a rebalance of partitions among the consumers in the group, including the new consumer.
+
+During the rebalance:
+
+1. Kafka will assign a subset of the partitions to the new consumer based on the consumer group's partition assignment strategy.
+2. For each assigned partition, the new consumer will start consuming from the last committed offset.
+
+This behavior ensures that the new consumer starts processing at the correct position and does not duplicate or miss any messages.
+
+Statement A is incorrect because the new consumer will not start from the earliest available offset unless it is explicitly configured to do so (e.g., by setting `auto.offset.reset=earliest`).
+
+Statement B is incorrect because the new consumer will not start from the latest available offset unless it is explicitly configured to do so (e.g., by setting `auto.offset.reset=latest`).
+
+Statement D is incorrect because the new consumer will not wait until the next rebalance. The joining of a new consumer itself triggers a rebalance, and the consumer starts consuming immediately after the rebalance completes.
+
+## Question 12
+
+What is the purpose of the `group.id` property in a Kafka consumer configuration?
+
+A. To specify the ID of the consumer within a consumer group
+B. To specify the ID of the consumer group the consumer belongs to
+C. To specify the ID of the Kafka cluster the consumer connects to
+D. To specify the ID of the partitions the consumer should read from
+
+**Answer:** B
+
+**Explanation:**
+The `group.id` property in a Kafka consumer configuration is used to specify the ID of the consumer group the consumer belongs to.
+
+In Kafka, consumers can be organized into consumer groups for scalability and fault tolerance. Consumers within the same group coordinate with each other to distribute the partitions of a topic among themselves. Each consumer in a group is assigned a subset of the partitions to consume from.
+
+The `group.id` serves as a unique identifier for a consumer group. All consumers with the same `group.id` are considered part of the same group and will work together to consume from the topic partitions.
+
+Some key points about `group.id`:
+
+- It is a required property for consumers that participate in a consumer group.
+- Consumers with the same `group.id` belong to the same group and will coordinate partition assignments.
+- Consumers with different `group.id`s are in separate groups and will each receive all messages from the topic independently.
+
+Statement A is incorrect because the `group.id` identifies the group, not the individual consumer within the group. Kafka assigns each consumer a unique member ID within the group.
+
+Statements C and D are incorrect because the `group.id` is not related to the Kafka cluster or the specific partitions to read from. It is solely used for consumer group coordination.

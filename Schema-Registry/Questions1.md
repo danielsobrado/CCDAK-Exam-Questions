@@ -156,3 +156,92 @@ If the name of a schema is changed:
 Therefore, changing the name of a record schema is an incompatible change. Statements A, B, and C are incorrect.
 
 To evolve a schema while maintaining compatibility, you should not change the name of the schema. Instead, you should evolve the fields within the schema following the Avro compatibility rules.
+
+## Question 8
+
+What happens when a Kafka consumer using KafkaAvroDeserializer encounters a message without a schema ID?
+
+A. The consumer throws a SerializationException
+B. The consumer skips the message and moves to the next one
+C. The consumer attempts to deserialize the message using the latest schema
+D. The consumer falls back to using the GenericRecord deserializer
+
+**Answer:** A
+
+**Explanation:**
+When a Kafka consumer using the KafkaAvroDeserializer encounters a message that does not include a schema ID, it will throw a SerializationException.
+
+The KafkaAvroDeserializer expects messages to be serialized with Confluent Schema Registry and to include the schema ID as part of the message payload. The schema ID is used to retrieve the corresponding schema from the Schema Registry for deserialization.
+
+If a message does not contain a schema ID, the deserializer is unable to determine which schema to use for deserialization, and it cannot proceed. In this case, it will throw a SerializationException to indicate that the message cannot be deserialized due to the missing schema ID.
+
+It's important to ensure that the producer is properly configured to use the KafkaAvroSerializer and that it is registering the schemas with the Schema Registry. This way, the produced messages will include the necessary schema ID for the consumer to deserialize them correctly.
+
+Statement B is incorrect because the consumer does not skip messages without a schema ID. It throws an exception instead.
+
+Statement C is incorrect because the consumer cannot attempt to deserialize the message using the latest schema if there is no schema ID present. It needs the schema ID to retrieve the correct schema.
+
+Statement D is incorrect because the consumer does not fall back to using a different deserializer when the schema ID is missing. The KafkaAvroDeserializer specifically relies on the schema ID for deserialization.
+
+## Question 9
+
+How can you handle a SerializationException thrown by the KafkaAvroDeserializer in a Kafka consumer?
+
+A. Catch the exception and retry deserializing the message with a different deserializer
+B. Catch the exception and skip the problematic message by committing its offset
+C. Catch the exception and manually retrieve the schema from the Schema Registry for deserialization
+D. Let the exception propagate and handle it at a higher level in the consumer application
+
+**Answer:** B
+
+**Explanation:**
+When a Kafka consumer using the KafkaAvroDeserializer encounters a SerializationException due to a missing schema ID or other deserialization issues, one way to handle it is to catch the exception and skip the problematic message by committing its offset.
+
+Here's how you can approach this:
+
+1. Surround the code that consumes and processes the messages with a try-catch block.
+2. In the catch block, if the exception is a SerializationException, log an error message indicating the failed deserialization.
+3. Commit the offset of the problematic message using the consumer's commitSync() or commitAsync() method. This tells Kafka that the consumer has processed the message, even though it couldn't deserialize it.
+4. Continue consuming the next message.
+
+By committing the offset of the problematic message, the consumer acknowledges that it has processed the message and moves on to the next one. This prevents the consumer from getting stuck on the same message indefinitely.
+
+However, it's important to note that skipping messages should be done with caution and only after careful consideration. Skipping messages means losing data, so it's crucial to have proper error handling and monitoring in place to detect and investigate such incidents.
+
+Statement A is incorrect because retrying deserialization with a different deserializer is not a recommended approach. The KafkaAvroDeserializer is specifically designed to work with Confluent Schema Registry and Avro-serialized messages.
+
+Statement C is incorrect because manually retrieving the schema from the Schema Registry is not a practical solution. The deserializer should handle schema retrieval automatically based on the schema ID.
+
+Statement D is partially correct, as letting the exception propagate and handling it at a higher level is another valid approach. However, it doesn't address the specific action of skipping the problematic message by committing its offset.
+
+## Question 10
+
+What are the benefits of using Confluent Schema Registry and KafkaAvroDeserializer in a Kafka consumer?
+
+A. Automatic schema evolution and compatibility checks
+B. Improved deserialization performance compared to generic deserializers
+C. Ability to deserialize messages without knowing the schema upfront
+D. All of the above
+
+**Answer:** D
+
+**Explanation:**
+Using Confluent Schema Registry and KafkaAvroDeserializer in a Kafka consumer offers several benefits:
+
+1. Automatic schema evolution and compatibility checks:
+   - The Schema Registry allows you to store and manage schemas for your Kafka messages.
+   - It enables schema evolution by allowing you to define compatibility rules for schema changes.
+   - The KafkaAvroDeserializer automatically retrieves the appropriate schema from the Schema Registry based on the schema ID included in the message.
+   - It ensures that the consumer can deserialize messages even if the schema has evolved, as long as the changes are compatible.
+
+2. Improved deserialization performance compared to generic deserializers:
+   - The KafkaAvroDeserializer is optimized for deserializing Avro-serialized messages.
+   - It leverages the compact and efficient binary format of Avro, resulting in faster deserialization compared to generic deserializers like JSON.
+   - The deserializer also benefits from the schema information stored in the Schema Registry, enabling efficient deserialization without the overhead of including the full schema in each message.
+
+3. Ability to deserialize messages without knowing the schema upfront:
+   - When using the KafkaAvroDeserializer, the consumer does not need to have prior knowledge of the schema for the messages it consumes.
+   - The deserializer automatically retrieves the schema from the Schema Registry based on the schema ID included in the message.
+   - This allows the consumer to deserialize messages from multiple topics or with different schemas without requiring explicit schema management in the consumer code.
+
+By leveraging Confluent Schema Registry and KafkaAvroDeserializer, Kafka consumers can benefit from automatic schema evolution, improved deserialization performance, and the ability to deserialize messages without prior knowledge of the schema. These features simplify the development and maintenance of Kafka consumers while ensuring data compatibility and efficiency.

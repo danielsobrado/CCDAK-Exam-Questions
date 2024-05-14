@@ -80,6 +80,12 @@ Kafka Connect links Kafka to othe­r systems. It allows data to move in and out.
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/Questions1.md)
 
+### Kafka REST Proxy
+Kafka REST Proxy allows external applications to interact with Kafka clusters. It enables the production and consumption of messages through HTTP. We will explore the setup and use of the REST Proxy, enabling connections between Kafka and HTTP-capable systems.
+
+[Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/REST%20Proxy/README.md)
+[Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/REST%20Proxy/Questions1.md)
+
 ### Schema-Registry
 
 Schema Re­gistry is a tool to manage schema definitions for Kafka me­ssages. It helps with schema e­volution and makes sure data is compatible. Unde­rstanding how schema registration works is important. Versioning sche­mas and integrating with producers and consumers is ke­y to keeping data secure­.

@@ -1,4 +1,4 @@
-## Question 2
+## Question 1
 
 How can you view the current configuration of a Kafka topic?
 
@@ -27,3 +27,85 @@ Statement B is incorrect because `kafka-configs.sh --describe` is used to descri
 Statement C is incorrect because while topic configurations are stored in Zookeeper, using the `zookeeper-shell.sh` command to navigate the znodes is a low-level approach and not the recommended way to view topic configurations.
 
 Statement D is incorrect because topic configurations are not stored in the Kafka broker's log files. They are stored in Zookeeper and can be accessed through the Kafka tools.
+
+## Question 2
+
+What is the default behavior of the `kafka-console-consumer` when no consumer group is specified?
+
+A. It joins a random consumer group
+B. It creates a new consumer group with a generated name
+C. It fails with an error indicating that a consumer group must be specified
+D. It consumes messages without joining any consumer group
+
+**Answer:** B
+
+**Explanation:**
+When using the `kafka-console-consumer` CLI tool to consume messages from a Kafka topic, if you don't explicitly specify a consumer group using the `--group` option, the tool's default behavior is to create a new consumer group with a generated name.
+
+The `kafka-console-consumer` automatically generates a unique consumer group name for each instance of the tool that is run without a specified group. The generated group name typically follows a pattern like `console-consumer-<random-string>`, where `<random-string>` is a randomly generated string to ensure uniqueness.
+
+By creating a new consumer group for each instance, the `kafka-console-consumer` ensures that multiple instances of the tool can consume messages independently from the same topic without interfering with each other's offsets or causing rebalances.
+
+Statement A is incorrect because the tool does not join a random existing consumer group. It creates a new group with a generated name.
+
+Statement C is incorrect because the tool does not fail with an error when no consumer group is specified. It handles this scenario by creating a new group.
+
+Statement D is incorrect because the `kafka-console-consumer` always joins a consumer group, even if it's a newly created one with a generated name. It does not consume messages without being part of a group.
+
+## Question 3
+
+How does the `kafka-console-consumer` behave when you specify the `--from-beginning` option?
+
+A. It starts consuming messages from the earliest available offset in the assigned partitions
+B. It starts consuming messages from the latest available offset in the assigned partitions
+C. It starts consuming messages from a specific offset that you provide
+D. It starts consuming messages from a random offset in the assigned partitions
+
+**Answer:** A
+
+**Explanation:**
+When you run the `kafka-console-consumer` CLI tool with the `--from-beginning` option, it starts consuming messages from the earliest available offset in the assigned partitions.
+
+By default, when a consumer starts consuming from a topic, it begins from the latest offset, which means it will only receive new messages that are produced after the consumer started. However, when you specify the `--from-beginning` option, the consumer will seek to the earliest available offset in each assigned partition and start consuming messages from there.
+
+This option is useful when you want to consume all the messages in a topic, including the older messages that were produced before the consumer started. It allows you to process the entire history of messages in the topic.
+
+Keep in mind that consuming from the beginning can result in a large number of messages being processed, especially if the topic has a long retention period or has been receiving messages for a significant time.
+
+Statement B is incorrect because the `--from-beginning` option does not start consuming from the latest offset. It starts from the earliest offset.
+
+Statement C is incorrect because the `--from-beginning` option does not allow you to specify a specific offset to start consuming from. It always starts from the earliest available offset.
+
+Statement D is incorrect because the `--from-beginning` option does not start consuming from a random offset. It deterministically starts from the earliest offset in each assigned partition.
+
+## Question 4
+
+What happens when you run multiple instances of the `kafka-console-consumer` with the same consumer group?
+
+A. The instances will consume messages independently, each receiving a copy of every message
+B. The instances will collaborate and distribute the partitions among themselves for parallel consumption
+C. The instances will compete for messages, and each message will be consumed by only one instance
+D. The instances will consume messages in a round-robin fashion, with each instance receiving a subset of messages
+
+**Answer:** B
+
+**Explanation:**
+When you run multiple instances of the `kafka-console-consumer` CLI tool with the same consumer group, the instances will collaborate and distribute the partitions among themselves for parallel consumption.
+
+In Kafka, consumers within the same consumer group coordinate with each other to share the work of consuming messages from the topic partitions. When multiple consumers belong to the same group, Kafka assigns each partition to one consumer in the group. This assignment is dynamic and can change over time as consumers join or leave the group.
+
+Here's how it works:
+
+1. When the first consumer instance starts, it becomes the group leader and triggers a rebalance. It is assigned a subset of the topic partitions.
+2. When subsequent consumer instances start with the same group, they join the group and trigger a rebalance. The partitions are redistributed among all the consumers in the group.
+3. Each consumer instance will consume messages from its assigned partitions independently. Messages from a single partition are processed by only one consumer instance.
+4. If a consumer instance fails or is terminated, the partitions it was consuming are redistributed among the remaining consumers in the group during a rebalance.
+
+This collaborative consumption model allows for parallel processing of messages, improved throughput, and fault tolerance. The workload is distributed among the consumer instances, and if one instance fails, the others can take over its partitions.
+
+Statement A is incorrect because the instances do not consume messages independently or receive a copy of every message. They collaborate and divide the partitions among themselves.
+
+Statement C is incorrect because the instances do not compete for messages. Each message is consumed by only one instance, but the instances work together to distribute the partitions.
+
+Statement D is incorrect because the instances do not consume messages in a round-robin fashion. Each instance is assigned specific partitions and consumes messages only from those partitions.
+

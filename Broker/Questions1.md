@@ -529,3 +529,41 @@ Any topic-level configurations set by the producer or consumer are ignored durin
 
 - A and C are incorrect because the producer/consumer configurations are not used for automatic topic creation.
 - D is incorrect because the topic is not created with empty configuration, but with the broker's default configurations.
+
+## Question 21
+
+Can Kafka's zero-copy optimization be used in combination with compression?
+
+A. Yes, zero-copy and compression can be used together seamlessly.
+B. No, zero-copy is incompatible with compression and cannot be used together.
+C. Zero-copy can be used with compression, but it requires additional configuration.
+D. Zero-copy is automatically disabled when compression is enabled.
+
+**Answer:** A
+
+**Explanation:**
+Kafka's zero-copy optimization can be used in combination with compression seamlessly. Zero-copy and compression are independent features that can work together to optimize data transfer and storage in Kafka.
+
+Here's how zero-copy and compression can be used together:
+
+1. Producer-side compression:
+   - Before sending data to Kafka, the producer application can compress the data using a compression algorithm supported by Kafka, such as Gzip, Snappy, or LZ4.
+   - Compression reduces the size of the data, which can help save network bandwidth and storage space.
+
+2. Zero-copy data transfer:
+   - When the producer sends the compressed data to Kafka, Kafka uses zero-copy optimization to transfer the compressed data directly from the file system cache to the network buffer.
+   - Zero-copy operates on the compressed data without any modifications or decompression.
+
+3. Broker-side storage:
+   - Kafka brokers store the compressed data as-is, without decompressing it.
+   - Storing compressed data helps optimize storage utilization and reduces the storage footprint of the Kafka cluster.
+
+4. Consumer-side decompression:
+   - When the consumer receives the compressed data from Kafka, it needs to decompress the data before processing it.
+   - The consumer is responsible for decompressing the data using the same compression algorithm used by the producer.
+
+Zero-copy and compression can work together seamlessly because zero-copy operates on the compressed data without any modifications. It transfers the compressed data efficiently from the producer to the consumer, while compression helps reduce the data size and optimize storage.
+
+Using zero-copy with compression does not require any additional configuration (option C) and is not automatically disabled when compression is enabled (option D). Kafka supports the combination of zero-copy and compression out of the box.
+
+By leveraging both zero-copy and compression, Kafka can achieve efficient data transfer, reduced network bandwidth usage, and optimized storage utilization, leading to improved overall performance and scalability of the Kafka cluster.

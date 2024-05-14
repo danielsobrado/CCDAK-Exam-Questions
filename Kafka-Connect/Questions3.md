@@ -218,3 +218,4 @@ Statement A is incorrect because increasing `max.tasks` will not provide paralle
 Statement B is incorrect because increasing the number of partitions in the target Kafka topic does not affect the parallelism of the JDBC connector. The connector's tasks write data to the topic sequentially.
 
 Statement C is incorrect because increasing `tasks.max` of the Kafka Connect workers will not automatically increase the parallelism of the JDBC connector. The connector's parallelism is determined by the number of tasks it creates based on the number of tables.
+

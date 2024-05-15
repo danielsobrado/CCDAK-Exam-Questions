@@ -2,7 +2,7 @@
 
 How can you view the current configuration of a Kafka topic?
 
-- - A. Use the `kafka-topics.sh --describe` command
+- A. Use the `kafka-topics.sh --describe` command
 - B. Use the `kafka-configs.sh --describe` command
 - C. Use the `zookeeper-shell.sh` command to navigate to the topic's configuration znode
 - D. Look in the Kafka broker's log files for the topic configuration

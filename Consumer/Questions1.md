@@ -2,11 +2,11 @@
 
 Which of the following is stored in the Kafka `__consumer_offsets` topic? (Select two)
 
-A. The latest committed offset for each consumer group
-B. The list of consumers in each consumer group
-C. The mapping of partitions to consumer groups
-D. The last produced message for each topic partition
-E. The earliest committed offset for each consumer group
+- - A. The latest committed offset for each consumer group
+- B. The list of consumers in each consumer group
+- C. The mapping of partitions to consumer groups
+- D. The last produced message for each topic partition
+- E. The earliest committed offset for each consumer group
 
 **Answer:** A, B
 
@@ -26,10 +26,10 @@ The other options are not stored in this topic:
 
 There are two consumers C1 and C2 belonging to the same group G subscribed to topics T1, T2, and T3. Each topic has 4 partitions. Assuming all partitions have data, how many partitions will each consumer be assigned with the Range Assignor?
 
-A. C1: 6 partitions, C2: 6 partitions
-B. C1: 4 partitions, C2: 8 partitions
-C. C1: 2 partitions from each topic, C2: 2 partitions from each topic
-D. C1: 1 partition from each topic, C2: 3 partitions from each topic
+- - A. C1: 6 partitions, C2: 6 partitions
+- B. C1: 4 partitions, C2: 8 partitions
+- C. C1: 2 partitions from each topic, C2: 2 partitions from each topic
+- D. C1: 1 partition from each topic, C2: 3 partitions from each topic
 
 **Answer:** A
 
@@ -40,10 +40,10 @@ With the Range Assignor, each consumer will be assigned a contiguous range of pa
 
 There are four consumers C1, C2, C3, C4 belonging to the same group G subscribed to two topics T1 and T2. T1 has 3 partitions and T2 has 2 partitions. With the Round Robin Assignor, which consumer(s) will be assigned partition 2 from topic T1?
 
-A. C1
-B. C2
-C. C3
-D. C4
+- - A. C1
+- B. C2
+- C. C3
+- D. C4
 
 **Answer:** C
 
@@ -61,10 +61,10 @@ So partition 2 from topic T1 will be assigned to consumer C3.
 
 There are three consumers C1, C2, C3 belonging to the same group G subscribed to a topic T. The topic has 10 partitions. If the Sticky Assignor is used, and C1 leaves the group, how will the partitions be rebalanced?
 
-A. All partitions will be reassigned evenly among C2 and C3
-B. C2 and C3 will retain their existing partitions, and the partitions from C1 will be reassigned to either C2 or C3
-C. All partitions will be reassigned randomly to C2 and C3
-D. C2 and C3 will retain their existing partitions, and the partitions from C1 will not be reassigned
+- - A. All partitions will be reassigned evenly among C2 and C3
+- B. C2 and C3 will retain their existing partitions, and the partitions from C1 will be reassigned to either C2 or C3
+- C. All partitions will be reassigned randomly to C2 and C3
+- D. C2 and C3 will retain their existing partitions, and the partitions from C1 will not be reassigned
 
 **Answer:** B
 
@@ -78,10 +78,10 @@ The Sticky Assignor aims to minimize partition movement when the group membershi
 
 A Kafka Streams application tries to consume from an input topic partition. It receives an 'Offset Out Of Range' error from the broker. How should the application handle this?
 
-A. Reset the consumer offset to the earliest offset and retry
-B. Reset the consumer offset to the latest offset and retry
-C. Trigger a shutdown of the Streams application
-D. Ignore the error and continue processing other partitions
+- - A. Reset the consumer offset to the earliest offset and retry
+- B. Reset the consumer offset to the latest offset and retry
+- C. Trigger a shutdown of the Streams application
+- D. Ignore the error and continue processing other partitions
 
 **Answer:** A
 
@@ -96,10 +96,10 @@ An 'Offset Out Of Range' error in Kafka Streams indicates that the application i
 
 You are designing a Kafka consumer application that will consume messages from a topic. The messages in the topic are in JSON format. Which of the following properties should you set in the consumer configuration?
 
-A. `key.deserializer=JsonDeserializer`
-B. `value.deserializer=JsonDeserializer`
-C. `key.deserializer=StringDeserializer`
-D. `value.deserializer=StringDeserializer`
+- - A. `key.deserializer=JsonDeserializer`
+- B. `value.deserializer=JsonDeserializer`
+- C. `key.deserializer=StringDeserializer`
+- D. `value.deserializer=StringDeserializer`
 
 **Answer:** B
 
@@ -117,10 +117,10 @@ The other options are not correct:
 
 A consumer wants to read messages from a specific partition of a topic. Which of the following methods should be used?
 
-A. `KafkaConsumer.subscribe(String topic, int partition)`
-B. `KafkaConsumer.assign(Collection<TopicPartition> partitions)`
-C. `KafkaConsumer.subscribe(Collection<TopicPartition> partitions)`
-D. `KafkaConsumer.assign(String topic, int partition)`
+- - A. `KafkaConsumer.subscribe(String topic, int partition)`
+- B. `KafkaConsumer.assign(Collection<TopicPartition> partitions)`
+- C. `KafkaConsumer.subscribe(Collection<TopicPartition> partitions)`
+- D. `KafkaConsumer.assign(String topic, int partition)`
 
 **Answer:** B
 
@@ -140,10 +140,10 @@ Using `assign` allows for fine-grained control over which partitions a consumer 
 
 What happens when a consumer is assigned a partition that does not exist in the Kafka cluster?
 
-A. The consumer will ignore the non-existent partition and continue processing other assigned partitions
-B. The consumer will throw an exception and stop processing
-C. The consumer will create the partition automatically
-D. The consumer will wait until the partition is created
+- - A. The consumer will ignore the non-existent partition and continue processing other assigned partitions
+- B. The consumer will throw an exception and stop processing
+- C. The consumer will create the partition automatically
+- D. The consumer will wait until the partition is created
 
 **Answer:** B
 
@@ -166,10 +166,10 @@ To avoid this error, ensure that the partitions assigned to a consumer actually 
 
 Can a consumer dynamically change the partitions it is assigned to without stopping and restarting?
 
-A. Yes, by calling `KafkaConsumer.subscribe()` with a new set of topics
-B. Yes, by calling `KafkaConsumer.assign()` with a new set of partitions
-C. No, partition assignment can only be changed when the consumer is first started
-D. No, partition assignment is fixed for the entire lifecycle of the consumer
+- - A. Yes, by calling `KafkaConsumer.subscribe()` with a new set of topics
+- B. Yes, by calling `KafkaConsumer.assign()` with a new set of partitions
+- C. No, partition assignment can only be changed when the consumer is first started
+- D. No, partition assignment is fixed for the entire lifecycle of the consumer
 
 **Answer:** B
 
@@ -195,10 +195,10 @@ Statements C and D are incorrect because partition assignment is not fixed for t
 
 A consumer is part of a consumer group and is currently processing messages. If the consumer crashes and is restarted, what will happen?
 
-A. The consumer will resume processing from the last committed offset
-B. The consumer will start processing from the earliest available offset
-C. The consumer will start processing from the latest available offset
-D. The consumer will be assigned a new set of partitions
+- - A. The consumer will resume processing from the last committed offset
+- B. The consumer will start processing from the earliest available offset
+- C. The consumer will start processing from the latest available offset
+- D. The consumer will be assigned a new set of partitions
 
 **Answer:** A
 
@@ -225,10 +225,10 @@ Statement D is incorrect because the consumer will not necessarily be assigned a
 
 What happens when a new consumer joins an existing consumer group?
 
-A. The new consumer will start consuming from the earliest available offset for all partitions
-B. The new consumer will start consuming from the latest available offset for all partitions
-C. The new consumer will be assigned a subset of partitions and start consuming from the last committed offset for each partition
-D. The new consumer will wait until the next rebalance before starting to consume
+- - A. The new consumer will start consuming from the earliest available offset for all partitions
+- B. The new consumer will start consuming from the latest available offset for all partitions
+- C. The new consumer will be assigned a subset of partitions and start consuming from the last committed offset for each partition
+- D. The new consumer will wait until the next rebalance before starting to consume
 
 **Answer:** C
 
@@ -252,10 +252,10 @@ Statement D is incorrect because the new consumer will not wait until the next r
 
 What is the purpose of the `group.id` property in a Kafka consumer configuration?
 
-A. To specify the ID of the consumer within a consumer group
-B. To specify the ID of the consumer group the consumer belongs to
-C. To specify the ID of the Kafka cluster the consumer connects to
-D. To specify the ID of the partitions the consumer should read from
+- - A. To specify the ID of the consumer within a consumer group
+- B. To specify the ID of the consumer group the consumer belongs to
+- C. To specify the ID of the Kafka cluster the consumer connects to
+- D. To specify the ID of the partitions the consumer should read from
 
 **Answer:** B
 
@@ -280,10 +280,10 @@ Statements C and D are incorrect because the `group.id` is not related to the Ka
 
 What is the default behavior of the auto.offset.reset configuration in Kafka consumers?
 
-A. It starts consuming from the earliest offset if no committed offset is found
-B. It starts consuming from the latest offset if no committed offset is found
-C. It throws an exception if no committed offset is found
-D. It waits for a committed offset to be available before starting consumption
+- - A. It starts consuming from the earliest offset if no committed offset is found
+- B. It starts consuming from the latest offset if no committed offset is found
+- C. It throws an exception if no committed offset is found
+- D. It waits for a committed offset to be available before starting consumption
 
 **Answer:** C
 
@@ -305,10 +305,10 @@ If you want to avoid exceptions and have more control over the starting offset, 
 
 What happens when a Kafka consumer with enable.auto.commit set to false calls the commitSync() method?
 
-A. The consumer commits the offsets of the messages it has processed so far
-B. The consumer commits the offsets of the messages it has fetched but not yet processed
-C. The consumer does not commit any offsets and throws an exception
-D. The consumer waits for the next batch of messages to be processed before committing offsets
+- - A. The consumer commits the offsets of the messages it has processed so far
+- B. The consumer commits the offsets of the messages it has fetched but not yet processed
+- C. The consumer does not commit any offsets and throws an exception
+- D. The consumer waits for the next batch of messages to be processed before committing offsets
 
 **Answer:** A
 
@@ -331,10 +331,10 @@ An alternative to commitSync() is commitAsync(), which sends the commit request 
 
 What is the purpose of the isolation.level configuration in Kafka consumers?
 
-A. To control the visibility of transactional messages
-B. To specify the maximum number of messages to be read in a single batch
-C. To determine the behavior when a partition is reassigned to another consumer in the group
-D. To set the level of consistency for reading messages from a partition
+- - A. To control the visibility of transactional messages
+- B. To specify the maximum number of messages to be read in a single batch
+- C. To determine the behavior when a partition is reassigned to another consumer in the group
+- D. To set the level of consistency for reading messages from a partition
 
 **Answer:** A
 
@@ -357,10 +357,10 @@ It's important to note that using "read_committed" isolation level may introduce
 
 What happens if you try to call `poll()` on a KafkaConsumer from multiple threads simultaneously?
 
-A. The consumer will automatically coordinate the threads to process messages in parallel
-B. The consumer will throw a ConcurrentModificationException
-C. The behavior is undefined and may lead to unexpected results or errors
-D. The consumer will process messages sequentially, with each thread taking turns
+- - A. The consumer will automatically coordinate the threads to process messages in parallel
+- B. The consumer will throw a ConcurrentModificationException
+- C. The behavior is undefined and may lead to unexpected results or errors
+- D. The consumer will process messages sequentially, with each thread taking turns
 
 **Answer:** C
 
@@ -381,10 +381,10 @@ Therefore, it is important to ensure that a KafkaConsumer instance is only acces
 
 What is the recommended approach to process messages concurrently using the KafkaConsumer?
 
-A. Create a single KafkaConsumer instance and share it among multiple threads
-B. Create multiple KafkaConsumer instances, each running in its own thread
-C. Use a thread pool to process messages from a single KafkaConsumer instance
-D. Use a lock or synchronization mechanism to coordinate access to a shared KafkaConsumer instance
+- - A. Create a single KafkaConsumer instance and share it among multiple threads
+- B. Create multiple KafkaConsumer instances, each running in its own thread
+- C. Use a thread pool to process messages from a single KafkaConsumer instance
+- D. Use a lock or synchronization mechanism to coordinate access to a shared KafkaConsumer instance
 
 **Answer:** B
 
@@ -407,10 +407,10 @@ It's important to note that when using multiple consumer instances, you should c
 
 How does Kafka ensure that messages are processed in a balanced way when using multiple consumer instances in a consumer group?
 
-A. Kafka assigns an equal number of messages to each consumer instance
-B. Kafka assigns partitions to consumer instances in a round-robin fashion
-C. Kafka dynamically adjusts the assignment of partitions based on consumer load
-D. Kafka relies on ZooKeeper to distribute messages evenly among consumer instances
+- - A. Kafka assigns an equal number of messages to each consumer instance
+- B. Kafka assigns partitions to consumer instances in a round-robin fashion
+- C. Kafka dynamically adjusts the assignment of partitions based on consumer load
+- D. Kafka relies on ZooKeeper to distribute messages evenly among consumer instances
 
 **Answer:** B
 
@@ -435,10 +435,10 @@ It's important to note that the actual partition assignment strategy can be cust
 
 What is the primary benefit of Kafka's zero-copy optimization when sending data from producers to consumers?
 
-A. It reduces the memory overhead by avoiding data duplication in memory.
-B. It minimizes the latency by eliminating the need for data serialization and deserialization.
-C. It improves the security by encrypting the data during transmission.
-D. It increases the parallelism by leveraging multiple CPU cores for data transfer.
+- - A. It reduces the memory overhead by avoiding data duplication in memory.
+- B. It minimizes the latency by eliminating the need for data serialization and deserialization.
+- C. It improves the security by encrypting the data during transmission.
+- D. It increases the parallelism by leveraging multiple CPU cores for data transfer.
 
 **Answer:** A
 

@@ -93,17 +93,17 @@ In the context of Kafka's distributed architecture, broker elections are vital f
 
 Select the most accurate answers for each scenario:
 
-A. The Zookeeper ensemble elects the new Controller based on ephemeral node creation sequence.
-B. The new partition leader is elected based on the ISR list order, favoring replicas with the most recent updates.
-C. Brokers in the main cluster segment with access to Zookeeper retain their roles, while isolated brokers step down until connectivity is restored.
-D. A broker majority within the isolated segment elects a new temporary Controller until the network partition is resolved.
-E. The election of a new partition leader among replicas with identical network latency is determined by a random selection process.
+- A. The Zookeeper ensemble elects the new Controller based on ephemeral node creation sequence.
+- B. The new partition leader is elected based on the ISR list order, favoring replicas with the most recent updates.
+- C. Brokers in the main cluster segment with access to Zookeeper retain their roles, while isolated brokers step down until connectivity is restored.
+- D. A broker majority within the isolated segment elects a new temporary Controller until the network partition is resolved.
+- E. The election of a new partition leader among replicas with identical network latency is determined by a random selection process.
 
 Choose the correct answers.
 
 Response:
 
-1. **A. The Zookeeper ensemble elects the new Controller based on ephemeral node creation sequence.**
+1. **- A. The Zookeeper ensemble elects the new Controller based on ephemeral node creation sequence.**
    
    Explanation: When the broker acting as the Controller fails, Zookeeper plays a crucial role in the election of a new Controller. Kafka brokers register themselves with Zookeeper using ephemeral nodes. When the current Controller's node disappears from Zookeeper (due to failure or disconnection), Zookeeper triggers the Controller re-election process among the live brokers. The new Controller is typically the first broker to respond to this trigger, based on the sequence of ephemeral node creation.
 
@@ -207,7 +207,7 @@ Explanation:
 
 1. **Incorrect**. In a network partition scenario where both groups can communicate with Zookeeper, Kafka prioritizes availability and allows the larger group (Group B in this case) to continue operating normally. Partitions with a leader in Group A will not continue to function normally, as they do not have a majority of ISRs available.
 
-2. **Correct**. Kafka's partition leadership election process is designed to ensure that the cluster remains available and functional in the presence of network partitions. When a network partition occurs, Kafka follows the "majority rule" to determine which group of brokers should remain active. In this scenario, Group B has a majority of brokers (3 out of 5) and can communicate with Zookeeper. Therefore, partitions with a leader in Group B will continue to function normally. For partitions with a leader in Group A, the brokers in Group B will detect the loss of the leader and elect a new leader from the available ISRs within Group B. This ensures that all partitions have a functioning leader and can continue to serve client requests.
+2. **Correct**. Kafka's partition leadership election process is designed to ensure that the cluster remains available and functional in the presence of network partitions. When a network partition occurs, Kafka follows the "majority rule" to determine which group of brokers should remain active. In this scenario, Group B has a majority of brokers (3 out of 5) and can communicate with Zookeeper. Therefore, partitions with a leader in Group B will continue to function normally. For partitions with a leader in Group A, the brokers in Group B will detect the loss of the leader and elect a new leader from the available ISRs within Group - B. This ensures that all partitions have a functioning leader and can continue to serve client requests.
 
 3. **Incorrect**. Not all partitions will be offline in this scenario. As long as a group of brokers (in this case, Group B) has a majority and can communicate with Zookeeper, Kafka will allow that group to continue operating and serving client requests for the partitions they hold the leadership for.
 
@@ -440,10 +440,10 @@ All three factors independently contribute to the eligibility of a log segment f
 
 A client connects to a broker in a Kafka cluster and sends a produce request for a topic partition. The broker responds with a 'Not Enough Replicas' error. What does the client do next?
 
-A. Retries sending the produce request to the same broker
-B. Sends metadata request to the same broker to refresh its metadata
-C. Sends produce request to the controller broker
-D. Sends metadata request to the Zookeeper to find the controller broker
+- A. Retries sending the produce request to the same broker
+- B. Sends metadata request to the same broker to refresh its metadata
+- C. Sends produce request to the controller broker
+- D. Sends metadata request to the Zookeeper to find the controller broker
 
 **Answer:** B
 
@@ -458,10 +458,10 @@ When a Kafka client receives a 'Not Enough Replicas' error from a broker, it mea
 
 A Kafka consumer is consuming from a topic partition. It sends a fetch request to the broker and receives a 'Replica Not Available' error. What is the consumer's next action?
 
-A. Backs off and retries the fetch request after a short delay
-B. Sends an offset commit request to trigger partition rebalancing
-C. Sends a metadata request to refresh its view of the cluster
-D. Closes the connection and tries connecting to a different broker
+- A. Backs off and retries the fetch request after a short delay
+- B. Sends an offset commit request to trigger partition rebalancing
+- C. Sends a metadata request to refresh its view of the cluster
+- D. Closes the connection and tries connecting to a different broker
 
 **Answer:** C
 
@@ -476,10 +476,10 @@ When a consumer receives a 'Replica Not Available' error, it means the broker it
 
 What happens if you produce to a topic that does not exist, and the broker setting `auto.create.topics.enable` is set to `false`?
 
-A. The broker will create the topic with default configurations
-B. The broker will reject the produce request and the producer will throw an exception
-C. The producer will automatically create the topic
-D. The producer will wait until the topic is created
+- A. The broker will create the topic with default configurations
+- B. The broker will reject the produce request and the producer will throw an exception
+- C. The producer will automatically create the topic
+- D. The producer will wait until the topic is created
 
 **Answer:** B
 
@@ -494,10 +494,10 @@ When `auto.create.topics.enable` is set to `false` on the Kafka brokers, they wi
 
 What is the default value of `auto.create.topics.enable` in Kafka?
 
-A. `true`
-B. `false`
-C. It is not set by default
-D. It depends on the Kafka version
+- A. `true`
+- B. `false`
+- C. It is not set by default
+- D. It depends on the Kafka version
 
 **Answer:** A
 
@@ -512,10 +512,10 @@ In Kafka, `auto.create.topics.enable` is set to `true` by default. This means th
 
 When a topic is automatically created due to `auto.create.topics.enable` being `true`, what configurations are used for the new topic?
 
-A. The configurations specified by the producer or consumer
-B. The default configurations set on the broker
-C. A combination of producer/consumer configurations and broker defaults
-D. No configurations are set, the topic is created with empty configuration
+- A. The configurations specified by the producer or consumer
+- B. The default configurations set on the broker
+- C. A combination of producer/consumer configurations and broker defaults
+- D. No configurations are set, the topic is created with empty configuration
 
 **Answer:** B
 
@@ -534,10 +534,10 @@ Any topic-level configurations set by the producer or consumer are ignored durin
 
 Can Kafka's zero-copy optimization be used in combination with compression?
 
-A. Yes, zero-copy and compression can be used together seamlessly.
-B. No, zero-copy is incompatible with compression and cannot be used together.
-C. Zero-copy can be used with compression, but it requires additional configuration.
-D. Zero-copy is automatically disabled when compression is enabled.
+- A. Yes, zero-copy and compression can be used together seamlessly.
+- B. No, zero-copy is incompatible with compression and cannot be used together.
+- C. Zero-copy can be used with compression, but it requires additional configuration.
+- D. Zero-copy is automatically disabled when compression is enabled.
 
 **Answer:** A
 

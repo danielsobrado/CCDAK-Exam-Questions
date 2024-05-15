@@ -2,10 +2,10 @@
 
 What information about Kafka Connect tasks is NOT stored in the `connect-status` topic?
 
-A. The connector and task configurations
-B. The current status of each connector and task (running, failed, paused, etc.)
-C. The offsets processed by each connector
-D. The worker node each task is assigned to
+- A. The connector and task configurations
+- B. The current status of each connector and task (running, failed, paused, etc.)
+- C. The offsets processed by each connector
+- D. The worker node each task is assigned to
 
 **Answer:** A
 
@@ -20,10 +20,10 @@ The `connect-status` topic in Kafka is used by Kafka Connect to store status inf
 
 You have a Kafka cluster with 5 brokers and a topic with 10 partitions. You want to consume messages from this topic using a consumer group with 3 consumers. What is the maximum number of partitions that can be assigned to a single consumer?
 
-A. 3
-B. 4
-C. 5
-D. 10
+- A. 3
+- B. 4
+- C. 5
+- D. 10
 
 **Answer:** B
 
@@ -46,10 +46,10 @@ It's important to note that the actual partition assignment may vary based on fa
 
 You have a Kafka cluster with 3 brokers and a topic with 12 partitions. You want to create a consumer group with 4 consumers to consume messages from this topic. How many consumers will be actively consuming messages?
 
-A. 1
-B. 3
-C. 4
-D. 12
+- A. 1
+- B. 3
+- C. 4
+- D. 12
 
 **Answer:** C
 
@@ -75,10 +75,10 @@ It's important to note that the actual partition assignment may vary based on fa
 
 What is the purpose of the `connect-offsets` topic in Kafka Connect?
 
-A. It stores the configuration of the connectors.
-B. It stores the status of the connector tasks.
-C. It stores the offsets of the source connectors.
-D. It stores the offsets of the sink connectors.
+- A. It stores the configuration of the connectors.
+- B. It stores the status of the connector tasks.
+- C. It stores the offsets of the source connectors.
+- D. It stores the offsets of the sink connectors.
 
 **Answer:** C
 
@@ -110,10 +110,10 @@ The `connect-configs` topic (option A) is used to store the configuration of the
 
 How does Kafka Connect handle the scalability of connectors?
 
-A. By automatically creating multiple instances of a connector based on the load.
-B. By allowing manual configuration of the number of tasks for each connector.
-C. By dynamically adjusting the number of tasks based on the connector's performance.
-D. By requiring a separate Kafka Connect cluster for each connector.
+- A. By automatically creating multiple instances of a connector based on the load.
+- B. By allowing manual configuration of the number of tasks for each connector.
+- C. By dynamically adjusting the number of tasks based on the connector's performance.
+- D. By requiring a separate Kafka Connect cluster for each connector.
 
 **Answer:** B
 
@@ -149,10 +149,10 @@ Additionally, Kafka Connect does not require a separate cluster for each connect
 
 What happens when a Kafka Connect worker node fails in a distributed Kafka Connect cluster?
 
-A. All the connectors and tasks running on the failed worker node are permanently lost.
-B. The connectors and tasks are automatically redistributed to the remaining worker nodes.
-C. The failed worker node is replaced with a new worker node, and the tasks are reassigned.
-D. The entire Kafka Connect cluster goes down until the failed worker node is restored.
+- A. All the connectors and tasks running on the failed worker node are permanently lost.
+- B. The connectors and tasks are automatically redistributed to the remaining worker nodes.
+- C. The failed worker node is replaced with a new worker node, and the tasks are reassigned.
+- D. The entire Kafka Connect cluster goes down until the failed worker node is restored.
 
 **Answer:** B
 

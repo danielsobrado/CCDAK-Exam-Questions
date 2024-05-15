@@ -2,10 +2,10 @@
 
 How does Kafka's zero-copy optimization handle data transformation or modification?
 
-A. It automatically applies data transformations during the zero-copy process.
-B. It allows custom data transformations to be plugged into the zero-copy mechanism.
-C. It does not support data transformations and sends data as-is.
-D. It performs data transformations after the data is copied into the application's memory.
+- A. It automatically applies data transformations during the zero-copy process.
+- B. It allows custom data transformations to be plugged into the zero-copy mechanism.
+- C. It does not support data transformations and sends data as-is.
+- D. It performs data transformations after the data is copied into the application's memory.
 
 **Answer:** C
 

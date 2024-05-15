@@ -2,12 +2,12 @@
 
 Which of the following statements about `acks` and `min.insync.replicas` are true? (Select all that apply)
 
-A. `acks` is a producer configuration, while `min.insync.replicas` is a topic configuration
-B. `acks` and `min.insync.replicas` are both producer configurations
-C. `acks` and `min.insync.replicas` are both topic configurations
-D. `acks=all` and `min.insync.replicas=1` provides the strongest durability guarantee
-E. `acks=1` and `min.insync.replicas=2` provides the strongest durability guarantee
-F. For `acks=all` to provide any additional durability over `acks=1`, `min.insync.replicas` must be greater than 1
+- A. `acks` is a producer configuration, while `min.insync.replicas` is a topic configuration
+- B. `acks` and `min.insync.replicas` are both producer configurations
+- C. `acks` and `min.insync.replicas` are both topic configurations
+- D. `acks=all` and `min.insync.replicas=1` provides the strongest durability guarantee
+- E. `acks=1` and `min.insync.replicas=2` provides the strongest durability guarantee
+- F. For `acks=all` to provide any additional durability over `acks=1`, `min.insync.replicas` must be greater than 1
 
 **Answer:** A, F
 
@@ -27,10 +27,10 @@ For `acks=all` to provide any additional durability guarantee over `acks=1`, `mi
 
 What is the relationship between `unclean.leader.election.enable` and `min.insync.replicas`?
 
-A. They control the same thing and should always be set to the same value
-B. `unclean.leader.election.enable` overrides `min.insync.replicas`
-C. They are independent and one does not affect the other
-D. If `unclean.leader.election.enable=true`, `min.insync.replicas` can be violated during leader election
+- A. They control the same thing and should always be set to the same value
+- B. `unclean.leader.election.enable` overrides `min.insync.replicas`
+- C. They are independent and one does not affect the other
+- D. If `unclean.leader.election.enable=true`, `min.insync.replicas` can be violated during leader election
 
 **Answer:** D
 
@@ -51,10 +51,10 @@ However, if `unclean.leader.election.enable` is set to `true`, this protection i
 
 A Kafka cluster has 3 brokers. You create a topic with 6 partitions and 2 consumers in a consumer group subscribed to this topic. What is the maximum number of partitions that can be assigned to a single consumer?
 
-A. 1
-B. 2
-C. 3
-D. 6
+- A. 1
+- B. 2
+- C. 3
+- D. 6
 
 **Answer:** D
 
@@ -71,10 +71,10 @@ It's important to note that having more partitions than consumers is a valid and
 
 A topic has 10 partitions and a replication factor of 3. There are 2 consumers in a consumer group subscribed to this topic. The cluster has 5 brokers. How would the partitions be assigned to the consumers to achieve maximum throughput?
 
-A. Consumer 1: Partitions 0-4, Consumer 2: Partitions 5-9
-B. Consumer 1: Partitions 0, 2, 4, 6, 8, Consumer 2: Partitions 1, 3, 5, 7, 9
-C. Consumer 1: Partitions 0, 1, 2, Consumer 2: Partitions 3, 4, 5, Unassigned: 6, 7, 8, 9
-D. Consumer 1: Partitions 0-9
+- A. Consumer 1: Partitions 0-4, Consumer 2: Partitions 5-9
+- B. Consumer 1: Partitions 0, 2, 4, 6, 8, Consumer 2: Partitions 1, 3, 5, 7, 9
+- C. Consumer 1: Partitions 0, 1, 2, Consumer 2: Partitions 3, 4, 5, Unassigned: 6, 7, 8, 9
+- D. Consumer 1: Partitions 0-9
 
 **Answer:** A
 
@@ -98,10 +98,10 @@ The replication factor and the number of brokers do not directly affect the part
 
 Which of the following statements about Kafka topic configurations is true?
 
-A. Topic configurations can only be set when a topic is first created and cannot be changed later
-B. Topic configurations can be changed dynamically using the `kafka-configs.sh` tool
-C. Topic configurations are stored in Zookeeper and are not accessible through the Kafka broker
-D. Topic configurations are stored in the Kafka broker's configuration file and require a broker restart to take effect
+- A. Topic configurations can only be set when a topic is first created and cannot be changed later
+- B. Topic configurations can be changed dynamically using the `kafka-configs.sh` tool
+- C. Topic configurations are stored in Zookeeper and are not accessible through the Kafka broker
+- D. Topic configurations are stored in the Kafka broker's configuration file and require a broker restart to take effect
 
 **Answer:** B
 
@@ -128,10 +128,10 @@ Statement D is incorrect because topic configurations are not stored in the brok
 
 What is the default cleanup policy for Kafka topics?
 
-A. Delete
-B. Compact
-C. Delete and Compact
-D. None
+- A. Delete
+- B. Compact
+- C. Delete and Compact
+- D. None
 
 **Answer:** A
 

@@ -56,10 +56,10 @@ The correct answer is **d. Leverage Change Data Capture (CDC) connectors to stre
 
 Where are the Kafka Connect connector configurations stored?
 
-A. In a separate config file on each Kafka Connect worker
-B. In the Kafka broker's config directory
-C. In Zookeeper under the `/kafka-connect` znode
-D. In a special Kafka topic named `connect-configs`
+- A. In a separate config file on each Kafka Connect worker
+- B. In the Kafka broker's config directory
+- C. In Zookeeper under the `/kafka-connect` znode
+- D. In a special Kafka topic named `connect-configs`
 
 **Answer:** D
 
@@ -74,10 +74,10 @@ Kafka Connect uses a special Kafka topic named `connect-configs` to store connec
 
 You want to use Kafka Connect to export data from a Kafka topic to a relational database. Which type of connector should you use?
 
-A. Source Connector
-B. Sink Connector
-C. Transformation Connector
-D. Import Connector
+- A. Source Connector
+- B. Sink Connector
+- C. Transformation Connector
+- D. Import Connector
 
 **Answer:** B
 
@@ -92,10 +92,10 @@ In Kafka Connect, a Sink Connector is used to consume data from Kafka topics and
 
 You need to stream data from a Twitter feed into a Kafka topic for real-time processing. Which Kafka Connect connector type is most appropriate?
 
-A. Sink Connector
-B. Source Connector
-C. Transformation Connector
-D. Export Connector
+- A. Sink Connector
+- B. Source Connector
+- C. Transformation Connector
+- D. Export Connector
 
 **Answer:** B
 
@@ -110,10 +110,10 @@ A Kafka Connect Source Connector is used to import data from an external source,
 
 You are using Kafka Connect to move data from a source system into Kafka for real-time processing with Kafka Streams. After processing, the results need to be stored in HDFS for batch analysis. Which combination of connector types will you need?
 
-A. Source Connector -> Sink Connector
-B. Sink Connector -> Source Connector
-C. Source Connector -> Source Connector
-D. Sink Connector -> Sink Connector
+- A. Source Connector -> Sink Connector
+- B. Sink Connector -> Source Connector
+- C. Source Connector -> Source Connector
+- D. Sink Connector -> Sink Connector
 
 **Answer:** A
 
@@ -133,10 +133,10 @@ The other options are incorrect:
 
 You are using a JDBC source connector to copy data from a database table to a Kafka topic. The table has 5 columns. How many tasks will be created by the connector?
 
-A. 1
-B. 5
-C. It depends on the `max.tasks` configuration of the connector
-D. It depends on the number of partitions in the Kafka topic
+- A. 1
+- B. 5
+- C. It depends on the `max.tasks` configuration of the connector
+- D. It depends on the number of partitions in the Kafka topic
 
 **Answer:** A
 
@@ -159,10 +159,10 @@ Statement D is incorrect because the number of tasks is not related to the numbe
 
 What happens if the `max.tasks` configuration is set to a value less than the number of tables being copied by a JDBC source connector?
 
-A. The connector will create one task per table, ignoring the `max.tasks` setting
-B. The connector will create tasks only for a subset of the tables, up to the `max.tasks` limit
-C. The connector will distribute the tables evenly among the available tasks
-D. The connector will fail with an error due to the insufficient number of tasks
+- A. The connector will create one task per table, ignoring the `max.tasks` setting
+- B. The connector will create tasks only for a subset of the tables, up to the `max.tasks` limit
+- C. The connector will distribute the tables evenly among the available tasks
+- D. The connector will fail with an error due to the insufficient number of tasks
 
 **Answer:** B
 
@@ -190,10 +190,10 @@ Statement D is incorrect because the connector does not fail with an error when 
 
 How can you increase the parallelism of a JDBC source connector to improve the performance of copying data from a database to Kafka?
 
-A. Increase the `max.tasks` configuration of the connector
-B. Increase the number of partitions in the target Kafka topic
-C. Increase the `tasks.max` configuration of the Kafka Connect workers
-D. Use multiple instances of the JDBC connector, each copying a different subset of tables
+- A. Increase the `max.tasks` configuration of the connector
+- B. Increase the number of partitions in the target Kafka topic
+- C. Increase the `tasks.max` configuration of the Kafka Connect workers
+- D. Use multiple instances of the JDBC connector, each copying a different subset of tables
 
 **Answer:** D
 

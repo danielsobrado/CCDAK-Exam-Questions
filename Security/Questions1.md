@@ -2,10 +2,10 @@
 
 Where are the ACLs stored in a Kafka cluster by default?
 
-A. In the Kafka topic `_acls`
-B. Inside the broker's data directory  
-C. In Zookeeper node `/kafka-acl/`
-D. In a separate ACL server
+- A. In the Kafka topic `_acls`
+- B. Inside the broker's data directory  
+- C. In Zookeeper node `/kafka-acl/`
+- D. In a separate ACL server
 
 **Answer:** C
 
@@ -25,10 +25,10 @@ Therefore, for Kafka clusters that do not use Zookeeper, the correct answer woul
 
 What Kafka CLI command can be used to add new ACL rules to a running Kafka cluster?
 
-A. `kafka-acls.sh`
-B. `kafka-configs.sh`
-C. `kafka-topics.sh`
-D. `kafka-console-producer.sh`
+- A. `kafka-acls.sh`
+- B. `kafka-configs.sh`
+- C. `kafka-topics.sh`
+- D. `kafka-console-producer.sh`
 
 **Answer:** A
 
@@ -43,10 +43,10 @@ The `kafka-acls.sh` CLI tool is used to manage ACLs in Kafka. It allows adding, 
 
 Which of the following is NOT a valid resource type when defining ACLs in Kafka?
 
-A. Topic
-B. Consumer Group
-C. Cluster
-D. Partition
+- A. Topic
+- B. Consumer Group
+- C. Cluster
+- D. Partition
 
 **Answer:** D
 
@@ -60,10 +60,10 @@ In Kafka, ACLs can be defined for resource types like Topic, Consumer Group, Clu
 
 In the Confluent Schema Registry, what is the default compatibility setting for new schemas?
 
-A. BACKWARD
-B. FORWARD
-C. FULL
-D. NONE
+- A. BACKWARD
+- B. FORWARD
+- C. FULL
+- D. NONE
 
 **Answer:** C
 
@@ -81,10 +81,10 @@ So by default, the Schema Registry enforces the strictest level of compatibility
 
 Where does the Confluent Schema Registry store its own configuration?
 
-A. In Zookeeper
-B. In a Kafka topic
-C. On the filesystem
-D. In a database
+- A. In Zookeeper
+- B. In a Kafka topic
+- C. On the filesystem
+- D. In a database
 
 **Answer:** A
 
@@ -107,10 +107,10 @@ So while the Schema Registry uses a Kafka topic to store the actual schema data,
 
 How does the Confluent Schema Registry ensure high availability?
 
-A. By running multiple instances and electing a master
-B. By relying on the availability of the underlying Kafka cluster
-C. By replicating data across multiple Zookeeper instances
-D. By using a distributed consensus protocol among instances
+- A. By running multiple instances and electing a master
+- B. By relying on the availability of the underlying Kafka cluster
+- C. By replicating data across multiple Zookeeper instances
+- D. By using a distributed consensus protocol among instances
 
 **Answer:** A
 

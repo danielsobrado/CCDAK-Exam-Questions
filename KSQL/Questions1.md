@@ -2,11 +2,11 @@
 
 Which of the following KSQL statements will cause writes to a Kafka topic? (Select two)
 
-A. `CREATE STREAM FROM_TOPIC AS SELECT * FROM source_topic;`
-B. `CREATE TABLE FROM_TOPIC AS SELECT * FROM source_topic;`
-C. `SELECT * FROM source_topic EMIT CHANGES;`
-D. `DESCRIBE source_topic;`
-E. `SHOW QUERIES;`
+- A. `CREATE STREAM FROM_TOPIC AS SELECT * FROM source_topic;`
+- B. `CREATE TABLE FROM_TOPIC AS SELECT * FROM source_topic;`
+- C. `SELECT * FROM source_topic EMIT CHANGES;`
+- D. `DESCRIBE source_topic;`
+- E. `SHOW QUERIES;`
 
 **Answer:** A, B
 
@@ -20,10 +20,10 @@ In KSQL, `CREATE STREAM AS SELECT` and `CREATE TABLE AS SELECT` statements creat
 
 What happens when you run a `CREATE STREAM` statement without an `AS SELECT` clause in KSQL?
 
-A. It creates a new stream and writes metadata to the KSQL command topic.
-B. It creates a new stream and starts writing data to it from the KSQL application.
-C. It fails because `CREATE STREAM` must always include an `AS SELECT` clause.
-D. It creates a new empty stream but doesn't write anything to Kafka.
+- A. It creates a new stream and writes metadata to the KSQL command topic.
+- B. It creates a new stream and starts writing data to it from the KSQL application.
+- C. It fails because `CREATE STREAM` must always include an `AS SELECT` clause.
+- D. It creates a new empty stream but doesn't write anything to Kafka.
 
 **Answer:** A
 
@@ -38,10 +38,10 @@ When you run a `CREATE STREAM` statement without an `AS SELECT` clause in KSQL, 
 
 What is the purpose of the `PARTITIONS` clause in a KSQL `CREATE TABLE` statement?
 
-A. To specify the number of partitions for the output Kafka topic
-B. To specify the partitioning key for the output Kafka topic
-C. To specify the number of partitions to read from the input Kafka topic
-D. To specify the partitioning key to read from the input Kafka topic
+- A. To specify the number of partitions for the output Kafka topic
+- B. To specify the partitioning key for the output Kafka topic
+- C. To specify the number of partitions to read from the input Kafka topic
+- D. To specify the partitioning key to read from the input Kafka topic
 
 **Answer:** A
 

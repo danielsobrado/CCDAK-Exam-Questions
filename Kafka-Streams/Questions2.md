@@ -2,10 +2,10 @@
 
 In a Kafka Streams application, where are the processing topology configurations stored?
 
-A. In a special Kafka topic named `streams-configs`
-B. In Zookeeper under the `/kafka-streams` znode
-C. In the Kafka Streams application code itself
-D. In a separate config file read by the Kafka Streams application
+- A. In a special Kafka topic named `streams-configs`
+- B. In Zookeeper under the `/kafka-streams` znode
+- C. In the Kafka Streams application code itself
+- D. In a separate config file read by the Kafka Streams application
 
 **Answer:** C
 
@@ -19,10 +19,10 @@ In a Kafka Streams application, the processing topology (the DAG of processing n
 
 You are implementing a Kafka Streams application. The input is a KStream from a topic where the message values are in Avro format. What should you set for the `default.value.serde` property in the Streams configuration?
 
-A. `Serdes.String()`
-B. `Serdes.ByteArray()`
-C. `SpecificAvroSerde`
-D. `GenericAvroSerde`
+- A. `Serdes.String()`
+- B. `Serdes.ByteArray()`
+- C. `SpecificAvroSerde`
+- D. `GenericAvroSerde`
 
 **Answer:** C
 
@@ -41,10 +41,10 @@ The other options are not ideal:
 
 What is the recommended way to enhance the performance of a Kafka Streams application that does a simple map transformation on the input data?
 
-A. Increase the number of partitions of the output topic
-B. Enable state store caching
-C. Increase the commit interval
-D. Disable logging
+- A. Increase the number of partitions of the output topic
+- B. Enable state store caching
+- C. Increase the commit interval
+- D. Disable logging
 
 **Answer:** A
 
@@ -59,10 +59,10 @@ In a Kafka Streams application that performs a simple stateless transformation l
 
 You are running a Kafka Streams application in a Docker container. The application performs a complex join operation and maintains a large state store. Which of the following would provide the greatest performance improvement when restarting the container?
 
-A. Increase the heap size of the Docker container
-B. Mount a high-performance SSD for the RocksDB directory
-C. Increase the number of replicas for the input topics
-D. Use a more powerful CPU for the Docker host
+- A. Increase the heap size of the Docker container
+- B. Mount a high-performance SSD for the RocksDB directory
+- C. Increase the number of replicas for the input topics
+- D. Use a more powerful CPU for the Docker host
 
 **Answer:** B
 
@@ -77,10 +77,10 @@ In a Kafka Streams application that maintains a large state store (e.g., for a c
 
 You are deploying a Kafka Streams application that joins two high-volume streams. Which of the following is LEAST likely to improve the performance of the application?
 
-A. Ensuring that the two input streams have the same number of partitions
-B. Increasing the number of standby replicas for the state store
-C. Tuning the `cache.max.bytes.buffering` parameter
-D. Increasing the `num.streams.threads` parameter
+- A. Ensuring that the two input streams have the same number of partitions
+- B. Increasing the number of standby replicas for the state store
+- C. Tuning the `cache.max.bytes.buffering` parameter
+- D. Increasing the `num.streams.threads` parameter
 
 **Answer:** B
 
@@ -97,11 +97,11 @@ In contrast:
 
 Which of the following stream processing operations can be considered stateful? (Select all that apply)
 
-A. Filter: Discarding messages based on a condition
-B. Map: Transforming messages from one format to another
-C. Aggregate: Combining multiple messages into a single result
-D. Join: Combining messages from two different streams based on a common key
-E. Peek: Performing an action on each message without modifying it
+- A. Filter: Discarding messages based on a condition
+- B. Map: Transforming messages from one format to another
+- C. Aggregate: Combining multiple messages into a single result
+- D. Join: Combining messages from two different streams based on a common key
+- E. Peek: Performing an action on each message without modifying it
 
 **Explanation:**
 In stream processing, stateful operations are those that maintain and update a state based on the processed messages. They require the stream processor to keep track of some information over time.
@@ -124,10 +124,10 @@ It's important to note that the specific implementation and requirements of a st
 
 What is the purpose of state stores in Kafka Streams?
 
-A. To persist the intermediate results and enable fault tolerance
-B. To cache the input messages for faster processing
-C. To store the final output of the stream processing application
-D. To maintain the configuration of the Kafka Streams application
+- A. To persist the intermediate results and enable fault tolerance
+- B. To cache the input messages for faster processing
+- C. To store the final output of the stream processing application
+- D. To maintain the configuration of the Kafka Streams application
 
 **Answer:** A
 
@@ -154,10 +154,10 @@ It's important to note that state stores are not used for caching input messages
 
 How does Kafka Streams handle state recovery in case of a failure?
 
-A. By replaying all the input messages from the beginning
-B. By restoring the state from a snapshot stored in Kafka
-C. By rebuilding the state from the change log topic
-D. By retrieving the state from an external database
+- A. By replaying all the input messages from the beginning
+- B. By restoring the state from a snapshot stored in Kafka
+- C. By rebuilding the state from the change log topic
+- D. By retrieving the state from an external database
 
 **Answer:** C
 
@@ -184,10 +184,10 @@ Additionally, Kafka Streams does not rely on external databases for state storag
 
 You have a Kafka Streams application that processes messages from an input topic with 6 partitions. The application performs a stateful aggregation using a KTable. How many local state stores will be created by default?
 
-A. 1
-B. 3
-C. 6
-D. 12
+- A. 1
+- B. 3
+- C. 6
+- D. 12
 
 **Answer:** C
 

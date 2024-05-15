@@ -141,10 +141,10 @@ For stateful operations such as windowed aggregation (`ordersPerHour`), ensuring
 
 Is Kafka Streams DSL ANSI SQL compliant?
 
-A. Yes
-B. No
-C. Partially
-D. It depends on the version
+- A. Yes
+- B. No
+- C. Partially
+- D. It depends on the version
 
 **Answer:** B
 
@@ -158,10 +158,10 @@ Kafka Streams DSL, which is used for writing stream processing applications, is 
 
 What is the primary language used for writing Kafka Streams applications?
 
-A. Python
-B. Java
-C. Scala
-D. SQL
+- A. Python
+- B. Java
+- C. Scala
+- D. SQL
 
 **Answer:** B
 
@@ -174,10 +174,10 @@ Kafka Streams is a Java library for building real-time, highly scalable, fault-t
 
 What is the primary language used for writing Kafka Streams applications?
 
-A. Python
-B. Java
-C. Scala
-D. SQL
+- A. Python
+- B. Java
+- C. Scala
+- D. SQL
 
 **Answer:** B
 
@@ -190,10 +190,10 @@ Kafka Streams is a Java library for building real-time, highly scalable, fault-t
 
 What is the role of RocksDB in Kafka Streams?
 
-A. It is used for storing output topics.
-B. It is used for storing intermediate processing state.
-C. It is used for storing the Kafka Streams application code.
-D. It is not used in Kafka Streams.
+- A. It is used for storing output topics.
+- B. It is used for storing intermediate processing state.
+- C. It is used for storing the Kafka Streams application code.
+- D. It is not used in Kafka Streams.
 
 **Answer:** B
 

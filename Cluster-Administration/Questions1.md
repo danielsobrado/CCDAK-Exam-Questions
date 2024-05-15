@@ -2,7 +2,7 @@
 
 Which of the following is stored in Zookeeper for a Kafka cluster? (Select two)
 
-- - A. Consumer offsets
+- A. Consumer offsets
 - B. Kafka broker information
 - C. Topic partition assignments
 - D. Topic-level configurations
@@ -11,7 +11,7 @@ Which of the following is stored in Zookeeper for a Kafka cluster? (Select two)
 **Answer:** B, D
 
 **Explanation:**
-In a Kafka cluster, Zookeeper is used to store critical cluster metadat- - A. This includes:
+In a Kafka cluster, Zookeeper is used to store critical cluster metadat- A. This includes:
 
 - Kafka broker information: Details about each broker in the cluster.
 - Topic-level configurations: Topic configurations such as retention policies, replication factors, etc.
@@ -26,7 +26,7 @@ The other options are stored elsewhere:
 
 In a Kafka cluster, you have a topic with 6 partitions and a replication factor of 3. How many replicas of each partition will be spread across the brokers?
 
-- - A. 1 replica per broker
+- A. 1 replica per broker
 - B. 2 replicas per broker
 - C. 3 replicas per broker
 - D. 6 replicas per broker
@@ -53,7 +53,7 @@ It's important to note that the number of replicas per broker may vary depending
 
 What happens to the replicas when a broker in a Kafka cluster goes down?
 
-- - A. All replicas on the failed broker are permanently lost
+- A. All replicas on the failed broker are permanently lost
 - B. The replicas on the failed broker are automatically redistributed to other brokers
 - C. The replicas on the failed broker become unavailable until the broker is restarted
 - D. The replicas on the failed broker are immediately promoted to be leaders on other brokers
@@ -85,7 +85,7 @@ However, if the number of in-sync replicas falls below the configured `min.insyn
 
 How does Kafka ensure data integrity and consistency across replicas?
 
-- - A. By using a two-phase commit protocol
+- A. By using a two-phase commit protocol
 - B. By relying on ZooKeeper for distributed consensus
 - C. By implementing a leader-follower replication model
 - D. By using a gossip protocol for eventual consistency

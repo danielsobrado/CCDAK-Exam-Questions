@@ -2,7 +2,7 @@
 
 How can you view the current configuration of a Kafka topic?
 
-- - A. Use the `kafka-topics.sh --describe` command
+- A. Use the `kafka-topics.sh --describe` command
 - B. Use the `kafka-configs.sh --describe` command
 - C. Use the `zookeeper-shell.sh` command to navigate to the topic's configuration znode
 - D. Look in the Kafka broker's log files for the topic configuration
@@ -32,7 +32,7 @@ Statement D is incorrect because topic configurations are not stored in the Kafk
 
 What is the default behavior of the `kafka-console-consumer` when no consumer group is specified?
 
-- - A. It joins a random consumer group
+- A. It joins a random consumer group
 - B. It creates a new consumer group with a generated name
 - C. It fails with an error indicating that a consumer group must be specified
 - D. It consumes messages without joining any consumer group
@@ -56,7 +56,7 @@ Statement D is incorrect because the `kafka-console-consumer` always joins a con
 
 How does the `kafka-console-consumer` behave when you specify the `--from-beginning` option?
 
-- - A. It starts consuming messages from the earliest available offset in the assigned partitions
+- A. It starts consuming messages from the earliest available offset in the assigned partitions
 - B. It starts consuming messages from the latest available offset in the assigned partitions
 - C. It starts consuming messages from a specific offset that you provide
 - D. It starts consuming messages from a random offset in the assigned partitions
@@ -82,7 +82,7 @@ Statement D is incorrect because the `--from-beginning` option does not start co
 
 What happens when you run multiple instances of the `kafka-console-consumer` with the same consumer group?
 
-- - A. The instances will consume messages independently, each receiving a copy of every message
+- A. The instances will consume messages independently, each receiving a copy of every message
 - B. The instances will collaborate and distribute the partitions among themselves for parallel consumption
 - C. The instances will compete for messages, and each message will be consumed by only one instance
 - D. The instances will consume messages in a round-robin fashion, with each instance receiving a subset of messages
@@ -113,7 +113,7 @@ Statement D is incorrect because the instances do not consume messages in a roun
 
 How can you create a topic named "test" with 3 partitions and a replication factor of 2 using the Kafka CLI?
 
-- - A. kafka-topics.sh --create --zookeeper localhost:2181 --topic test --partitions 3 --replication-factor 2
+- A. kafka-topics.sh --create --zookeeper localhost:2181 --topic test --partitions 3 --replication-factor 2
 - B. kafka-topics.sh --create --bootstrap-server localhost:9092 --topic test --partitions 3 --replication-factor 2
 - C. kafka-console-producer.sh --broker-list localhost:9092 --topic test --partitions 3 --replication-factor 2
 - D. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --partitions 3 --replication-factor 2
@@ -127,7 +127,7 @@ To create a topic using the Kafka CLI, you should use the `kafka-topics.sh` comm
 
 Which command can you use to list all the topics in a Kafka cluster?
 
-- - A. kafka-topics.sh --list --zookeeper localhost:2181
+- A. kafka-topics.sh --list --zookeeper localhost:2181
 - B. kafka-topics.sh --list --bootstrap-server localhost:9092
 - C. kafka-console-producer.sh --list --broker-list localhost:9092
 - D. kafka-console-consumer.sh --list --bootstrap-server localhost:9092
@@ -141,7 +141,7 @@ To list all the topics in a Kafka cluster, you should use the `kafka-topics.sh` 
 
 How can you describe the configuration of a topic named "test" using the Kafka CLI?
 
-- - A. kafka-topics.sh --describe --topic test --zookeeper localhost:2181
+- A. kafka-topics.sh --describe --topic test --zookeeper localhost:2181
 - B. kafka-topics.sh --describe --topic test --bootstrap-server localhost:9092
 - C. kafka-configs.sh --describe --entity-type topics --entity-name test --zookeeper localhost:2181
 - D. kafka-configs.sh --describe --entity-type topics --entity-name test --bootstrap-server localhost:9092
@@ -155,7 +155,7 @@ To describe the configuration of a topic, you should use the `kafka-configs.sh` 
 
 Which Kafka CLI command is used to produce messages to a topic?
 
-- - A. kafka-console-producer.sh
+- A. kafka-console-producer.sh
 - B. kafka-console-consumer.sh
 - C. kafka-topics.sh
 - D. kafka-configs.sh
@@ -169,7 +169,7 @@ To produce messages to a topic using the Kafka CLI, you should use the `kafka-co
 
 How can you consume messages from the beginning of a topic named "test" using the Kafka CLI?
 
-- - A. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+- A. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 - B. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test
 - C. kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 - D. kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test
@@ -183,7 +183,7 @@ To consume messages from the beginning of a topic using the Kafka CLI, you shoul
 
 What is the purpose of the `--group` option in the `kafka-console-consumer.sh` command?
 
-- - A. To specify the consumer group ID for the console consumer
+- A. To specify the consumer group ID for the console consumer
 - B. To specify the number of consumer instances in the group
 - C. To specify the list of topics to consume from
 - D. To specify the bootstrap server for the consumer

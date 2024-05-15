@@ -7,8 +7,6 @@ How can you view the current configuration of a Kafka topic?
 - C. Use the `zookeeper-shell.sh` command to navigate to the topic's configuration znode
 - D. Look in the Kafka broker's log files for the topic configuration
 
-**Answer:** A
-
 **Explanation:**
 To view the current configuration of a Kafka topic, you can use the `kafka-topics.sh --describe` command.
 
@@ -27,6 +25,8 @@ Statement B is incorrect because `kafka-configs.sh --describe` is used to descri
 Statement C is incorrect because while topic configurations are stored in Zookeeper, using the `zookeeper-shell.sh` command to navigate the znodes is a low-level approach and not the recommended way to view topic configurations.
 
 Statement D is incorrect because topic configurations are not stored in the Kafka broker's log files. They are stored in Zookeeper and can be accessed through the Kafka tools.
+
+**Answer:** A
 
 ## Question 2
 

@@ -241,3 +241,23 @@ Here's how zero-copy optimization benefits Kafka:
 While zero-copy does provide some latency benefits by reducing the time spent on data copying, it does not eliminate the need for data serialization and deserialization (option B). Serialization and deserialization are still required to convert data between the application's format and the network format.
 
 Zero-copy is not primarily focused on security (option C) or parallelism (option D). Its main goal is to optimize data transfer efficiency and reduce memory overhead.
+
+## Question 20
+
+What is the purpose of the `isolation.level` setting in the Kafka consumer configuration?
+
+A. To specify the maximum number of records to fetch in a single request
+B. To control the visibility of transactional messages
+C. To determine the behavior of the consumer when it encounters an invalid offset
+D. To set the maximum amount of time the consumer will wait for new messages
+
+**Explanation:**
+The `isolation.level` setting in the Kafka consumer configuration is used to control the visibility of transactional messages. It determines how the consumer behaves when reading messages that are part of a transaction. There are two possible values for `isolation.level`:
+
+1. `read_uncommitted` (default): With this isolation level, the consumer will read all messages, including transactional messages that are not yet committed. It may read messages from aborted transactions.
+
+2. `read_committed`: With this isolation level, the consumer will only read messages that are not part of ongoing transactions and messages that are part of committed transactions. It will wait for transactions to be committed before making the messages visible to the consumer.
+
+The `isolation.level` setting allows you to control the consistency and visibility of transactional messages consumed by the consumer.
+
+**Answer:** B

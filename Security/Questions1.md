@@ -1,4 +1,4 @@
-### Question 1
+## Question 1
 
 Where are the ACLs stored in a Kafka cluster by default?
 
@@ -21,7 +21,7 @@ For newer versions of Kafka that operate without Zookeeper, the ACLs are stored 
 
 Therefore, for Kafka clusters that do not use Zookeeper, the correct answer would be: The Kafka topic `__cluster_metadata`.
 
-### Question 2
+## Question 2
 
 What Kafka CLI command can be used to add new ACL rules to a running Kafka cluster?
 
@@ -39,7 +39,7 @@ The `kafka-acls.sh` CLI tool is used to manage ACLs in Kafka. It allows adding, 
 - C is used for managing topics, not ACLs.
 - D is used for producing messages, not managing ACLs.
 
-### Question 3
+## Question 3
 
 Which of the following is NOT a valid resource type when defining ACLs in Kafka?
 

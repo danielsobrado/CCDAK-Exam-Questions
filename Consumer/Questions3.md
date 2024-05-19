@@ -111,3 +111,31 @@ D. The consumer is permanently removed from the consumer group and cannot rejoin
 When a Kafka consumer is marked as dead due to exceeding the `max.poll.interval.ms` interval, the consumer is automatically rebalanced, and its partitions are reassigned to other consumers in the consumer group. The Kafka consumer group coordinator detects that the consumer has failed to poll within the specified interval and triggers a rebalance operation. During the rebalance, the partitions assigned to the dead consumer are revoked and redistributed among the remaining active consumers in the group. This ensures that the workload is evenly distributed and that the consumer group continues to make progress. The dead consumer is removed from the group, and it needs to rejoin the group and receive new partition assignments to start consuming again.
 
 **Answer:** A
+
+## Question 29
+
+What triggers a partition rebalance in a Kafka consumer group?
+
+A. Adding a new topic to the Kafka cluster
+B. Changing the replication factor of a topic
+C. Adding a new consumer to the consumer group
+D. Modifying the consumer group ID
+
+**Explanation:**
+A partition rebalance in a Kafka consumer group is triggered when there is a change in the group membership. Specifically, adding a new consumer to the consumer group will trigger a rebalance. During a rebalance, Kafka reassigns the partitions to the consumers in the group to ensure an even distribution of work. This allows the new consumer to start consuming messages from the assigned partitions. Other events, such as removing a consumer from the group or a consumer voluntarily leaving the group, will also trigger a rebalance. However, adding a new topic to the cluster, changing the replication factor of a topic, or modifying the consumer group ID do not directly trigger a rebalance.
+
+**Answer:** C
+
+## Question 30
+
+What happens to the partition assignments during a consumer group rebalance?
+
+A. Partitions are evenly distributed among the remaining consumers
+B. Partitions are assigned to the consumers based on the consumer group ID
+C. Partitions are randomly assigned to the consumers
+D. Partitions are assigned to the consumers based on the topic name
+
+**Explanation:**
+During a consumer group rebalance, Kafka reassigns the partitions to the consumers in the group to ensure an even distribution of work. The partitions are evenly distributed among the remaining active consumers in the group. Kafka uses a partition assignment strategy, such as the range or round-robin strategy, to determine which consumer gets assigned which partitions. The assignment strategy aims to balance the workload and ensure that each consumer receives a fair share of the partitions. The partition assignments are not based on factors like the consumer group ID or the topic name, but rather on the number of active consumers and the available partitions.
+
+**Answer:** A

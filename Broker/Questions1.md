@@ -1,4 +1,4 @@
-### Question 1:
+## Question 1:
 Assuming a Kafka topic is configured with the following settings:
 - `log.segment.bytes` = 1073741824 (1GB)
 - `log.retention.ms` = 86400000 (1 day)
@@ -27,7 +27,7 @@ Explanation:
 
 4. **Incorrect**. The statement that logs are retained indefinitely is wrong because `log.retention.ms` is explicitly set to a finite duration (86400000 ms or 1 day), dictating a time-based retention policy. The `-1` value for `log.retention.bytes` means there is no size limit on log retention, but it does not affect or override the time-based retention set by `log.retention.ms`.
 
-### Question 2:
+## Question 2:
 Consider a Kafka topic with the following configuration:
 - `cleanup.policy` = "compact,delete"
 - `min.cleanable.dirty.ratio` = 0.5
@@ -57,7 +57,7 @@ Explanation:
 
 4. **Incorrect**. `segment.ms` specifies the time after which Kafka will close the current log segment and create a new one. It does not dictate the maximum lifespan of any record in the log. Record lifespan is determined by the `cleanup.policy` and associated configurations like `log.retention.ms` for deletion and `min.cleanable.dirty.ratio` for compaction.
 
-### Question 3:
+## Question 3:
 In a Kafka cluster, the Controller is a critical component for managing cluster state. Which of the following statements accurately describe the role and election of the Controller? (Select two)
 
 1. Elected by broker majority.
@@ -84,7 +84,7 @@ Explanation:
 
 5. **Incorrect**. Automatically assigning replicas to brokers based on load is not directly managed by the Controller. Replica assignment is typically done at topic creation time or during manual rebalancing operations. While the Controller does manage some aspects of replica management, such as initiating reassignment tasks, the automatic balancing of load is not a direct responsibility of the Controller but can be achieved through tools like Kafka's built-in partition reassignment tool or third-party solutions.
 
-### Question 4:
+## Question 4:
 In the context of Kafka's distributed architecture, broker elections are vital for cluster health and stability. Consider the following advanced scenarios where Kafka's internal mechanisms must decide on leadership roles:
 
 1. If a broker acting as the Controller goes down, what mechanism is responsible for the election of a new Controller?
@@ -117,7 +117,7 @@ Response:
 
 D and E are incorrect options based on Kafka's current architecture and leader election protocols.
 
-### Question 5:
+## Question 5:
 A Kafka producer is configured to use the `acks=all` setting while publishing messages to a topic partition that has a replication factor of 3. Broker A hosts the current leader for this partition, while Brokers B and C host the replicas. Due to unforeseen circumstances, both Broker B and Broker C go offline simultaneously. What is the impact on the producer's ability to successfully publish messages to this partition?
 
 1. The producer will be able to publish messages, but with potential data loss.
@@ -141,7 +141,7 @@ Explanation:
 
 4. **Incorrect**. Kafka producers do not automatically switch to another topic's partition in response to issues with the current partition's replicas. The producer's target partition is determined by the partitioning logic (either default or custom) at the time of message production. Failures of replicas in a partition do not trigger automatic redirection of messages to different partitions within the same or different topics.
 
-### Question 6:
+## Question 6:
 When a Kafka broker starts up, it performs various initialization tasks. Which of the following is NOT one of these tasks?
 
 1. Registering itself with Zookeeper.
@@ -165,7 +165,7 @@ Explanation:
 
 4. **Incorrect**. Initializing the log directories for each partition it hosts is an essential task performed by the broker during startup. It ensures that the necessary directory structure and files are in place for storing and managing the partition data.
 
-### Question 7:
+## Question 7:
 In a Kafka cluster, the Controller is responsible for managing partition states and leadership. How does the Controller ensure that partition leadership is evenly distributed among the brokers in the cluster?
 
 1. The Controller periodically triggers a rebalance operation to redistribute partition leadership.
@@ -189,7 +189,7 @@ Explanation:
 
 4. **Correct**. The Controller's primary responsibility is to manage partition states and elect partition leaders when necessary, such as when a broker fails or a new partition is created. However, it does not actively aim to evenly distribute partition leadership among brokers. The distribution of partition leadership is a result of factors like topic creation, replica assignment, and broker failures, rather than being actively managed by the Controller.
 
-### Question 8:
+## Question 8:
 Consider a Kafka cluster with 5 brokers and a topic with 10 partitions and a replication factor of 3. The cluster experiences a network partition, splitting the brokers into two groups: Group A with 2 brokers and Group B with 3 brokers. Both groups can communicate with Zookeeper. How does Kafka handle partition leadership in this scenario?
 
 1. Partitions with a leader in Group A will continue to function normally, while partitions with a leader in Group B will be offline until the network partition is resolved.
@@ -213,7 +213,7 @@ Explanation:
 
 4. **Incorrect**. The behavior of partition leadership in a network partition scenario is deterministic and does not depend on which group the Controller belongs to. Kafka's partition leadership election process is designed to prioritize availability and maintain consistency based on the majority of brokers and their ability to communicate with Zookeeper, regardless of the Controller's location.
 
-### Question 9:
+## Question 9:
 In a Kafka cluster, a broker is configured with the following settings:
 - `num.io.threads=8`
 - `num.network.threads=4`
@@ -248,7 +248,7 @@ Explanation:
 
 4. **Incorrect**. The descriptions of all three configurations are incorrect in this option. `num.io.threads` is used for disk I/O operations, `num.network.threads` is used for network I/O operations, and `num.replica.fetchers` is used for fetching messages from the leader replica.
 
-### Question 10:
+## Question 10:
 A Kafka broker is configured with the following settings:
 - `log.segment.bytes=1073741824`
 - `log.segment.ms=86400000`
@@ -286,312 +286,3 @@ Explanation:
 3. **Incorrect**. The log segment creation policy is partially correct, but it ignores the time-based limit specified by `log.segment.ms`. Additionally, the retention policy is incorrect, as `log.retention.bytes=-1` means that there is no size-based retention limit.
 
 4. **Incorrect**. The log segment creation policy is incorrect, as it ignores the size-based limit specified by `log.segment.bytes`. The retention policy is also incorrect, as `log.retention.bytes=-1` means that there is no size-based retention limit.
-### Question 11:
-A Kafka cluster is configured with the following settings:
-- `default.replication.factor=2`
-- `min.insync.replicas=2`
-
-What is the minimum number of brokers required in the cluster to ensure that the cluster can tolerate at least one broker failure without losing the ability to serve write requests?
-
-1. 1
-2. 2
-3. 3
-4. 4
-
-Choose the correct answer.
-
-Response:
-
-The correct answer is **3. 3**.
-
-Explanation:
-To tolerate at least one broker failure without losing the ability to serve write requests, the cluster must have enough brokers to satisfy the `min.insync.replicas` requirement even when one broker is down.
-
-With `default.replication.factor=2`, each partition will have two replicas (one leader and one follower). To ensure that writes can succeed even if one broker fails, there must be at least one in-sync replica (ISR) available to acknowledge the write.
-
-Since `min.insync.replicas=2`, a minimum of two replicas (including the leader) must be in-sync for a write to be considered successful. Therefore, the cluster needs at least three brokers to guarantee that there will always be at least two replicas available, even if one broker fails.
-
-If the cluster had only two brokers and one failed, the remaining broker would not be able to satisfy the `min.insync.replicas` requirement, and writes would fail.
-
-### Question 12:
-A Kafka cluster has the following configuration:
-- `num.partitions=6`
-- `default.replication.factor=3`
-
-How many replicas will be created in total across all brokers for a newly created topic that uses the default settings?
-
-1. 6
-2. 9
-3. 12
-4. 18
-
-Choose the correct answer.
-
-Response:
-
-The correct answer is **4. 18**.
-
-Explanation:
-The total number of replicas created for a topic is determined by the number of partitions multiplied by the replication factor.
-
-In this case, the cluster is configured with `num.partitions=6`, which means that a newly created topic using the default settings will have 6 partitions.
-
-The `default.replication.factor` is set to 3, indicating that each partition will have 3 replicas (one leader and two followers).
-
-To calculate the total number of replicas, we multiply the number of partitions by the replication factor:
-- Total replicas = `num.partitions` × `default.replication.factor`
-- Total replicas = 6 × 3 = 18
-
-Therefore, a newly created topic with the default settings will have a total of 18 replicas distributed across the brokers in the cluster.
-
-### Question 13:
-A Kafka cluster has the following configuration:
-- `unclean.leader.election.enable=false`
-
-What is the implication of this setting when a partition leader fails and there are no in-sync replicas (ISRs) available?
-
-1. The partition will remain unavailable until the failed leader recovers.
-2. The partition will elect a new leader from the out-of-sync replicas to maintain availability.
-3. The partition will automatically create a new replica to replace the failed leader.
-4. The partition will be reassigned to another broker in the cluster.
-
-Choose the correct answer.
-
-Response:
-
-The correct answer is **1. The partition will remain unavailable until the failed leader recovers.**
-
-Explanation:
-When `unclean.leader.election.enable` is set to `false`, Kafka enforces a strict consistency model and does not allow the election of a leader from out-of-sync replicas.
-
-In the event of a partition leader failure, Kafka will first attempt to elect a new leader from the set of in-sync replicas (ISRs). ISRs are replicas that are fully caught up with the leader and have all the latest messages.
-
-However, if there are no ISRs available when the leader fails, Kafka has two options:
-1. If `unclean.leader.election.enable` is set to `true`, Kafka will elect a new leader from the out-of-sync replicas to maintain availability, potentially resulting in data loss or inconsistency.
-2. If `unclean.leader.election.enable` is set to `false`, Kafka will not elect a leader from the out-of-sync replicas and will instead keep the partition unavailable until the failed leader recovers or a new ISR becomes available.
-
-In this scenario, since `unclean.leader.election.enable` is set to `false`, and there are no ISRs available, the partition will remain unavailable until the failed leader recovers. This ensures data consistency but may impact availability until the leader is back online.
-
-### Question 14:
-A Kafka broker is configured with the following settings:
-- `num.replication.fetchers=4`
-- `replica.fetch.max.bytes=1048576`
-
-What is the maximum amount of data that can be fetched by the broker for replication purposes in a single request?
-
-1. 1 MB
-2. 4 MB
-3. 1048576 bytes
-4. 4194304 bytes
-
-Choose the correct answer.
-
-Response:
-
-The correct answer is **1. 1 MB**.
-
-Explanation:
-The maximum amount of data that can be fetched by the broker for replication purposes in a single request is determined by the `replica.fetch.max.bytes` configuration.
-
-In this case, `replica.fetch.max.bytes` is set to 1048576, which is equal to 1 MB (1024 * 1024 bytes).
-
-The `num.replication.fetchers` setting specifies the number of fetcher threads used to replicate messages from the leader. However, it does not directly impact the maximum amount of data that can be fetched in a single request.
-
-Each fetcher thread can fetch up to `replica.fetch.max.bytes` of data in a single request. So, even though there are 4 fetcher threads (`num.replication.fetchers=4`), each thread is still limited by the `replica.fetch.max.bytes` value.
-
-Therefore, the maximum amount of data that can be fetched by the broker for replication purposes in a single request is 1 MB, as specified by `replica.fetch.max.bytes`.
-
-### Question 15:
-A Kafka cluster is configured with the following settings:
-- `log.retention.hours=48`
-- `log.retention.bytes=1073741824`
-- `log.segment.bytes=536870912`
-
-Assuming a topic has a constant message production rate, which of the following factors will trigger a log segment to be eligible for deletion?
-
-1. The log segment is older than 48 hours.
-2. The log segment size exceeds 536870912 bytes (512 MB).
-3. The total size of all log segments for the topic exceeds 1073741824 bytes (1 GB).
-4. All of the above.
-
-Choose the correct answer.
-
-Response:
-
-The correct answer is **4. All of the above**.
-
-Explanation:
-In Kafka, log retention is controlled by a combination of time-based and size-based policies. The configuration properties `log.retention.hours`, `log.retention.bytes`, and `log.segment.bytes` work together to determine when a log segment is eligible for deletion.
-
-1. `log.retention.hours=48`: This setting specifies the maximum time a log segment can be retained before it becomes eligible for deletion. In this case, any log segment older than 48 hours will be eligible for deletion, regardless of its size.
-
-2. `log.segment.bytes=536870912`: This setting determines the maximum size of a single log segment. When a log segment reaches this size (512 MB in this case), Kafka will close the current segment and start a new one. The old segment will be eligible for deletion based on the retention policies.
-
-3. `log.retention.bytes=1073741824`: This setting specifies the maximum total size of all log segments for a topic. If the total size of all log segments exceeds this value (1 GB in this case), Kafka will start deleting the oldest segments to free up space, even if they haven't reached the time-based retention limit.
-
-Therefore, a log segment will be eligible for deletion if any of the following conditions are met:
-- The log segment is older than the retention time specified by `log.retention.hours`.
-- The log segment size exceeds the size specified by `log.segment.bytes`.
-- The total size of all log segments for the topic exceeds the size specified by `log.retention.bytes`.
-
-All three factors independently contribute to the eligibility of a log segment for deletion.
-
-## Question 16
-
-A client connects to a broker in a Kafka cluster and sends a produce request for a topic partition. The broker responds with a 'Not Enough Replicas' error. What does the client do next?
-
-- A. Retries sending the produce request to the same broker
-- B. Sends metadata request to the same broker to refresh its metadata
-- C. Sends produce request to the controller broker
-- D. Sends metadata request to the Zookeeper to find the controller broker
-
-**Answer:** B
-
-**Explanation:**
-When a Kafka client receives a 'Not Enough Replicas' error from a broker, it means the broker doesn't have enough in-sync replicas to satisfy the request. The client's next step is to refresh its metadata by sending a metadata request to the same broker. This will provide the client with the most up-to-date information about the cluster, including the current leader for the partition.
-
-- A is incorrect because retrying the same request without refreshing metadata is likely to result in the same error.
-- C is incorrect because the client doesn't directly send requests to the controller broker.
-- D is incorrect because the client communicates with Zookeeper only for the initial bootstrap, not for regular operations.
-
-## Question 17
-
-A Kafka consumer is consuming from a topic partition. It sends a fetch request to the broker and receives a 'Replica Not Available' error. What is the consumer's next action?
-
-- A. Backs off and retries the fetch request after a short delay
-- B. Sends an offset commit request to trigger partition rebalancing
-- C. Sends a metadata request to refresh its view of the cluster
-- D. Closes the connection and tries connecting to a different broker
-
-**Answer:** C
-
-**Explanation:**
-When a consumer receives a 'Replica Not Available' error, it means the broker it's connected to doesn't have a replica of the partition available to serve the request. The consumer's next step is to send a metadata request to refresh its view of the cluster. This will provide updated information about which brokers are currently hosting the partition replicas.
-
-- A is incorrect because simply retrying after a delay may not resolve the issue if the consumer's metadata is stale.
-- B is incorrect because committing offsets is not directly related to handling this error and doesn't trigger rebalancing.
-- D is incorrect because closing the connection is not necessary. The consumer can refresh metadata over the existing connection.
-
-## Question 18
-
-What happens if you produce to a topic that does not exist, and the broker setting `auto.create.topics.enable` is set to `false`?
-
-- A. The broker will create the topic with default configurations
-- B. The broker will reject the produce request and the producer will throw an exception
-- C. The producer will automatically create the topic
-- D. The producer will wait until the topic is created
-
-**Answer:** B
-
-**Explanation:**
-When `auto.create.topics.enable` is set to `false` on the Kafka brokers, they will not automatically create a topic if a producer tries to produce to a non-existent topic. Instead, the broker will reject the produce request, and the producer will throw a `TopicExistsException`.
-
-- A is incorrect because the broker will not create the topic when `auto.create.topics.enable` is `false`.
-- C is incorrect because the producer does not have the ability to create topics, only the broker does.
-- D is incorrect because the producer will not wait, it will immediately throw an exception.
-
-## Question 19
-
-What is the default value of `auto.create.topics.enable` in Kafka?
-
-- A. `true`
-- B. `false`
-- C. It is not set by default
-- D. It depends on the Kafka version
-
-**Answer:** A
-
-**Explanation:**
-In Kafka, `auto.create.topics.enable` is set to `true` by default. This means that by default, when a producer tries to produce to a non-existent topic or a consumer tries to consume from a non-existent topic, Kafka will automatically create the topic with default configurations.
-
-- B is incorrect because `false` is not the default value.
-- C is incorrect because the property does have a default value.
-- D is incorrect because the default value is consistent across Kafka versions.
-
-## Question 20
-
-When a topic is automatically created due to `auto.create.topics.enable` being `true`, what configurations are used for the new topic?
-
-- A. The configurations specified by the producer or consumer
-- B. The default configurations set on the broker
-- C. A combination of producer/consumer configurations and broker defaults
-- D. No configurations are set, the topic is created with empty configuration
-
-**Answer:** B
-
-**Explanation:**
-When Kafka automatically creates a topic due to `auto.create.topics.enable` being `true`, it uses the default topic configurations set on the broker. These defaults are defined by the following broker settings:
-
-- `num.partitions`: The default number of partitions for automatically created topics.
-- `default.replication.factor`: The default replication factor for automatically created topics.
-
-Any topic-level configurations set by the producer or consumer are ignored during automatic topic creation.
-
-- A and C are incorrect because the producer/consumer configurations are not used for automatic topic creation.
-- D is incorrect because the topic is not created with empty configuration, but with the broker's default configurations.
-
-## Question 21
-
-Can Kafka's zero-copy optimization be used in combination with compression?
-
-- A. Yes, zero-copy and compression can be used together seamlessly.
-- B. No, zero-copy is incompatible with compression and cannot be used together.
-- C. Zero-copy can be used with compression, but it requires additional configuration.
-- D. Zero-copy is automatically disabled when compression is enabled.
-
-**Answer:** A
-
-**Explanation:**
-Kafka's zero-copy optimization can be used in combination with compression seamlessly. Zero-copy and compression are independent features that can work together to optimize data transfer and storage in Kafka.
-
-Here's how zero-copy and compression can be used together:
-
-1. Producer-side compression:
-   - Before sending data to Kafka, the producer application can compress the data using a compression algorithm supported by Kafka, such as Gzip, Snappy, or LZ4.
-   - Compression reduces the size of the data, which can help save network bandwidth and storage space.
-
-2. Zero-copy data transfer:
-   - When the producer sends the compressed data to Kafka, Kafka uses zero-copy optimization to transfer the compressed data directly from the file system cache to the network buffer.
-   - Zero-copy operates on the compressed data without any modifications or decompression.
-
-3. Broker-side storage:
-   - Kafka brokers store the compressed data as-is, without decompressing it.
-   - Storing compressed data helps optimize storage utilization and reduces the storage footprint of the Kafka cluster.
-
-4. Consumer-side decompression:
-   - When the consumer receives the compressed data from Kafka, it needs to decompress the data before processing it.
-   - The consumer is responsible for decompressing the data using the same compression algorithm used by the producer.
-
-Zero-copy and compression can work together seamlessly because zero-copy operates on the compressed data without any modifications. It transfers the compressed data efficiently from the producer to the consumer, while compression helps reduce the data size and optimize storage.
-
-Using zero-copy with compression does not require any additional configuration (option C) and is not automatically disabled when compression is enabled (option D). Kafka supports the combination of zero-copy and compression out of the box.
-
-By leveraging both zero-copy and compression, Kafka can achieve efficient data transfer, reduced network bandwidth usage, and optimized storage utilization, leading to improved overall performance and scalability of the Kafka cluster.
-
-## Question 22
-
-What is the relationship between the `replication.factor` of a topic and the `min.insync.replicas` setting?
-
-A. `min.insync.replicas` must be less than or equal to the `replication.factor`
-B. `min.insync.replicas` must be greater than the `replication.factor`
-C. `min.insync.replicas` and `replication.factor` are independent settings
-D. `min.insync.replicas` must be equal to the `replication.factor`
-
-**Explanation:**
-The `replication.factor` of a topic and the `min.insync.replicas` setting are related, and there is a specific requirement for their values. The `min.insync.replicas` setting specifies the minimum number of in-sync replicas that must acknowledge a write for the write to be considered successful. For the producer to successfully write messages to a topic, the number of in-sync replicas must be greater than or equal to the `min.insync.replicas` value. Therefore, `min.insync.replicas` must be less than or equal to the `replication.factor` of the topic. If `min.insync.replicas` is set higher than the `replication.factor`, writes to the topic will fail because there won't be enough in-sync replicas to satisfy the `min.insync.replicas` requirement.
-
-**Answer:** A
-
-## Question 23
-
-What happens when a producer sends a message with `acks=all` to a topic that has a `min.insync.replicas` value greater than the number of currently in-sync replicas?
-
-A. The producer will receive an acknowledgment and the write will succeed
-B. The producer will receive an error indicating that the `min.insync.replicas` requirement is not met
-C. The producer will wait indefinitely until the number of in-sync replicas meets the `min.insync.replicas` requirement
-D. The producer will ignore the `min.insync.replicas` setting and write the message successfully
-
-**Explanation:**
-When a producer sends a message with `acks=all` to a topic that has a `min.insync.replicas` value greater than the number of currently in-sync replicas, the producer will receive an error indicating that the `min.insync.replicas` requirement is not met. The write operation will fail because the number of in-sync replicas is insufficient to satisfy the durability requirement specified by `min.insync.replicas`. The producer will not wait indefinitely for the number of in-sync replicas to increase, nor will it ignore the `min.insync.replicas` setting. Instead, it will immediately return an error to the producer, indicating that the write could not be completed successfully due to the lack of enough in-sync replicas.
-
-**Answer:** B

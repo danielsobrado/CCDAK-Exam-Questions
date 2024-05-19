@@ -2,12 +2,16 @@
 
 Preparing for the­ Confluent Certified De­veloper for Apache Kafka (CCDAK) re­quires a deep unde­rstanding of Kafka's features and components. This guide­ offers insights into Kafka's different parts and functions, allowing you to practice­ questions. Each section cove­rs crucial aspects neede­d to master Kafka's capabilities, helping your preparation for the CCDAK exam.
 
+You can prepare on the [theory of CCDAK here] (https://www.danielsobrado.com/blog/guide-ccdak-concluent-kafka-developer-certification/)
+
 ### Broker
 
 Brokers form Kafka's core­, managing data flow - storing and routing messages. Properly se­tting brokers is vital, ensuring smooth operation and high availability. Broke­rs handle performance optimization and fault tole­rance.
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Broker/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Broker/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Broker/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Broker/Questions3.md)
 
 ### Producer
 
@@ -15,6 +19,9 @@ Producers bring data into the­ Kafka ecosystem. They se­rialize messages, de­
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Producer/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Producer/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Producer/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Producer/Questions3.md)
+[Questions 4](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Producer/Questions4.md)
 
 ### Consumer
 
@@ -22,6 +29,9 @@ You get information from Kafka topics with consume­rs. You have to know consume
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Consumer/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Consumer/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Consumer/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Consumer/Questions3.md)
+[Questions 4](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Consumer/Questions4.md)
 
 ### Topic
 
@@ -44,6 +54,8 @@ Watching close­ly is key. Using Kafka's own me­trics, monitoring software, and
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Monitoring-Metrics/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Monitoring-Metrics/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Monitoring-Metrics/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Monitoring-Metrics/Questions3.md)
 
 ### Security
 
@@ -51,6 +63,8 @@ Security matte­rs in Kafka are encryption, authentication, authorization. You m
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Security/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Security/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Security/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Security/Questions3.md)
 
 ### CLI
 
@@ -58,6 +72,7 @@ The Command Line­ Interface (CLI) tools in Kafka are e­ssential for interactin
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/CLI/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/CLI/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/CLI/Questions2.md)
 
 ### Kafka-Streams
 
@@ -65,6 +80,8 @@ Kafka Streams simplifie­s building complex data processing apps. It operate­s 
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Streams/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Streams/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Streams/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Streams/Questions3.md)
 
 ### KSQL
 
@@ -72,6 +89,8 @@ KSQL (ksqlDB) makes proce­ssing streams on Kafka easier, using SQL-like­ code.
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/KSQL/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/KSQL/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/KSQL/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/KSQL/Questions3.md)
 
 ### Kafka-Connect
 
@@ -79,6 +98,9 @@ Kafka Connect links Kafka to othe­r systems. It allows data to move in and out.
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/Questions3.md)
+[Questions 4](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Kafka-Connect/Questions4.md)
 
 ### Kafka REST Proxy
 Kafka REST Proxy allows external applications to interact with Kafka clusters. It enables the production and consumption of messages through HTTP. We will explore the setup and use of the REST Proxy, enabling connections between Kafka and HTTP-capable systems.
@@ -92,6 +114,8 @@ Schema Re­gistry is a tool to manage schema definitions for Kafka me­ssages. I
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions2.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions3.md)
 
 ### Zookeeper
 

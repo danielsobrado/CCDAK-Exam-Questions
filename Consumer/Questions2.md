@@ -102,7 +102,7 @@ Here's what happens when commitSync() is called:
 
 It's important to note that commitSync() is a blocking call, meaning that the consumer will wait for the Kafka broker to respond before proceeding with further message processing. This can impact the throughput of the consumer, especially if commits are performed frequently.
 
-An alternative to commitSync() is commitAsync(), which sends the commit request asynchronously and allows the consumer to continue processing messages without waiting for the commit response. However, with commitAsync(), the consumer needs to handle the commit callback to check for any commit failures.
+- A. alternative to commitSync() is commitAsync(), which sends the commit request asynchronously and allows the consumer to continue processing messages without waiting for the commit response. However, with commitAsync(), the consumer needs to handle the commit callback to check for any commit failures.
 
 ## Question 15
 
@@ -176,7 +176,7 @@ Here's how you can implement concurrent message processing using multiple KafkaC
 4. In each thread, continuously call `poll()` on the consumer instance to retrieve messages and process them independently.
 5. Implement proper error handling and resource cleanup in each thread to handle exceptions and gracefully shutdown the consumers when necessary.
 
-By running multiple consumer instances concurrently, you can achieve parallel processing of messages and improve the overall throughput of your application. Kafka's consumer group protocol ensures that each partition is assigned to only one consumer within a group, allowing for efficient and balanced distribution of work among the consumer instances.
+- B. running multiple consumer instances concurrently, you can achieve parallel processing of messages and improve the overall throughput of your application. Kafka's consumer group protocol ensures that each partition is assigned to only one consumer within a group, allowing for efficient and balanced distribution of work among the consumer instances.
 
 It's important to note that when using multiple consumer instances, you should carefully consider the number of instances and the partition assignment strategy to ensure proper load balancing and avoid over-subscribing or under-utilizing the available partitions.
 
@@ -204,7 +204,7 @@ Here's how Kafka achieves balanced message processing:
 6. As messages are produced to the partitions, each consumer instance processes the messages from its assigned partitions independently.
 7. If a consumer instance fails or leaves the group, Kafka triggers a rebalance to redistribute the partitions among the remaining consumer instances.
 
-By assigning partitions to consumer instances in a round-robin manner, Kafka ensures that the workload is evenly distributed among the consumer instances. Each consumer instance is responsible for processing messages from its assigned partitions, allowing for parallel processing and improved throughput.
+- B. assigning partitions to consumer instances in a round-robin manner, Kafka ensures that the workload is evenly distributed among the consumer instances. Each consumer instance is responsible for processing messages from its assigned partitions, allowing for parallel processing and improved throughput.
 
 It's important to note that the actual partition assignment strategy can be customized by implementing a custom `PartitionAssignor` if needed. However, the default round-robin assignment strategy is sufficient for most use cases and provides a balanced distribution of work among the consumer instances.
 
@@ -246,10 +246,10 @@ Zero-copy is not primarily focused on security (option C) or parallelism (option
 
 What is the purpose of the `isolation.level` setting in the Kafka consumer configuration?
 
-A. To specify the maximum number of records to fetch in a single request
-B. To control the visibility of transactional messages
-C. To determine the behavior of the consumer when it encounters an invalid offset
-D. To set the maximum amount of time the consumer will wait for new messages
+- A. To specify the maximum number of records to fetch in a single request
+- B. To control the visibility of transactional messages
+- C. To determine the behavior of the consumer when it encounters an invalid offset
+- D. To set the maximum amount of time the consumer will wait for new messages
 
 **Explanation:**
 The `isolation.level` setting in the Kafka consumer configuration is used to control the visibility of transactional messages. It determines how the consumer behaves when reading messages that are part of a transaction. There are two possible values for `isolation.level`:

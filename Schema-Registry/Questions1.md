@@ -202,7 +202,7 @@ Here's how you can approach this:
 3. Commit the offset of the problematic message using the consumer's commitSync() or commitAsync() method. This tells Kafka that the consumer has processed the message, even though it couldn't deserialize it.
 4. Continue consuming the next message.
 
-By committing the offset of the problematic message, the consumer acknowledges that it has processed the message and moves on to the next one. This prevents the consumer from getting stuck on the same message indefinitely.
+- B. committing the offset of the problematic message, the consumer acknowledges that it has processed the message and moves on to the next one. This prevents the consumer from getting stuck on the same message indefinitely.
 
 However, it's important to note that skipping messages should be done with caution and only after careful consideration. Skipping messages means losing data, so it's crucial to have proper error handling and monitoring in place to detect and investigate such incidents.
 
@@ -242,6 +242,6 @@ Using Confluent Schema Registry and KafkaAvroDeserializer in a Kafka consumer of
    - The deserializer automatically retrieves the schema from the Schema Registry based on the schema ID included in the message.
    - This allows the consumer to deserialize messages from multiple topics or with different schemas without requiring explicit schema management in the consumer code.
 
-By leveraging Confluent Schema Registry and KafkaAvroDeserializer, Kafka consumers can benefit from automatic schema evolution, improved deserialization performance, and the ability to deserialize messages without prior knowledge of the schema. These features simplify the development and maintenance of Kafka consumers while ensuring data compatibility and efficiency.
+- B. leveraging Confluent Schema Registry and KafkaAvroDeserializer, Kafka consumers can benefit from automatic schema evolution, improved deserialization performance, and the ability to deserialize messages without prior knowledge of the schema. These features simplify the development and maintenance of Kafka consumers while ensuring data compatibility and efficiency.
 
 **Answer:** D

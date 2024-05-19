@@ -74,7 +74,7 @@ d. Create a ksqlDB process to pull session data from source systems, apply anony
 The correct answer is **a. Deploy a Kafka Connect Source Connector to capture session data directly into Kafka, using Stream Processing to anonymize user identifiers before aggregating sessions for recommendation analysis.**
 
 ## Question 6:
-An organization is implementing a system to monitor and alert on infrastructure health status in real-time. The system collects metrics from various sources, including some that contain proprietary information. Which approach ensures that only non-proprietary, critical health metrics are analyzed and alerted on?
+- A. organization is implementing a system to monitor and alert on infrastructure health status in real-time. The system collects metrics from various sources, including some that contain proprietary information. Which approach ensures that only non-proprietary, critical health metrics are analyzed and alerted on?
 
 a. Use Kafka Connect with appropriate Source Connectors for each metric source, configuring the connectors to filter out proprietary information. Process the filtered metrics stream with Kafka Streams for alerting.
 
@@ -101,7 +101,7 @@ d. Configure a Kafka Connect Sink Connector for each regional system to replicat
 The correct answer is **b. Use Kafka Connect with a mix of Source Connectors suitable for each regional system's technology to ingest data directly into Kafka.**
 
 ## Question 8:
-An online media platform wishes to analyze user interactions (clicks, views, and comments) in real-time to dynamically adjust content recommendations. The platform generates a high volume of interaction data, necessitating scalable and real-time processing. What architecture best suits this requirement?
+- A. online media platform wishes to analyze user interactions (clicks, views, and comments) in real-time to dynamically adjust content recommendations. The platform generates a high volume of interaction data, necessitating scalable and real-time processing. What architecture best suits this requirement?
 
 a. Utilize a Kafka Connect Source Connector to ingest interaction data into Kafka, then process this data with Kafka Streams to update content recommendations in real-time.
 b. Directly stream interaction data into Kafka using a custom API, then use ksqlDB to perform real-time analysis and generate content recommendations.
@@ -137,7 +137,7 @@ d. Modify the replication factor of the user activities topic during high load p
 The correct answer is **b. Scale the Kafka Streams application instances up or down in response to the processing load.**
 
 ## Question 11:
-An e-commerce company uses Kafka to process customer orders. During sales events, the order volume spikes significantly. Which approach ensures the system scales efficiently to handle these spikes in order volume?
+- A. e-commerce company uses Kafka to process customer orders. During sales events, the order volume spikes significantly. Which approach ensures the system scales efficiently to handle these spikes in order volume?
 
 a. Automatically adjust the number of topics to spread the increased order messages across more Kafka topics during sales events.
 b. Use Kafka Connect with scalable Source Connectors to adjust the throughput based on order volume.
@@ -185,7 +185,7 @@ d. Transform data within the legacy system using SQL stored procedures, then use
 The correct answer is **c. Ingest transaction data into Kafka using JDBC Source Connectors and leverage ksqlDB for transforming and querying the data in a SQL-like manner.**
 
 ## Question 15:
-An automotive manufacturer aims to optimize its supply chain by analyzing sensor data from its manufacturing equipment in real-time. The sensor data is currently logged in a proprietary format in a traditional database. The operations team, skilled in SQL, seeks to convert this data into actionable insights. Considering their expertise and requirements, which solution would best suit their needs?
+- A. automotive manufacturer aims to optimize its supply chain by analyzing sensor data from its manufacturing equipment in real-time. The sensor data is currently logged in a proprietary format in a traditional database. The operations team, skilled in SQL, seeks to convert this data into actionable insights. Considering their expertise and requirements, which solution would best suit their needs?
 
 a. Utilize JDBC Source Connectors to stream sensor data into Kafka, transforming the data into a more accessible format using Kafka Streams.
 b. Export sensor data to a common format like JSON, use Kafka Connect to ingest this data, and then apply ksqlDB to analyze and visualize the data in real-time.
@@ -251,7 +251,7 @@ The correct answer is **b. S3 Sink Connector.**
 - **d. File Source Connector**: Incorrect. It's used for reading data from files into Kafka topics, not for writing or storing data into Amazon S3 from Kafka.
 
 ## Question 19:
-An IoT company collects temperature and humidity data from sensors deployed in various locations. The goal is to correlate this environmental data with location-specific weather forecasts retrieved from an external API. Which approach best facilitates this integration and processing within the Kafka ecosystem?
+- A. IoT company collects temperature and humidity data from sensors deployed in various locations. The goal is to correlate this environmental data with location-specific weather forecasts retrieved from an external API. Which approach best facilitates this integration and processing within the Kafka ecosystem?
 
 a. Ingest sensor data into a Kafka topic using MQTT connectors. Separately, use an external service to fetch weather forecasts, storing this data in a Kafka topic via the HTTP Source Connector. Utilize Kafka Streams to join sensor data with weather forecasts based on location and timestamp, outputting enriched data to another topic.
 b. Directly stream sensor data and weather forecasts into Kafka using custom Kafka Producers implemented in Python. These producers perform API calls to retrieve forecasts, merge this data with sensor readings, and produce the combined records into a single Kafka topic.
@@ -305,7 +305,7 @@ The correct answer is **b. Directly stream logs from NoSQL databases to Kafka us
 - **d.** Batch ETL processes cannot meet the requirements for real-time analysis and dynamic content personalization due to the inherent delay in processing.
 
 ## Question 22:
-An online retailer integrates user reviews from their website into Kafka to perform sentiment analysis and adjust product rankings accordingly. Reviews are initially posted to a MongoDB database. To ensure the analysis reflects recent feedback, which configuration ensures the most efficient and timely data flow into Kafka?
+- A. online retailer integrates user reviews from their website into Kafka to perform sentiment analysis and adjust product rankings accordingly. Reviews are initially posted to a MongoDB database. To ensure the analysis reflects recent feedback, which configuration ensures the most efficient and timely data flow into Kafka?
 
 a. Configure MongoDB Source Connector to capture new and updated reviews into Kafka, then use Kafka Streams for sentiment analysis and to adjust product rankings in near-real-time.
 b. Utilize a cron job to export reviews from MongoDB to CSV files at regular intervals, then use File Source Connectors to ingest these files into Kafka, followed by processing with Kafka Streams.

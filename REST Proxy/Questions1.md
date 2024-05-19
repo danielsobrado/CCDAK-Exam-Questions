@@ -19,7 +19,7 @@ If the `value.schema.id` is provided, the REST Proxy performs the following step
 3. If the validation succeeds, the REST Proxy produces the message to the specified Kafka topic.
 4. If the validation fails, the REST Proxy returns an error indicating that the payload does not match the schema.
 
-By providing the `value.schema.id`, you can ensure that the message payload conforms to a specific schema before it is produced to Kafka. This helps maintain data consistency and avoids producing invalid or malformed messages.
+- B. providing the `value.schema.id`, you can ensure that the message payload conforms to a specific schema before it is produced to Kafka. This helps maintain data consistency and avoids producing invalid or malformed messages.
 
 Statement B is incorrect because the REST Proxy does not include the schema itself in the produced message. It only validates the payload against the schema.
 
@@ -49,7 +49,7 @@ The available converter options include:
 - `org.apache.kafka.common.serialization.StringSerializer`: Serializes the key or value as a string.
 - `org.apache.kafka.common.serialization.ByteArraySerializer`: Serializes the key or value as a byte array.
 
-By configuring the appropriate converters, you can ensure that the REST Proxy correctly serializes and deserializes the message key and value when producing or consuming messages via the REST API.
+- B. configuring the appropriate converters, you can ensure that the REST Proxy correctly serializes and deserializes the message key and value when producing or consuming messages via the REST API.
 
 Statement A is incorrect because the `key.converter` and `value.converter` do not specify the format of the message key and value in the produced messages. They are used for serialization in the REST API layer.
 
@@ -204,7 +204,7 @@ How can you configure the Kafka REST Proxy to use SSL/TLS for secure communicati
 **Explanation:**
 To configure the Kafka REST Proxy to use SSL/TLS for secure communication, you need to set the `ssl.enabled` configuration parameter to `true` in the REST Proxy's configuration file.
 
-By default, the REST Proxy uses plain-text communication over HTTP. However, when `ssl.enabled` is set to `true`, the REST Proxy will enable SSL/TLS support and expect clients to communicate with it using HTTPS.
+- B. default, the REST Proxy uses plain-text communication over HTTP. However, when `ssl.enabled` is set to `true`, the REST Proxy will enable SSL/TLS support and expect clients to communicate with it using HTTPS.
 
 In addition to enabling SSL/TLS in the REST Proxy configuration, you also need to provide the necessary SSL/TLS certificates and keys. This typically involves configuring the `ssl.keystore.location`, `ssl.keystore.password`, `ssl.key.password`, and other relevant SSL/TLS parameters in the REST Proxy configuration file.
 

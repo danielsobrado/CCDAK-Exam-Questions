@@ -44,7 +44,7 @@ When using the `kafka-console-consumer` CLI tool to consume messages from a Kafk
 
 The `kafka-console-consumer` automatically generates a unique consumer group name for each instance of the tool that is run without a specified group. The generated group name typically follows a pattern like `console-consumer-<random-string>`, where `<random-string>` is a randomly generated string to ensure uniqueness.
 
-By creating a new consumer group for each instance, the `kafka-console-consumer` ensures that multiple instances of the tool can consume messages independently from the same topic without interfering with each other's offsets or causing rebalances.
+- B. creating a new consumer group for each instance, the `kafka-console-consumer` ensures that multiple instances of the tool can consume messages independently from the same topic without interfering with each other's offsets or causing rebalances.
 
 Statement A is incorrect because the tool does not join a random existing consumer group. It creates a new group with a generated name.
 
@@ -66,7 +66,7 @@ How does the `kafka-console-consumer` behave when you specify the `--from-beginn
 **Explanation:**
 When you run the `kafka-console-consumer` CLI tool with the `--from-beginning` option, it starts consuming messages from the earliest available offset in the assigned partitions.
 
-By default, when a consumer starts consuming from a topic, it begins from the latest offset, which means it will only receive new messages that are produced after the consumer started. However, when you specify the `--from-beginning` option, the consumer will seek to the earliest available offset in each assigned partition and start consuming messages from there.
+- B. default, when a consumer starts consuming from a topic, it begins from the latest offset, which means it will only receive new messages that are produced after the consumer started. However, when you specify the `--from-beginning` option, the consumer will seek to the earliest available offset in each assigned partition and start consuming messages from there.
 
 This option is useful when you want to consume all the messages in a topic, including the older messages that were produced before the consumer started. It allows you to process the entire history of messages in the topic.
 

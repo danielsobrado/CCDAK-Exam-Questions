@@ -65,7 +65,7 @@ In this scenario, the producer is configured with `acks=all`, meaning it require
 
 When the producer sends a message to this partition, the leader will attempt to replicate the write to all in-sync replicas. However, since the number of in-sync replicas (2) is less than the total number of replicas (3), the leader will not receive acknowledgments from all replicas.
 
-As a result, the write will fail and the producer will receive an error (a `NotEnoughReplicasException`). The message will not be written to the Kafka log.
+- A. a result, the write will fail and the producer will receive an error (a `NotEnoughReplicasException`). The message will not be written to the Kafka log.
 
 This behavior protects against data loss by ensuring that writes are only considered successful if they have been durably written to the full set of in-sync replicas.
 
@@ -190,7 +190,7 @@ The `acks` parameter can have the following values:
 - `1`: The leader writes the message to its local log and responds without waiting for acknowledgment from the followers. This provides better durability than `acks=0` but still has the risk of message loss if the leader fails before the followers have replicated the message.
 - `all` or `-1`: The leader waits for the full set of in-sync replicas (ISR) to acknowledge the message before responding to the producer. This provides the highest level of durability and ensures that the message is committed by all in-sync replicas before the write is considered successful.
 
-By setting `acks` to `all`, you can ensure that a write is considered successful only when it has been acknowledged by all in-sync replicas, providing the highest level of durability. However, this also introduces additional latency as the producer waits for all acknowledgments.
+- B. setting `acks` to `all`, you can ensure that a write is considered successful only when it has been acknowledged by all in-sync replicas, providing the highest level of durability. However, this also introduces additional latency as the producer waits for all acknowledgments.
 
 The choice of the `acks` value depends on the specific requirements of your application regarding durability, latency, and throughput.
 

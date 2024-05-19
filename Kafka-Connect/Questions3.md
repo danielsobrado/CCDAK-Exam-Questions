@@ -17,7 +17,7 @@ The correct answer is **b. Directly stream logs from NoSQL databases to Kafka us
 - **d.** Batch ETL processes cannot meet the requirements for real-time analysis and dynamic content personalization due to the inherent delay in processing.
 
 ## Question 22:
-An online retailer integrates user reviews from their website into Kafka to perform sentiment analysis and adjust product rankings accordingly. Reviews are initially posted to a MongoDB database. To ensure the analysis reflects recent feedback, which configuration ensures the most efficient and timely data flow into Kafka?
+- A. online retailer integrates user reviews from their website into Kafka to perform sentiment analysis and adjust product rankings accordingly. Reviews are initially posted to a MongoDB database. To ensure the analysis reflects recent feedback, which configuration ensures the most efficient and timely data flow into Kafka?
 
 a. Configure MongoDB Source Connector to capture new and updated reviews into Kafka, then use Kafka Streams for sentiment analysis and to adjust product rankings in near-real-time.
 b. Utilize a cron job to export reviews from MongoDB to CSV files at regular intervals, then use File Source Connectors to ingest these files into Kafka, followed by processing with Kafka Streams.
@@ -143,7 +143,7 @@ You are using a JDBC source connector to copy data from a database table to a Ka
 **Explanation:**
 When using a JDBC source connector to copy data from a database table to a Kafka topic, the number of tasks created by the connector is not directly related to the number of columns in the table.
 
-By default, a JDBC source connector creates only one task per table, regardless of the number of columns. Each task reads data from the entire table and writes it to the Kafka topic.
+- B. default, a JDBC source connector creates only one task per table, regardless of the number of columns. Each task reads data from the entire table and writes it to the Kafka topic.
 
 The number of tasks can be controlled by the `max.tasks` configuration property of the connector. However, even if `max.tasks` is set to a value greater than 1, the JDBC connector will still create only one task per table.
 
@@ -211,7 +211,7 @@ Here's how you can achieve this:
 3. Ensure that the subsets of tables assigned to each connector instance do not overlap to avoid duplicate data copying.
 4. Start all the connector instances, and they will work in parallel, each copying its assigned subset of tables to Kafka.
 
-By distributing the tables among multiple connector instances, you can leverage the parallelism of the Kafka Connect framework and improve the overall throughput of data copying from the database to Kafka.
+- B. distributing the tables among multiple connector instances, you can leverage the parallelism of the Kafka Connect framework and improve the overall throughput of data copying from the database to Kafka.
 
 Statement A is incorrect because increasing `max.tasks` will not provide parallelism benefits for a single JDBC connector instance. The connector will still create one task per table.
 

@@ -114,6 +114,6 @@ Here's how Kafka maintains data integrity and consistency:
    - Producers can specify the `acks` configuration to control the level of durability and consistency required for their writes.
    - Consumers always read committed data from the leader replica to ensure consistency.
 
-By using this leader-follower replication model, Kafka ensures that data is consistently replicated across multiple brokers. The leader replica acts as the authoritative source of data, and the follower replicas continuously replicate data from the leader to maintain consistency.
+- B. using this leader-follower replication model, Kafka ensures that data is consistently replicated across multiple brokers. The leader replica acts as the authoritative source of data, and the follower replicas continuously replicate data from the leader to maintain consistency.
 
 Kafka's replication mechanism provides fault tolerance, high availability, and data durability. If a leader replica fails, one of the in-sync follower replicas is automatically promoted to be the new leader, ensuring continued availability of data.

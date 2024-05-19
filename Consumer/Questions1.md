@@ -86,7 +86,7 @@ A Kafka Streams application tries to consume from an input topic partition. It r
 **Answer:** A
 
 **Explanation:**
-An 'Offset Out Of Range' error in Kafka Streams indicates that the application is trying to fetch from an offset that is no longer available in the partition, usually because the data has been deleted due to retention policies. The recommended way to handle this is to reset the consumer offset to the earliest available offset and retry consuming from there.
+- A. 'Offset Out Of Range' error in Kafka Streams indicates that the application is trying to fetch from an offset that is no longer available in the partition, usually because the data has been deleted due to retention policies. The recommended way to handle this is to reset the consumer offset to the earliest available offset and retry consuming from there.
 
 - B is not recommended because resetting to the latest offset will skip over the missing data.
 - C is too extreme. The error can be handled without shutting down the entire application.

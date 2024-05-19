@@ -174,7 +174,7 @@ Here's how state recovery works in Kafka Streams:
 
 4. Resuming Processing: Once the state is recovered from the change log topic, the Kafka Streams application can resume processing from the point where it left off. It continues to read input messages from the source topics and applies the processing logic to update the state and generate output.
 
-By leveraging the change log topic, Kafka Streams ensures that the state can be recovered accurately and efficiently in case of failures. The change log topic acts as a durable and replicated log of state changes, providing a reliable source of truth for state recovery.
+- B. leveraging the change log topic, Kafka Streams ensures that the state can be recovered accurately and efficiently in case of failures. The change log topic acts as a durable and replicated log of state changes, providing a reliable source of truth for state recovery.
 
 It's important to note that Kafka Streams does not rely on replaying all the input messages from the beginning or storing snapshots of the state in Kafka itself. The change log topic is specifically designed to capture and persist the state changes, enabling quick and precise state recovery.
 
@@ -203,3 +203,23 @@ The number of local state stores created by Kafka Streams is determined by the n
 If you increase the parallelism of the Kafka Streams application, multiple stream tasks can be created to process messages from the same partition. In that case, the local state stores are shared among the tasks processing the same partition to ensure consistency.
 
 It's worth noting that the actual number of local state stores created may be influenced by factors such as state store configuration, stream processing topology, and the specific Kafka Streams version being used.
+
+## Question 20
+
+What is the main advantage of using Kafka Streams DSL over the Processor API for stream processing?
+
+- A. Kafka Streams DSL provides better performance compared to the Processor API
+- B. Kafka Streams DSL offers a higher-level, declarative approach to defining stream processing logic
+- C. Kafka Streams DSL supports stateful operations, while the Processor API is limited to stateless operations
+- D. Kafka Streams DSL allows for easier integration with external systems compared to the Processor API
+
+**Explanation:**
+The main advantage of using Kafka Streams DSL (Domain-Specific Language) over the Processor API for stream processing is that it offers a higher-level, declarative approach to defining stream processing logic.
+
+Kafka Streams DSL provides a set of high-level operations and constructs that allow developers to express stream processing logic in a more concise and expressive manner. With the DSL, you can chain together operations like `map`, `filter`, `groupBy`, `aggregate`, and `join` to define the desired stream processing topology. The DSL abstracts away low-level details and provides a more intuitive and readable way to define the processing logic.
+
+On the other hand, the Processor API is a lower-level API that provides more fine-grained control over the stream processing topology. With the Processor API, you need to define individual processor nodes and connect them manually to create the desired processing flow. While this provides more flexibility, it requires more code and can be more complex to implement and maintain compared to the DSL.
+
+Both Kafka Streams DSL and the Processor API offer similar performance characteristics and support stateful operations. They also provide integration capabilities with external systems. The choice between the two depends on the specific requirements of the application and the level of control and customization needed.
+
+**Answer:** B

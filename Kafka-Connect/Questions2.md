@@ -1,5 +1,5 @@
 ## Question 11:
-An e-commerce company uses Kafka to process customer orders. During sales events, the order volume spikes significantly. Which approach ensures the system scales efficiently to handle these spikes in order volume?
+- A. e-commerce company uses Kafka to process customer orders. During sales events, the order volume spikes significantly. Which approach ensures the system scales efficiently to handle these spikes in order volume?
 
 a. Automatically adjust the number of topics to spread the increased order messages across more Kafka topics during sales events.
 b. Use Kafka Connect with scalable Source Connectors to adjust the throughput based on order volume.
@@ -47,7 +47,7 @@ d. Transform data within the legacy system using SQL stored procedures, then use
 The correct answer is **c. Ingest transaction data into Kafka using JDBC Source Connectors and leverage ksqlDB for transforming and querying the data in a SQL-like manner.**
 
 ## Question 15:
-An automotive manufacturer aims to optimize its supply chain by analyzing sensor data from its manufacturing equipment in real-time. The sensor data is currently logged in a proprietary format in a traditional database. The operations team, skilled in SQL, seeks to convert this data into actionable insights. Considering their expertise and requirements, which solution would best suit their needs?
+- A. automotive manufacturer aims to optimize its supply chain by analyzing sensor data from its manufacturing equipment in real-time. The sensor data is currently logged in a proprietary format in a traditional database. The operations team, skilled in SQL, seeks to convert this data into actionable insights. Considering their expertise and requirements, which solution would best suit their needs?
 
 a. Utilize JDBC Source Connectors to stream sensor data into Kafka, transforming the data into a more accessible format using Kafka Streams.
 b. Export sensor data to a common format like JSON, use Kafka Connect to ingest this data, and then apply ksqlDB to analyze and visualize the data in real-time.
@@ -113,7 +113,7 @@ The correct answer is **b. S3 Sink Connector.**
 - **d. File Source Connector**: Incorrect. It's used for reading data from files into Kafka topics, not for writing or storing data into Amazon S3 from Kafka.
 
 ## Question 19:
-An IoT company collects temperature and humidity data from sensors deployed in various locations. The goal is to correlate this environmental data with location-specific weather forecasts retrieved from an external API. Which approach best facilitates this integration and processing within the Kafka ecosystem?
+- A. IoT company collects temperature and humidity data from sensors deployed in various locations. The goal is to correlate this environmental data with location-specific weather forecasts retrieved from an external API. Which approach best facilitates this integration and processing within the Kafka ecosystem?
 
 a. Ingest sensor data into a Kafka topic using MQTT connectors. Separately, use an external service to fetch weather forecasts, storing this data in a Kafka topic via the HTTP Source Connector. Utilize Kafka Streams to join sensor data with weather forecasts based on location and timestamp, outputting enriched data to another topic.
 b. Directly stream sensor data and weather forecasts into Kafka using custom Kafka Producers implemented in Python. These producers perform API calls to retrieve forecasts, merge this data with sensor readings, and produce the combined records into a single Kafka topic.

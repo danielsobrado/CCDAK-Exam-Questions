@@ -144,7 +144,7 @@ In Kafka, the cleanup policy determines how Kafka handles old log segments when 
 
 2. Compact: With the compact policy, Kafka periodically compacts the log by removing obsolete records based on the message key. If a key appears multiple times in the log, only the latest value is retained, and the older duplicates are discarded. This is useful for maintaining a changelog or snapshot of the latest state for each key.
 
-By default, when you create a new topic in Kafka, the cleanup policy is set to "Delete". This means that Kafka will automatically delete old log segments based on the retention time or size limit configured for the topic.
+- B. default, when you create a new topic in Kafka, the cleanup policy is set to "Delete". This means that Kafka will automatically delete old log segments based on the retention time or size limit configured for the topic.
 
 If you want to use the "Compact" policy for a topic, you need to explicitly set it using the topic configuration `cleanup.policy=compact`. This can be done when creating the topic or by modifying the topic configuration later.
 

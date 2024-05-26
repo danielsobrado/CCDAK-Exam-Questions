@@ -8,10 +8,37 @@ Confluent Schema Registry and Avro serialization provide a robust way to ensure 
 - **Schema Evolution**: Supports schema evolution with backward, forward, and full compatibility checks, preventing breaking changes.
 - **Integration with Kafka**: Seamlessly integrates with Kafka, enabling schemas to be applied to Kafka messages, ensuring data consistency across the system.
 
-### Avro Serialization
+The following schema formats are supported out-of-the-box with Confluent Platform, with serializers, deserializers, and command line tools available for each format:
+
+- **Avro:** Relies on schemas. When Avro data is read, the schema used when writing it is always present.
+- **JSON:** A lightweight data-interchange format. It's easy for humans to read and write, and it's easy for machines to parse and generate. JSON does not rely on schemas.
+- **ProtoBuf:** Protocol Buffers (ProtoBuf) are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data – think XML, but smaller, faster, and simpler.
+
+### Avro 
 
 - **Binary Format**: Avro is a compact binary format that enables efficient serialization and deserialization of data.
 - **Schema Evolution**: Avro supports schema evolution, allowing schemas to be updated without breaking existing applications.
+
+The set of primitive types:
+
+- null: no value
+- boolean: a binary value
+- int: 32-bit signed integer
+- long: 64-bit signed integer
+- float: single precision (32-bit) IEEE 754 floating-point number
+- double: double precision (64-bit) IEEE 754 floating-point number
+- bytes: sequence of 8-bit unsigned bytes
+- string: unicode character sequence
+
+Avro supports six types of complex data structures: records, enums, arrays, maps, unions, and fixed.
+
+**Records** are defined with the type name "record" and include the following attributes:
+
+- **name:** A required JSON string that specifies the record's name.
+- **namespace:** A JSON string that qualifies the record's name.
+- **doc:** An optional JSON string that provides documentation for the schema.
+- **aliases:** An optional JSON array of strings that provides alternate names for the record.
+- **fields:** A required JSON array that lists the fields of the record.
 
 ### Key Advantages of Schema Registry and Avro
 
@@ -45,6 +72,15 @@ Confluent Schema Registry and Avro serialization provide a robust way to ensure 
 
 - **Forward Planning**: Design schemas with evolution in mind, utilizing Avro's capabilities for adding, removing, and modifying fields without disrupting existing consumers.
 - **Compatibility Settings**: Leverage Schema Registry's compatibility checks to avoid introducing incompatible schema changes.
+
+When using Avro or other schema formats, managing schemas and their evolution is essential:
+
+The default compatibility type in Confluent Schema Registry is **BACKWARD**. Allowed changes for BACKWARD compatibility are:
+
+- Deleting fields
+- Adding optional fields
+
+BACKWARD compatibility means that consumers using the new schema X can read data produced with the new schema X or the previous schema X - 1.
 
 ### Troubleshooting Common Issues
 

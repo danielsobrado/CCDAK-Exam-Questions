@@ -64,7 +64,16 @@ Securing Kafka involves configuring encryption, authentication, and authorizatio
 - Utilizes SASL and SSL for verifying client and broker identities, ensuring that only legitimate participants engage in communication.
 
 #### Authorization
-- Employs access controls to restrict actions on Kafka resources, ensuring users can only perform operations they are explicitly allowed to.
+
+Apache Kafka ships with a pluggable, out-of-the-box Authorizer implementation that uses ZooKeeper to store all the ACLs. Setting ACLs is crucial because, without them, access to resources is limited to super users when an Authorizer is configured. By default, if a resource has no associated ACLs, no one except super users is allowed to access it.
+
+Access Control Lists (ACLs) provide essential authorization controls for your enterprise's Kafka cluster data.
+
+To set the required ACLs to allow a specific user "Andoni" to read and write to the topic "test-topic" from host "test-host," use the following command:
+
+```sh
+bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Andoni --allow-host test-host --operation read --operation write --topic test-topic
+```
 
 #### Comprehensive Security Model
 - A layered approach combining encryption, authentication, and authorization fortifies Kafka's security posture.

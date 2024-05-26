@@ -8,10 +8,28 @@ Kafka Streams is a client library designed to build real-time applications and m
 - **Topology**: A graph of stream processors (nodes) connected by streams (edges), defining the flow of data.
 - **KStreams and KTables**: KStreams represent a continuous stream of data, while KTables represent a changelog stream, akin to a table in a database.
 
+Stream-table duality:
+
+- **Stream as Table:** A stream can be viewed as a changelog of a table, where each data record in the stream captures a state change of the table. A stream can be turned into a 'real' table by replaying the changelog from the beginning to reconstruct the table.
+
+- **Table as Stream:** A table can be viewed as a snapshot of the latest value for each key in a stream. A table can be turned into a 'real' stream by iterating over each key-value entry in the table.
+
 ### Fundamental Components
 
 - **Stream Processor**: A fundamental unit that processes each incoming record, capable of transforming, filtering, or aggregating data streams.
 - **State Stores**: Facilitate storing state for stateful operations, enabling functionalities like windowing and interactive queries.
+
+### Permanent State Stores in Kafka Streams:
+
+- **Definition:** Permanent state stores are used in Kafka Streams to persistently store and manage stateful data across reboots and restarts.
+- **Types:** Includes key-value stores, window stores, and session stores.
+- **Usage:** Essential for operations like aggregations, joins, and windowing which require maintaining state over time.
+- **Configuration:** Defined in the Kafka Streams API using `Stores.persistentKeyValueStore()`, `Stores.persistentWindowStore()`, etc.
+- **Resource Management:** Always close Iterators after use to prevent resource leaks and Out-Of-Memory (OOM) issues.
+- **Recovery:** State stores support fault tolerance by restoring state from changelog topics on restart.
+- **Performance:** Performance can be optimized by configuring RocksDB, the default storage engine for state stores.
+- **Scaling:** State stores can be scaled across multiple instances using partitioning and sharding.
+- **Monitoring:** Monitor metrics related to state stores, such as cache hit rates and store sizes, to ensure efficient operation.
 
 ### Key Features
 
@@ -52,7 +70,25 @@ Critical configurations for Kafka Streams applications include the application I
 - **Streams DSL**: High-level domain-specific language to define stream processing topologies, including `KStream`, `KTable`, and `GlobalKTable`.
 
 #### Join Operations
-Detailing how different data streams or tables can be joined, including windowed joins (KStream-to-KStream) and non-windowed joins (e.g., KTable-to-KTable).
+
+Using the Streams API, the following join operations are supported, with joins being either windowed or non-windowed depending on the operands:
+
+- **KStream-to-KStream (windowed):** Supports inner join, left join, and outer join.
+- **KTable-to-KTable (non-windowed):** Supports inner join, left join, and outer join.
+- **KStream-to-KTable (non-windowed):** Supports inner join and left join. Outer join is not supported.
+- **KStream-to-GlobalKTable (non-windowed):** Supports inner join and left join. Outer join is not supported.
+
+### Message Delivery Guarantees
+
+Kafka supports three types of message delivery guarantees:
+
+- **At-most-once:** Every message is persisted in Kafka at most once. Message loss is possible if the producer doesn't retry on failures.
+- **At-least-once:** Every message is guaranteed to be persisted in Kafka at least once. There is no chance of message loss, but messages can be duplicated if the producer retries after the message is already persisted.
+- **Exactly-once:** Every message is guaranteed to be persisted in Kafka exactly once without any duplicates or data loss, even in the event of broker failures or producer retries.
+
+Exactly-once processing can be achieved for Kafka-to-Kafka workflows using the Kafka Streams API. For Kafka-to-sink workflows, an idempotent consumer is required.
+
+Stream processing applications written with the Kafka Streams library can enable exactly-once semantics by setting the `processing.guarantee` configuration to `exactly_once` (the default value is `at_least_once`). This change requires no code modifications.
 
 ### Co-Partitioning
 

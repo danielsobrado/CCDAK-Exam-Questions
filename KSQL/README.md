@@ -8,6 +8,10 @@ KSQL, known as ksqlDB in its more recent versions, is a stream processing framew
 - **KSQL Syntax**: Familiarity with the SQL-like syntax for creating streams, tables, and performing queries.
 - **Streams vs. Tables**: Grasp the difference between a stream (an immutable sequence of records) and a table (a mutable, stateful entity).
 
+ksqlDB supports exactly-once processing, ensuring correct results even in the event of failures such as machine crashes. Developers can configure this behavior using the `processing.guarantee` setting.
+
+Idle servers in a ksqlDB cluster consume minimal resources. When running a query against a Kafka topic with multiple partitions, only the servers corresponding to the number of partitions perform the actual work.
+
 ### Essential Components
 
 - **KSQL Server**: The server that runs KSQL queries. It interacts with Kafka to execute stream processing applications.
@@ -52,6 +56,8 @@ KSQL, known as ksqlDB in its more recent versions, is a stream processing framew
 - **Data Processing**: Understanding of how to perform data transformations, aggregations, and joins using KSQL.
 - **Windowing**: Knowledge of windowing functions to process data in time-bound chunks.
 - **User-Defined Functions (UDFs)**: Familiarity with using and possibly creating custom functions for specialized processing needs.
+
+The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about a stream or table, including its serialization format. Checking the compatibility between the `VALUE_FORMAT` of a stream and the format of records in a topic can help diagnose deserialization issues.
 
 ### Best Practices
 

@@ -7,6 +7,17 @@ Effective Kafka cluster management involves tuning various configurations to ens
 - **Cluster Balance and Efficiency**: Settings related to leader election and rebalance are crucial for evenly distributing the load across the cluster.
 - **Fault Tolerance**: Proper configuration ensures the cluster remains operational even when certain nodes or partitions fail.
 - **Topic Management**: Ability to dynamically manage topics, including deletion, is essential for operational flexibility.
+- Kafka uses a binary protocol over TCP.
+
+### APIs
+
+There are five key APIs in Kafka:
+
+- **Producer API:** Enables applications to send streams of data to topics within the Kafka cluster.
+- **Consumer API:** Allows applications to read streams of data from topics within the Kafka cluster.
+- **Streams API:** Facilitates the transformation of data streams from input topics to output topics.
+- **Connect API:** Provides the capability to implement connectors that continuously pull data from source systems into Kafka or push data from Kafka to sink systems.
+- **Admin API:** Offers tools for managing and inspecting topics, brokers, and other Kafka objects.
 
 ### Important Cluster Administration Properties
 

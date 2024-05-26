@@ -118,3 +118,11 @@ A Kafka Broker is a term for a server in a Kafka cluster that hosts topics and p
 
 - **Zookeeper Dependency**: Kafka brokers rely on Zookeeper for cluster metadata and coordination. Ensuring Zookeeper cluster's health is critical for Kafka's reliability.
 - **Broker Failures**: Kafka's replication mechanism ensures that as long as a sufficient number of replicas are alive, brokers can fail without losing data. Properly configuring `min.insync.replicas` and `replication.factor` is key.
+
+### Zero Copy
+
+Most traditional data systems use RAM for data storage due to its low latencies.
+
+Kafka avoids using RAM for this purpose, achieving low latency message delivery through the Zero Copy Principle. This optimization eliminates intermediate data copies, transferring data directly from the read buffer to the socket buffer.
+
+However, enabling SSL for data encryption in transit negates zero copy optimization. With SSL, the broker must decrypt and re-encrypt data, thus reintroducing intermediate data handling.

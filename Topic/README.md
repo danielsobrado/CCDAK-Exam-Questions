@@ -7,6 +7,13 @@ Kafka topics are categorized into partitions for scalability and replicated acro
 - **Durability and Fault Tolerance**: Configurations like `replication.factor` determine how data is replicated to ensure availability in case of broker failures.
 - **Scalability**: The `partition` count of a topic influences how data is distributed across the cluster and impacts parallel processing capabilities.
 - **Data Consistency**: The `acks` setting affects how producers receive acknowledgments from brokers, impacting data consistency guarantees.
+- **Order Guarantee:** Kafka guarantees that any consumer of a given topic-partition will always read that partition's events in exactly the same order as they were written.
+- **Partition-Specific Order:** Order is guaranteed only within a partition, not across partitions.
+- **Variable Message Count:** Partitions do not need to have the same number of messages.
+- **Partition-Specific Offsets:** Offsets only have meaning within a specific partition.
+- **Data Retention:** Messages are kept only for a limited time in Kafka, with the default being one week.
+- **Immutability:** Once data is written to a partition, it cannot be changed.
+- **Partition Assignment:** Data is assigned randomly to a partition unless a key is provided.
 
 After adding partitions later, it cannot be guaranteed that old messages will be on the same partition as new messages with the same key.
 

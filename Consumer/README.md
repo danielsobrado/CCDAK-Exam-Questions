@@ -9,6 +9,16 @@ Kafka Consumers read records from Kafka topics. They can subscribe to one or mor
 - **Rebalance Protocol**: Ensures partition ownership is balanced across all consumer instances in a group.
 - **Fault Tolerance**: Consumers can recover from failures, continuing processing from their last committed offset.
 
+When a consumer wants to join a group, it sends a JoinGroup request to the group coordinator. The first consumer to join becomes the group leader. The leader receives a list of all consumers in the group from the group coordinator (including those that sent a recent heartbeat and are considered alive) and is responsible for assigning a subset of partitions to each consumer.
+
+### Partition Assignors
+
+A `PartitionAssignor` is a class that, given consumers and the topics they subscribed to, decides which partitions will be assigned to which consumer. Kafka has two default assignment strategies:
+
+- **RangeAssignor (default):** Assigns each consumer a consecutive subset of partitions from each topic it subscribes to. For example, if consumers C1 and C2 are subscribed to two topics, T1 and T2, and each topic has three partitions, then C1 will be assigned partitions 0 and 1 from both topics, while C2 will be assigned partition 2 from both topics. Because each topic has an uneven number of partitions, the first consumer ends up with more partitions than the second when the number of consumers does not neatly divide the number of partitions in each topic.
+
+- **RoundRobinAssignor:** Takes all the partitions from all subscribed topics and assigns them to consumers sequentially, one by one. If C1 and C2 described previously used RoundRobin assignment, C1 would have partitions 0 and 2 from topic T1 and partition 1 from topic T2. C2 would have partition 1 from topic T1 and partitions 0 and 2 from topic T2. In general, if all consumers are subscribed to the same topics (a very common scenario), RoundRobin assignment will result in all consumers having the same number of partitions (or at most one partition difference).
+
 ### Important Consumer Properties
 
 #### `group.initial.rebalance.delay.ms`

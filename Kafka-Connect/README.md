@@ -20,6 +20,18 @@ Kafka Connect is a tool specifically designed for streaming data between Apache 
 - **Worker**: The runtime environment where connectors and tasks are executed. Workers can be standalone (single process) or distributed across multiple nodes.
 - **REST API**: Kafka Connect provides a REST API for managing connectors and tasks, making it easy to deploy and monitor without writing any code.
 
+### Key Connector configurations
+
+Connector configurations are simple key-value mappings. In standalone mode, these are defined in a properties file and passed to the Connect process on the command line. In distributed mode, they are included in the JSON payload for the request that creates or modifies the connector.
+
+Most configurations are connector-dependent, so they can't be outlined here. However, there are a few common options:
+
+- **name:** Unique name for the connector. Attempting to register again with the same name will fail.
+- **connector.class:** The Java class for the connector.
+- **tasks.max:** The maximum number of tasks that should be created for this connector. The connector may create fewer tasks if it cannot achieve this level of parallelism.
+- **key.converter:** (Optional) Override the default key converter set by the worker.
+- **value.converter:** (Optional) Override the default value converter set by the worker.
+
 ### Important Operations
 
 - **Configuring Connectors**: Understand how to configure source and sink connectors, including specifying the name of the Kafka topics to use, the key and value converters, and any connector-specific settings.

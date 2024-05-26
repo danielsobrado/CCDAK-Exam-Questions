@@ -80,7 +80,7 @@ Kafka Consumers read records from Kafka topics. They can subscribe to one or mor
 
 #### Understanding Consumer Behavior
 
-- **Subscription Types**: Kafka consumers can subscribe to topics in different ways, such as by specific topic names, pattern matching on topic names, or direct partition assignment.
+- **Subscription Types**: Kafka consumers can subscribe to topics in different ways, such as by specific topic names, pattern matching on topic names, or direct partition assignment. (e.g. `consumer.subscribe(Pattern.compile(".*topic"));` and `consumer.subscribe(Arrays.asList("orders-topic", "customers-topic", "sales-topic", "stocks-topic"));`)
 - **Polling Process**: Inside the consumer's `poll()` call, several checks and operations occur, including heartbeat checks, subscription updates, and potentially triggering rebalance if necessary.
 
 #### Consumer Rebalancing Triggers

@@ -8,6 +8,8 @@ Kafka topics are categorized into partitions for scalability and replicated acro
 - **Scalability**: The `partition` count of a topic influences how data is distributed across the cluster and impacts parallel processing capabilities.
 - **Data Consistency**: The `acks` setting affects how producers receive acknowledgments from brokers, impacting data consistency guarantees.
 
+After adding partitions later, it cannot be guaranteed that old messages will be on the same partition as new messages with the same key.
+
 ### Important Topic Properties
 
 #### `acks`

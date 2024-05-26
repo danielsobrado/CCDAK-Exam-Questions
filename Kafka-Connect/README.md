@@ -129,3 +129,10 @@ These connectors export data from Kafka topics to external systems.
 ### Data Enrichment
 - **Data enrichment** in the context of Kafka involves augmenting messages in a stream with additional information. This can be achieved by joining streams with other data sources (e.g., tables or databases) to add context or additional details to the original data.
 
+### Error Handling
+
+Kafka Connect provides error reporting to handle errors encountered at various stages of processing. By default, any error during conversion or transformations causes the connector to fail. Each connector configuration can also enable tolerating such errors by skipping them and optionally writing each error and details of the failed operation and problematic record to the Connect application log.
+
+To report errors within a connector's converter, transforms, or within the sink connector itself to the log, set `errors.log.enable=true` in the connector configuration to log details of each error and the problem record's topic, partition, and offset. For additional debugging purposes, set `errors.log.include.messages=true` to also log the problem record key, value, and headers (note this may log sensitive information).
+
+To report errors within a connector's converter, transforms, or within the sink connector itself to a dead letter queue topic, set `errors.deadletterqueue.topic.name`, and optionally `errors.deadletterqueue.context.headers.enable=true`.

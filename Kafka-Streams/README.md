@@ -72,6 +72,12 @@ Co-partitioning is a concept in Kafka where two or more topics have their partit
 
 7. **Producing to Co-Partitioned Topics**: When producing messages to co-partitioned topics, ensure that the keys used for partitioning are consistent and that messages destined to be joined together use the same keys.
 
+### Parallel processing
+
+Kafka Streams scales by allowing multiple threads of execution within one instance of the application and by supporting load balancing between distributed instances of the application. You can run the Streams application on one machine with multiple threads or on multiple machines; in either case, all active threads in the application will balance the data processing work.
+
+The Streams engine parallelizes the execution of a topology by splitting it into tasks. The number of tasks is determined by the Streams engine and depends on the number of partitions in the topics that the application processes. Each task is responsible for a subset of the partitions: the task subscribes to those partitions and consumes events from them. For every event it consumes, the task executes all the processing steps that apply to this partition in order before eventually writing the result to the sink. These tasks are the basic unit of parallelism in Kafka Streams, as each task can execute independently of others.
+
 ### Best Practices for Kafka Streams
 
 - **State Management**: Leverage state stores and interactive queries efficiently to manage state.

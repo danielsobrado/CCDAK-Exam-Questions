@@ -114,6 +114,7 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 
 - **Manual Partition Assignment**: Using the `assign()` method allows for direct control over which partitions a consumer processes, bypassing Kafka's consumer group management and rebalance protocol. This approach is suitable for scenarios requiring static partition assignments.
 - **Custom Offset Storage**: While Kafka provides built-in offset management through the `__consumer_offsets` topic, consumers can implement custom offset storage mechanisms if needed, allowing for greater flexibility in offset management strategies.
+- Kafka allows specifying the position using `seek(TopicPartition, long)` to specify the new position (offset) a consumer can read from. Also `seekToBeginning(TopicPartition tp)` and `seekToEnd(TopicPartition tp)`.
 
 ### Optimizing Consumer Performance
 

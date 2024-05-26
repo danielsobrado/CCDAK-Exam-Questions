@@ -1,6 +1,13 @@
 ## Kafka Connect Overview
 
-Kafka Connect is a tool for scalably and reliably streaming data between Apache Kafka and other data systems. It simplifies the process of importing data from external sources into Kafka and exporting data from Kafka into external systems, using a configuration-driven approach.
+Kafka Connect is a tool specifically designed for streaming data between Apache Kafka and other systems.
+
+- A common framework for Kafka connectors.
+- Distributed and standalone modes.
+- REST interface.
+- Automatic offset management.
+- Distributed and scalable by default.
+- Streaming/batch integration.
 
 ### Key Concepts
 
@@ -72,6 +79,14 @@ These internal topics enable Kafka Connect to recover from failures, ensuring ro
 
 - **`group.id`**: Unique identifier for the Kafka Connect cluster.
 - **`config.storage.topic`** and **`offset.storage.topic`**: Kafka topics for storing connector and task configurations and offsets.
+
+In distributed mode for Kafka Connect, key features include automatic work balancing, dynamic scaling, and fault tolerance. While configuration parameters are similar to standalone mode, the storage locations and classes differ. In distributed mode, Kafka Connect stores offsets, configurations, and task statuses in Kafka topics. It is recommended to manually create these topics to achieve the desired number of partitions and replication factors.
+
+Execution is similar to standalone mode:
+
+```
+bin/connect-distributed.sh config/connect-distributed.properties
+```
 
 #### JDBC Sink Configuration Options
 

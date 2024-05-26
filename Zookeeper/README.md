@@ -7,6 +7,14 @@ Apache ZooKeeper used to play a critical role in Kafka's ecosystem, acting as a 
 - **Cluster Coordination**: ZooKeeper is used by Kafka for leader election, cluster membership, and topic configuration management.
 - **Configuration Management**: Stores configuration data and metadata for Kafka brokers, topics, and other entities.
 
+Zookeeper's internal data structure is a tree:
+- Each node is called a zNode
+- Each zNode has a path
+- zNodes can be persistent or ephemeral
+- Each zNode can store data
+- You cannot rename a zNode
+- Each zNode can be watched for changes
+
 ### ZooKeeper Configuration Parameters
 
 Understanding key ZooKeeper configuration parameters is essential for setting up and managing a robust Kafka environment:

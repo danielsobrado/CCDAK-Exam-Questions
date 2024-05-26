@@ -5,6 +5,7 @@
 - **A topic partition consists of segments** with two indexes: offset to position and timestamp to offset.
 
 ### Broker:
+
 - **A Kafka Broker** is a JVM process that runs on a machine and hosts topics.
 - **In production, set the Java heap size to 6 GB** for optimal Kafka performance.
 - **In a multi-broker Kafka cluster**, only the `broker.id` property needs to be unique for each node.
@@ -25,30 +26,45 @@
 - **Quotas** can be configured on Kafka brokers to enforce limits on produce and fetch requests to control resource utilization.
 - **Kafka brokers** support multiple listener configurations to allow different security protocols on different ports, like PLAINTEXT, SSL, SASL, etc.
 - **Kafka brokers** can be configured with different log cleanup policies, like deletion or compaction, to manage disk space usage.
+- **Log Segments:** Kafka brokers split log data into segments. Each segment is a large file, which is flushed to disk periodically.
+- **Replica Fetchers:** Brokers have fetcher threads to pull data from leader replicas and replicate it to follower replicas.
+- **Inter-Broker Communication:** Brokers use ZooKeeper to elect the controller and maintain metadata about the cluster.
+- **Broker Metrics:** Commonly monitored metrics include `UnderReplicatedPartitions`, `OfflinePartitionsCount`, `RequestHandlerAvgIdlePercent`, and `NetworkProcessorAvgIdlePercent`.
+- **Leader and Follower:** Each partition has a leader broker and follower brokers. The leader handles all reads and writes, while followers replicate the data.
+- **Broker Startup:** During startup, brokers register themselves with ZooKeeper and load topic metadata to prepare for handling requests.
+- **Kafka Protocol:** Brokers use a binary protocol for communication, which clients and other brokers utilize to interact with the cluster.
+- **Broker Upgrades:** Brokers can be upgraded with zero downtime using a rolling upgrade process, ensuring continuous availability.
 
 ### CLI:
-- Use `bin/kafka-topics.sh` to check if a created topic is available.
-- **Create topics** using `bin/kafka-topics.sh --create`.
-- **Describe topics** using `bin/kafka-topics.sh --describe`.
-- **List topics** using `bin/kafka-topics.sh --list`.
-- **Delete topics** using `bin/kafka-topics.sh --delete`.
-- **Consume messages** using `bin/kafka-console-consumer.sh`.
-- **Produce messages** using `bin/kafka-console-producer.sh`.
-- **Manage consumer groups** using `bin/kafka-consumer-groups.sh`.
-- **Alter topic configurations** using `bin/kafka-configs.sh --alter --entity-type topics`.
-- **Describe topic configurations** using `bin/kafka-configs.sh --describe --entity-type topics`.
-- **Increase partition count** of a topic using `bin/kafka-topics.sh --alter --partitions`.
-- **Get offset and lag information** for a consumer group using `bin/kafka-consumer-groups.sh --describe`.
-- **Reset offsets** for a consumer group using `bin/kafka-consumer-groups.sh --reset-offsets`.
-- **Consume messages from a specific offset** using `bin/kafka-console-consumer.sh --offset`.
-- **Produce messages with keys** using `bin/kafka-console-producer.sh --property parse.key=true --property key.separator=,`.
-- **Consume messages in Avro format** using `bin/kafka-avro-console-consumer.sh`.
-- **Produce messages in Avro format** using `bin/kafka-avro-console-producer.sh`.
-- **List acls** using `bin/kafka-acls.sh --list`.
-- **Create acls** using `bin/kafka-acls.sh --add`.
-- **Delete acls** using `bin/kafka-acls.sh --remove`.
+
+- **Creating Topics:** Use `bin/kafka-topics.sh --create` to create topics.
+- **Describing Topics:** Use `bin/kafka-topics.sh --describe` to get details about topics.
+- **Listing Topics:** Use `bin/kafka-topics.sh --list` to list all topics in the cluster.
+- **Deleting Topics:** Use `bin/kafka-topics.sh --delete` to delete a topic.
+- **Consuming Messages:** Use `bin/kafka-console-consumer.sh` to consume messages from a topic.
+- **Producing Messages:** Use `bin/kafka-console-producer.sh` to produce messages to a topic.
+- **Managing Consumer Groups:** Use `bin/kafka-consumer-groups.sh` to manage consumer groups, including viewing offsets and lag.
+- **Resetting Offsets:** Use `bin/kafka-consumer-groups.sh --reset-offsets` to reset the offsets for consumer groups.
+- **Configuring Topics:** Use `bin/kafka-configs.sh` to alter topic configurations.
+- **Viewing Configs:** Use `bin/kafka-configs.sh --describe` to view configurations of brokers, topics, or clients.
+- **Running a Simple Producer Performance Test:** Use `bin/kafka-producer-perf-test.sh` to test producer performance.
+- **Running a Simple Consumer Performance Test:** Use `bin/kafka-consumer-perf-test.sh` to test consumer performance.
+- **Setting ACLs:** Use `bin/kafka-acls.sh --add` to set ACLs for users or hosts.
+- **Listing ACLs:** Use `bin/kafka-acls.sh --list` to view the ACLs configured.
+- **Removing ACLs:** Use `bin/kafka-acls.sh --remove` to remove ACLs.
+- **Starting Kafka Connect:** Use `bin/connect-standalone.sh` for standalone mode or `bin/connect-distributed.sh` for distributed mode.
+- **Monitoring Kafka Connect:** Use `bin/connect-distributed.sh --status` to check the status of Kafka Connect tasks and connectors.
+- **Rebalancing Partitions:** Use `bin/kafka-reassign-partitions.sh` to perform partition reassignments.
+- **Checking Reassignments:** Use `bin/kafka-reassign-partitions.sh --verify` to verify the status of partition reassignments.
+- **Viewing Partition Reassignment Plans:** Use `bin/kafka-reassign-partitions.sh --generate` to generate a reassignment plan.
+- **Running a Simple Consumer Group Test:** Use `bin/kafka-consumer-groups.sh --describe --group <group-id>` to check the status of consumer groups.
+- **Listing Consumer Groups:** Use `bin/kafka-consumer-groups.sh --list` to list all consumer groups.
+- **Decommissioning Brokers:** Use `bin/kafka-preferred-replica-election.sh` to initiate a preferred replica election.
+- **Migrating ZooKeeper:** Use `bin/kafka-migration.sh` to help with migrating metadata from ZooKeeper to KRaft (Kafka's Raft-based metadata quorum).
+
 
 ### Administration:
+
 - **For a safe data pipeline without message loss**, use `acks=all`, `replication.factor=3`, `min.insync.replicas=2`.
 - With `replication.factor=3`, `min.insync.replicas=2`, `acks=all`, a `NOT_ENOUGH_REPLICAS` exception is thrown if 2 brokers are down.
 - **Set `unclean.leader.election.enable=false`** to prevent data loss.
@@ -57,7 +73,7 @@
 - **Monitor under-replicated partitions** to ensure data durability and prevent data loss.
 - **Use `auto.leader.rebalance.enable=true`** to automatically balance leadership across the cluster.
 - **Configure `num.partitions` per topic** based on the desired parallelism and throughput.
-- **Use `log.retention.hours` or `log.retention.bytes`** to control data retention period.
+- **Use `log.retention.hours` or `log.retention.bytes`** to control the data retention period.
 - **Monitor disk usage** on brokers and add more disks or brokers when necessary.
 - **Use `replica.lag.time.max.ms`** to control the maximum time a replica can lag behind the leader.
 - **Upgrade Kafka brokers** one at a time, starting with the controller, to ensure a smooth rolling upgrade.
@@ -69,8 +85,21 @@
 - **Configure `zookeeper.connection.timeout.ms`** to control the maximum time to wait for a ZooKeeper connection.
 - **Use Kafka Streams** for real-time data processing and aggregation.
 - **Configure `producer.buffer.memory` and `consumer.fetch.max.bytes`** to tune producer and consumer performance.
+- **Implement quotas** using `quota.producer.byte-rate` and `quota.consumer.byte-rate` to manage resource usage.
+- **Set `log.cleanup.policy`** to either `delete` or `compact` to manage log retention policies.
+- **Use `controlled.shutdown.enable=true`** to ensure brokers shut down cleanly without data loss.
+- **Monitor the `UnderReplicatedPartitions` metric** to track replication health.
+- **Review and adjust JVM heap settings** to optimize broker performance (`-Xmx` and `-Xms` settings).
+- **Implement rack awareness** by setting `broker.rack` to improve fault tolerance.
+- **Regularly back up ZooKeeper data** to protect against data loss.
+- **Enable TLS/SSL** for secure communication between brokers and clients.
+- **Use `security.inter.broker.protocol`** to configure secure communication between brokers.
+- **Configure `zookeeper.session.timeout.ms`** to manage ZooKeeper session timeouts.
+- **Use `advertised.listeners`** to ensure brokers can be reached by clients.
+- **Enable and monitor JMX** for broker metrics and performance data.
 
 ### Consumer:
+
 - **The consumer can manually assign partitions** using `assign()` and seek to specific offsets using `seek()`.
 - **The first consumer to join a group** becomes the group leader.
 - **Consumer group rebalancing** reassigns partitions for a proportional share when members join/leave.
@@ -91,8 +120,17 @@
 - **Use `seek()` to reset the consumer's position** to a specific offset.
 - **Commit offsets asynchronously** using `commitAsync()` for better performance.
 - **Handle `CommitFailedException`** when offset commit fails due to rebalancing or other errors.
+- **Use `auto.offset.reset`** to control the behavior when there are no initial offsets or the current offset does not exist.
+- **Configure `heartbeat.interval.ms`** to control the interval at which the consumer sends heartbeats to the group coordinator.
+- **Use `session.timeout.ms`** to set the timeout for detecting consumer failures.
+- **Monitor consumer lag** to ensure that the consumer is keeping up with the latest records.
+- **Enable `client.id`** to provide a logical application name in logs and metrics for easier monitoring.
+- **Set `interceptor.classes`** to add custom interceptors for additional logging, monitoring, or modifications to records.
+- **Use `poll()` in a loop** to continuously consume messages from the Kafka broker.
+- **Handle rebalances gracefully** by using `RebalanceListener` to perform necessary actions during partition assignment and revocation.
 
 ### Kafka Connect:
+
 - **Kafka Connect simplifies connector development**, deployment, and management, supporting distributed and standalone modes.
 - **Distributed mode in Kafka Connect** handles automatic work balancing, scaling, and fault tolerance. Topics for offsets, configs, and statuses should be manually created.
 - **Connector configurations** must include a unique name, max tasks, and the connector class.
@@ -113,23 +151,31 @@
 - **Kafka Connect can be used for Change Data Capture (CDC)** to capture changes from databases and stream them into Kafka.
 - **The Kafka Connect `config` topic** stores the configuration for each connector and task.
 - **Kafka Connect can be scaled horizontally** by adding more worker nodes to the cluster.
+- **Standalone mode in Kafka Connect** is simpler and requires less setup but lacks the fault tolerance and scalability of distributed mode.
+- **Monitor Kafka Connect** using JMX metrics and integrate with monitoring tools like Prometheus and Grafana.
+- **Restart connectors and tasks** through the REST API to recover from transient errors or apply configuration changes.
+- **Ensure proper configuration** of `offset.storage.topic`, `config.storage.topic`, and `status.storage.topic` for reliable operation.
+- **Use `value.converter.schemas.enable`** to control whether the schema is included with each message for Avro, JSON, and Protobuf.
+- **Configure `key.converter` and `value.converter`** to specify the serialization format used by the connectors.
+- **Leverage Kafka Connect transformations** to perform lightweight message modifications without needing custom code.
 
 ### Streams:
+
 - **Tumbling time windows in Kafka Streams** are fixed-size, non-overlapping, and gap-less.
 - **Kafka Streams achieves parallelism** by splitting the topology into tasks that handle a subset of partitions independently.
 - **In Kafka Streams, `map` creates an output stream**, `foreach` is a terminal operation, and `peek` is for side effects.
 - **The Kafka Streams API** supports exactly-once delivery.
-- **Stream-table duality**: A stream is a changelog of a table, and a table is a snapshot of a stream at a point in time.
+- **Stream-table duality:** A stream is a changelog of a table, and a table is a snapshot of a stream at a point in time.
 - **When using a persistent state store** in Kafka Streams, close iterators to prevent memory issues.
 - **The Kafka Streams API** supports KStream-to-KStream windowed joins and KTable-to-KTable non-windowed joins.
 - **Stateless operations** don't require state, while stateful operations depend on state for processing.
 - **Mounting a persistent volume for RocksDB** can dramatically speed up Kafka Streams recovery on restart.
 - **reduce, join, count and aggregate** are stateful Kafka Streams operations.
-- **Stateless processing** depends only on the current message (e.g. format conversion, filtering).
+- **Stateless processing** depends only on the current message (e.g., format conversion, filtering).
 - **KStream-KTable joins** output a KStream.
 - **Kafka Streams exactly-once semantics** apply to Kafka-to-Kafka flows only.
 - **KStream-GlobalKTable join** does not require input topics to have the same number of partitions, unlike other join types.
-- **Kafka Streams uses the application.id config** as a prefix for internal topics like repartition and state topics.
+- **Kafka Streams uses the `application.id` config** as a prefix for internal topics like repartition and state topics.
 - **Kafka Streams supports Interactive Queries** to query the state of a running application.
 - **Hopping time windows in Kafka Streams** have a fixed size but can overlap, emitting results at a specified interval.
 - **Sliding time windows in Kafka Streams** are similar to hopping windows but emit results every time a new event enters or exits the window.

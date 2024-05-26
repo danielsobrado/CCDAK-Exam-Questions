@@ -126,6 +126,14 @@ Zookee­per is not required in the latest versions of Kafka and has lower import
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/Questions1.md)
 
+## Other repos
+
+[Kafka Notes](https://github.com/wilmerkrisp/kafka-notes)
+[Exam Notes](https://github.com/ayushdixit487/CCDAK-Exam-Notes)
+[CCDAK](https://github.com/varmaprr/Confluent-Kafka-Certification)
+
+And finally check the [Last minute review](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/LAST_MINUTE_REVIEW.md)
+
 ## Contributing
 
 All comments are welcome. Open an issue or send a pull request if you find any bugs or have recommendations for improvement.

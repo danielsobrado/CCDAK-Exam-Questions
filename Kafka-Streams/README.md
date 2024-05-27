@@ -8,6 +8,15 @@ Kafka Streams is a client library designed to build real-time applications and m
 - **Topology**: A graph of stream processors (nodes) connected by streams (edges), defining the flow of data.
 - **KStreams and KTables**: KStreams represent a continuous stream of data, while KTables represent a changelog stream, akin to a table in a database.
 
+### Know the Differences between KStream and KTable
+- KStream processes each record as an independent event, while KTable treats each record as an update.
+- KStream is useful for processing individual events, while KTable is suitable for maintaining the latest value for a given key.
+- KStream supports record-by-record transformations, while KTable allows aggregations and joins based on a key.
+
+### Identify the Appropriate Use Cases
+- Use KStream when you need to process each record independently, perform stateless transformations, or handle unbounded data.
+- Use KTable when you need to perform aggregations, joins, or maintain a materialized view of the latest values for each key.
+
 Stream-table duality:
 
 - **Stream as Table:** A stream can be viewed as a changelog of a table, where each data record in the stream captures a state change of the table. A stream can be turned into a 'real' table by replaying the changelog from the beginning to reconstruct the table.
@@ -113,6 +122,82 @@ Co-partitioning is a concept in Kafka where two or more topics have their partit
 Kafka Streams scales by allowing multiple threads of execution within one instance of the application and by supporting load balancing between distributed instances of the application. You can run the Streams application on one machine with multiple threads or on multiple machines; in either case, all active threads in the application will balance the data processing work.
 
 The Streams engine parallelizes the execution of a topology by splitting it into tasks. The number of tasks is determined by the Streams engine and depends on the number of partitions in the topics that the application processes. Each task is responsible for a subset of the partitions: the task subscribes to those partitions and consumes events from them. For every event it consumes, the task executes all the processing steps that apply to this partition in order before eventually writing the result to the sink. These tasks are the basic unit of parallelism in Kafka Streams, as each task can execute independently of others.
+
+## Understand the Available Operations
+- KStream operations:
+ - `map`: Applies a one-to-one transformation to each record in the stream.
+   Example:
+   ```java
+   KStream<String, Integer> doubled = stream.map((key, value) -> new KeyValue<>(key, value * 2));
+   ```
+ - `filter`: Filters records based on a predicate.
+   Example:
+   ```java
+   KStream<String, Integer> filtered = stream.filter((key, value) -> value > 100);
+   ```
+ - `flatMap`: Applies a one-to-many transformation to each record, flattening the result into a new stream.
+   Example:
+   ```java
+   KStream<String, String> words = stream.flatMapValues(value -> Arrays.asList(value.split("\\s+")));
+   ```
+ - `branch`: Splits a stream into multiple streams based on predicates.
+   Example:
+   ```java
+   KStream<String, Integer>[] branches = stream.branch((key, value) -> value > 100, (key, value) -> value <= 100);
+   ```
+ - `merge`: Merges multiple streams into a single stream.
+   Example:
+   ```java
+   KStream<String, Integer> merged = stream1.merge(stream2);
+   ```
+- KTable operations:
+ - `aggregate`: Performs an aggregation on the records of a KTable.
+   Example:
+   ```java
+   KTable<String, Long> counts = table.groupByKey().aggregate(() -> 0L, (aggKey, newValue, aggValue) -> aggValue + newValue);
+   ```
+ - `reduce`: Combines the records of a KTable based on a reducer function.
+   Example:
+   ```java
+   KTable<String, Integer> reduced = table.groupByKey().reduce((value1, value2) -> value1 + value2);
+   ```
+ - `join`: Joins two KTables based on their keys.
+   Example:
+   ```java
+   KTable<String, String> joined = table1.join(table2, (value1, value2) -> value1 + "-" + value2);
+   ```
+ - `groupBy`: Groups the records of a KTable based on a new key.
+   Example:
+   ```java
+   KTable<String, Integer> grouped = table.groupBy((key, value) -> value % 10);
+   ```
+ - `count`: Counts the number of records in a KTable.
+   Example:
+   ```java
+   KTable<String, Long> counts = table.groupByKey().count();
+   ```
+
+## Be Familiar with the Syntax and APIs
+- Creating a KStream:
+ ```java
+ KStream<String, String> stream = builder.stream("input-topic");
+ ```
+- Creating a KTable:
+ ```java
+ KTable<String, String> table = builder.table("input-topic");
+ ```
+- Performing transformations:
+ ```java
+ KStream<String, Integer> transformed = stream.mapValues(value -> value.length());
+ ```
+- Aggregating data:
+ ```java
+ KTable<String, Long> aggregated = stream.groupByKey().count();
+ ```
+- Joining streams and tables:
+ ```java
+ KStream<String, String> joined = stream.leftJoin(table, (streamValue, tableValue) -> streamValue + "-" + tableValue);
+ ```
 
 ### Best Practices for Kafka Streams
 

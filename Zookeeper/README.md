@@ -139,3 +139,41 @@ Here are some useful ZooKeeper commands for managing Kafka's metadata:
   ```
   zkCli.sh -server localhost:2181 ls /brokers/topics
   ```
+
+## KRaft Overview
+
+- KRaft (pronounced craft) mode is generally available starting with Confluent Platform version 7.4
+- KRaft is the consensus protocol introduced to remove Kafka's dependency on ZooKeeper for metadata management
+- Simplifies Kafka's architecture by consolidating responsibility for metadata into Kafka itself
+
+### Why move to KRaft?
+- Enables right-sized clusters to scale up to millions of partitions
+- Near-instantaneous metadata failover
+- Single management model for authentication, configuration, protocols, and networking
+
+### The Controller Quorum
+- KRaft controller nodes comprise a Raft quorum which manages the Kafka metadata log
+- The leader of the metadata log is called the active controller
+- Follower controllers replicate data and serve as hot standbys
+- Requires a majority of nodes to be running (e.g., 3-node cluster can survive 1 failure)
+- Controllers periodically write out a snapshot of the metadata to disk
+
+### Scaling Kafka with KRaft
+- KRaft mode is designed to handle a much larger number of partitions per cluster compared to ZooKeeper
+- Experiment shows KRaft can handle 10 times the maximum number of partitions for a cluster running ZooKeeper
+- Controlled shutdown time and recovery time after uncontrolled shutdown are greatly improved with a quorum controller versus ZooKeeper
+
+### Migrate from ZooKeeper to KRaft
+- See Migrate from ZooKeeper to KRaft on Confluent Platform for details
+
+### Configure Confluent Platform with KRaft
+- See KRaft Configuration Reference for Confluent Platform for details
+- Client configurations are not impacted by Confluent Platform moving to KRaft
+
+### Limitations and Known Issues
+- Combined mode (Kafka node acting as a broker and KRaft controller) is not currently supported for production workloads
+- JBOD (just a bunch of disks) is not supported in KRaft mode
+- Source-initiated Cluster Linking for Confluent Platform between a source cluster running Confluent Platform 7.0.x or earlier and a destination Confluent Platform cluster running in KRaft mode is not supported
+- No support for quorum reconfiguration (adding or removing KRaft controllers)
+- Cannot currently use Schema Registry Topic ACL Authorizer for Confluent Platform for Schema Registry with Confluent Platform in KRaft mode
+- Health+ reports KRaft controllers as brokers, which may cause alerts to function unexpectedly

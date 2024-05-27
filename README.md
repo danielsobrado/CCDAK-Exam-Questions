@@ -1,6 +1,6 @@
 ## Confluent Kafka questions to practice
 
-Preparing for the­ Confluent Certified De­veloper for Apache Kafka (CCDAK) re­quires a deep unde­rstanding of Kafka's features and components. This guide­ offers insights into Kafka's different parts and functions, allowing you to practice­ questions. Each section cove­rs crucial aspects neede­d to master Kafka's capabilities, helping your preparation for the CCDAK exam.
+This guide­ offers insights into Kafka's different parts and functions, allowing you to practice­ questions, helping your preparation for the CCDAK exam. 90 minutes - 60 questions - Around 75% pass rate required.
 
 You can prepare on the [theory of CCDAK here] (https://www.danielsobrado.com/blog/guide-ccdak-concluent-kafka-developer-certification/)
 

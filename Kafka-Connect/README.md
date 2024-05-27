@@ -87,6 +87,15 @@ These internal topics enable Kafka Connect to recover from failures, ensuring ro
 - **`offset.flush.interval.ms`**: Frequency at which to save offsets.
 - **`plugin.path`**: Path to directory containing Kafka Connect plugins.
 
+#### Additional Configurations
+- **Standalone mode**:
+ - `offset.storage.file.filename`: File to store offset data
+- **Distributed mode**:  
+ - `group.id`: Unique name for the cluster
+ - `config.storage.topic`: Topic for storing connector and task configurations
+ - `offset.storage.topic`: Topic for storing offsets
+ - `status.storage.topic`: Topic for storing statuses
+
 #### Distributed Worker Configurations
 
 - **`group.id`**: Unique identifier for the Kafka Connect cluster.
@@ -148,3 +157,23 @@ Kafka Connect provides error reporting to handle errors encountered at various s
 To report errors within a connector's converter, transforms, or within the sink connector itself to the log, set `errors.log.enable=true` in the connector configuration to log details of each error and the problem record's topic, partition, and offset. For additional debugging purposes, set `errors.log.include.messages=true` to also log the problem record key, value, and headers (note this may log sensitive information).
 
 To report errors within a connector's converter, transforms, or within the sink connector itself to a dead letter queue topic, set `errors.deadletterqueue.topic.name`, and optionally `errors.deadletterqueue.context.headers.enable=true`.
+
+## REST API
+- Kafka Connect provides a REST API for managing connectors
+- Key endpoints include viewing connector configurations, status, and restarting connectors and tasks
+- Secured clusters require additional configurations for the REST API
+
+## Connector Development
+- Connectors are responsible for breaking down a data copying job into tasks and monitoring for changes
+- `SourceConnector`s import data from systems into Kafka, `SinkConnector`s export data from Kafka to systems
+- Developers must implement the `Connector` and `Task` interfaces
+- Tasks should have consistent data schemas for the input/output streams and records
+
+## Configuration Validation
+- Kafka Connect allows configuration validation using `ConfigDef` and the `validate()` method
+- Provides feedback about errors and recommended values before running connectors
+
+## Schemas and the Kafka Connect Data API
+- More complex data requires using the data API to define schemas using `Schema` and `Struct` classes
+- Source connectors may have static or dynamic schemas and should avoid recomputing them frequently
+- Sink connectors should validate that consumed data has the expected schema

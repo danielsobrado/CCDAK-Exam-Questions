@@ -131,6 +131,39 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 - **Tuning Fetch Parameters**: Adjust `fetch.min.bytes`, `fetch.max.bytes`, and `max.partition.fetch.bytes` to optimize the balance between latency and throughput based on your application's specific needs.
 - **Consumer Lag Monitoring**: Keeping an eye on `records-lag-max` can help identify when a consumer is not keeping up with the producers, allowing for timely adjustments to consumer configurations or scaling out consumers.
 
+### High Watermark in Kafka
+
+The **high watermark (HW)** is a critical concept in Kafka, ensuring data consistency and reliability. It represents the offset of the last message that has been successfully replicated to all **In-Sync Replicas (ISR)** of a partition.
+
+#### Key Points:
+
+1. **Definition**:
+   - The high watermark is the offset of the last message replicated to all ISR.
+   - It ensures that consumers only read fully replicated messages.
+
+2. **In-Sync Replicas (ISR)**:
+   - ISR are replicas that are fully caught up with the leader replica.
+   - The leader handles all reads and writes for a partition.
+
+3. **Replication and Acknowledgements**:
+   - When a producer sends a message, it is written to the leader replica and then replicated to all ISR.
+   - Producers specify the acknowledgment level (`acks`):
+     - `acks=0`: No acknowledgment needed.
+     - `acks=1`: Leader acknowledgment only (default).
+     - `acks=-1` or `acks=all`: All ISR acknowledgment.
+
+4. **Message Visibility**:
+   - Consumers can only read messages up to the high watermark.
+   - This ensures that only fully replicated messages are read, maintaining data consistency.
+   - If `acks=1`, the highest offset (latest message) can be greater than the high watermark if the message is not yet replicated.
+
+#### Example Scenario:
+
+- A producer sends a message with offset 10.
+- With `acks=1`, the leader acknowledges the write before replication.
+- The high watermark may remain at offset 9 until the message at offset 10 is replicated to all ISR.
+- Consumers will read messages up to offset 9 until offset 10 is fully replicated.
+
 ### Security Considerations
 
 - **Encryption and Authentication**: Secure consumer connections to Kafka brokers using SSL/TLS for encryption and SASL for authentication to protect data in transit and ensure that only authorized consumers can access topic data.

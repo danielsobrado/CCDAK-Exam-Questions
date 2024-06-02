@@ -3,6 +3,9 @@
 - **Auto topic creation** depends on the broker setting `auto.create.topics.enable`.
 - **In Kafka, ordering is guaranteed** only within a partition, not across partitions.
 - **A topic partition consists of segments** with two indexes: offset to position and timestamp to offset.
+- **Topic, Partition and Offset** uniquely identifies a message in Kafka.
+- **Replicas are passive**, they don't handle produce or consume request. Produce and consume requests get sent to the node hosting partition leader.
+- **Point-to-point (request-response)** style will couple client to the server.
 
 ### Broker:
 
@@ -128,6 +131,7 @@
 - **Set `interceptor.classes`** to add custom interceptors for additional logging, monitoring, or modifications to records.
 - **Use `poll()` in a loop** to continuously consume messages from the Kafka broker.
 - **Handle rebalances gracefully** by using `RebalanceListener` to perform necessary actions during partition assignment and revocation.
+- **Calling `close()`** on consumer immediately triggers a partition rebalance as the consumer will not be available anymore.
 
 ### Kafka Connect:
 
@@ -168,10 +172,10 @@
 - **Stream-table duality:** A stream is a changelog of a table, and a table is a snapshot of a stream at a point in time.
 - **When using a persistent state store** in Kafka Streams, close iterators to prevent memory issues.
 - **The Kafka Streams API** supports KStream-to-KStream windowed joins and KTable-to-KTable non-windowed joins.
-- **Stateless operations** don't require state, while stateful operations depend on state for processing.
+- **Stateless operations** don't require state, while stateful operations depend on state for processing: Branch, Filter, FlatMap, Foreach, GroupByKey, GroupBy, Map, Map (values only), Peek, Print, SelectKey, Table to Stream.
+- **Stateful operations** : Aggregate, Count and Reduce. (Joins, windowing and custom pressesors)
 - **Mounting a persistent volume for RocksDB** can dramatically speed up Kafka Streams recovery on restart.
 - **reduce, join, count and aggregate** are stateful Kafka Streams operations.
-- **Stateless processing** depends only on the current message (e.g., format conversion, filtering).
 - **KStream-KTable joins** output a KStream.
 - **Kafka Streams exactly-once semantics** apply to Kafka-to-Kafka flows only.
 - **KStream-GlobalKTable join** does not require input topics to have the same number of partitions, unlike other join types.

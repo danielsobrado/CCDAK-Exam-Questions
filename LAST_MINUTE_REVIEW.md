@@ -67,7 +67,7 @@
 
 - **For a safe data pipeline without message loss**, use `acks=all`, `replication.factor=3`, `min.insync.replicas=2`.
 - With `replication.factor=3`, `min.insync.replicas=2`, `acks=all`, a `NOT_ENOUGH_REPLICAS` exception is thrown if 2 brokers are down.
-- **Set `unclean.leader.election.enable=false`** to prevent data loss.
+- **Set `unclean.leader.election.enable=false`** to prevent data loss.  ("Consistency-Availability" trade-off)
 - **Partitions with out-of-sync replicas** are considered under-replicated.
 - **Use `min.insync.replicas`** to define the minimum number of replicas that must acknowledge a write for it to be considered successful.
 - **Monitor under-replicated partitions** to ensure data durability and prevent data loss.
@@ -86,7 +86,7 @@
 - **Use Kafka Streams** for real-time data processing and aggregation.
 - **Configure `producer.buffer.memory` and `consumer.fetch.max.bytes`** to tune producer and consumer performance.
 - **Implement quotas** using `quota.producer.byte-rate` and `quota.consumer.byte-rate` to manage resource usage.
-- **Set `log.cleanup.policy`** to either `delete` or `compact` to manage log retention policies.
+- **Set `log.cleanup.policy`** to either `delete` or `compact` to manage log retention policies. (`delete` is the default)
 - **Use `controlled.shutdown.enable=true`** to ensure brokers shut down cleanly without data loss.
 - **Monitor the `UnderReplicatedPartitions` metric** to track replication health.
 - **Review and adjust JVM heap settings** to optimize broker performance (`-Xmx` and `-Xms` settings).
@@ -188,6 +188,8 @@
 - **The Kafka Streams `KStream` abstraction** represents an unbounded stream of records.
 - **The Kafka Streams `KTable` abstraction** represents a changelog stream, where each record represents an update.
 - **The Kafka Streams `GlobalKTable` abstraction** represents a fully replicated, non-partitioned changelog stream.
+- Use KStream when you need to process each record independently, perform stateless transformations, or handle unbounded data.
+- Use KTable when you need to perform aggregations, joins, or maintain a materialized view of the latest values for each key.
 
 ### KSQL:
 - **ksqlDB simplifies stream processing applications** on Kafka by allowing developers to write SQL queries. Key use cases include materialized caches, streaming ETL, and event-driven microservices.

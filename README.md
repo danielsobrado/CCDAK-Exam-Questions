@@ -123,10 +123,12 @@ Zookee­per manages activities within Kafka cluste­rs. Some things Zookeepe­r 
 
 Zookee­per is not required in the latest versions of Kafka and has lower importance in the exam.
 
-Zookeeper is not very important in the exam and it is good to have a good understanding of KRaft.
+Zookeeper is not very important in the exam and it is good to have a good understanding of KRaft. This is why the questions are only about KRaft.
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/Questions1.md)
+[Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/Questions1.md)
+[Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/Questions1.md)
 
 ## Other repos
 

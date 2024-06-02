@@ -177,3 +177,85 @@ To report errors within a connector's converter, transforms, or within the sink 
 - More complex data requires using the data API to define schemas using `Schema` and `Struct` classes
 - Source connectors may have static or dynamic schemas and should avoid recomputing them frequently
 - Sink connectors should validate that consumed data has the expected schema
+
+## Kafka Connect In-Depth
+
+### 1. Connect Architecture
+- Kafka Connect runs as a separate process from the Kafka brokers.
+- It can run in standalone mode (single process) or distributed mode (multiple instances).
+- In distributed mode, Connect distributes the work of connectors across multiple worker instances.
+- Workers coordinate through Kafka topics (`config`, `offset`, and `status`) for configuration, offset storage, and status updates.
+- Connectors are responsible for breaking down data copying tasks and generating task configurations.
+- Tasks are the actual units of work that perform data copying.
+- The `max.tasks` parameter determines the maximum number of tasks a connector can create.
+
+### 2. Connector Development
+- Connectors are implemented as Java classes that extend either `SourceConnector` or `SinkConnector`.
+- The `taskClass()` method returns the class of the `Task` implementation (`SourceTask` or `SinkTask`).
+- The `start()` method is called when the connector is started and initializes any necessary resources.
+- The `stop()` method is called when the connector is stopped and cleans up any resources.
+- The `config()` method returns the configuration definition for the connector.
+- The `taskConfigs()` method generates task configurations based on the connector's configuration and the maximum number of tasks.
+- `SourceTask` implementations define the `poll()` method to fetch data from the external system and return a list of source records.
+- `SinkTask` implementations define the `put()` method to receive a list of sink records and write them to the external system.
+
+### 3. Converters and Serialization
+- Converters are used to translate between the Connect data format and the serialized form stored in Kafka.
+- The `key.converter` and `value.converter` properties specify the converter classes for record keys and values, respectively.
+- Common converters include `JsonConverter`, `AvroConverter`, and `StringConverter`.
+- Converters can be configured with additional properties, such as `schemas.enable` to include schema information in the serialized data.
+
+### 4. Single Message Transforms (SMTs)
+- SMTs perform lightweight modifications to records as they flow through a connector.
+- They operate on individual records and should not perform complex operations like joins or aggregations.
+- SMTs are configured as part of the connector configuration using the `transforms` property.
+- The `transforms` property specifies a comma-separated list of transform aliases.
+- Each transform alias is configured with additional properties, such as `transforms.<alias>.type` to specify the transform class.
+- Common SMTs include `MaskField`, `ReplaceField`, `ExtractField`, and `InsertField`.
+
+### 5. Error Handling and Dead Letter Queues
+- Connectors can define error handling behavior using the `errors.tolerance` property.
+- The `errors.tolerance` property can be set to `none` (fail on any error), `all` (continue on all errors), or `transient` (continue on transient errors).
+- Dead letter queue (DLQ) can be configured to capture failed records using the `errors.deadletterqueue.topic.name` property.
+- The `errors.deadletterqueue.context.headers.enable` property can be set to `true` to include error context in the DLQ record headers.
+- Monitoring and handling records in the DLQ is important to identify and resolve issues with connector configuration or data compatibility.
+
+### 6. Offset Management
+- Connectors manage offsets to track the progress of data copying.
+- Source connectors use offsets to determine where to resume reading from the external system in case of failures or restarts.
+- Sink connectors use offsets to track the progress of writing records to the external system.
+- Offsets are stored in a Kafka topic specified by the `offset.storage.topic` property.
+- The `offset.flush.interval.ms` property controls how frequently offsets are flushed to the offset storage topic.
+- Offset management ensures exactly-once semantics and enables fault tolerance in Kafka Connect.
+
+### 7. Exactly-Once Semantics (EOS)
+- Kafka Connect supports exactly-once semantics for both source and sink connectors.
+- EOS ensures that records are processed exactly once, preventing duplicates or missing data.
+- To enable EOS, the following properties need to be configured:
+ - `enable.idempotence=true` for the Kafka producer used by the connector.
+ - `max.in.flight.requests.per.connection=1` to ensure records are sent in order.
+ - `acks=all` to require acknowledgment from all in-sync replicas.
+ - `transaction.timeout.ms` to set the transaction timeout for the connector.
+- EOS requires careful configuration and compatibility between the connector and the external system to handle failures and ensure data consistency.
+
+### 8. Schema Evolution
+- Kafka Connect supports schema evolution for connectors that use schema-based serialization formats like Avro or Protobuf.
+- Schema evolution allows the schema of records to change over time while maintaining compatibility with existing data.
+- The Confluent Schema Registry is often used in conjunction with Kafka Connect to manage and evolve schemas.
+- Connectors can be configured with the `value.converter.schema.registry.url` property to specify the URL of the Schema Registry.
+- When consuming records with a schema, the connector retrieves the schema from the Schema Registry based on the schema ID stored with the record.
+- Schema evolution strategies, such as backward and forward compatibility, need to be considered when making changes to record schemas.
+
+### 9. Monitoring and Metrics
+- Kafka Connect exposes metrics for monitoring the performance and health of connectors and tasks.
+- Metrics are exposed through JMX (Java Management Extensions) and can be collected using monitoring tools like JMX exporters or Prometheus.
+- Key metrics to monitor include:
+ - `connector-destroyed-task-count`: The number of destroyed tasks for a connector.
+ - `connector-failed-task-count`: The number of failed tasks for a connector.
+ - `connector-paused-task-count`: The number of paused tasks for a connector.
+ - `connector-running-task-count`: The number of running tasks for a connector.
+ - `connector-unassigned-task-count`: The number of unassigned tasks for a connector.
+ - `source-record-poll-total`: The total number of records polled by a source connector.
+ - `sink-record-read-total`: The total number of records read by a sink connector.
+ - `sink-record-send-total`: The total number of records sent by a sink connector.
+- Monitoring metrics helps identify performance bottlenecks, connectivity issues, and resource utilization of Kafka Connect.

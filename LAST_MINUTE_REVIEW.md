@@ -10,6 +10,7 @@
 ### Broker:
 
 - **A Kafka Broker** is a JVM process that runs on a machine and hosts topics.
+- Any Kafka broker can provide cluster **metadata to clients**.
 - **In production, set the Java heap size to 6 GB** for optimal Kafka performance.
 - **In a multi-broker Kafka cluster**, only the `broker.id` property needs to be unique for each node.
 - **Garbage Collection** is used by Kafka brokers to handle the deletion of unused objects and tune performance.
@@ -20,6 +21,7 @@
 - **Broker configuration** is defined in the `server.properties` file, which includes settings like `broker.id`, `port`, `log.dirs`, `zookeeper.connect`, etc.
 - **Kafka brokers** rely on ZooKeeper for maintaining their cluster state, like topics, partitions, replicas, leaders, ISRs, and more.
 - **Each broker** has a unique integer identifier, the `broker.id`, which is used in various Kafka protocols and requests.
+- `min.insync.replica`s does not impact producers when `acks=1` only when `acks=all`
 - **Kafka brokers** handle authentication and authorization of clients based on the configured security protocols and ACLs.
 - **Kafka brokers** expose metrics via JMX for monitoring their performance and health, like request rates, byte rates, CPU usage, etc.
 - **Kafka brokers** can be configured to use rack awareness for improved fault tolerance, by spreading replicas across different racks.
@@ -37,6 +39,12 @@
 - **Broker Startup:** During startup, brokers register themselves with ZooKeeper and load topic metadata to prepare for handling requests.
 - **Kafka Protocol:** Brokers use a binary protocol for communication, which clients and other brokers utilize to interact with the cluster.
 - **Broker Upgrades:** Brokers can be upgraded with zero downtime using a rolling upgrade process, ensuring continuous availability.
+- In a 5 node ZooKeeper ensemble, **up to 2 servers can fail while still maintaining a quorum**. In a 9 broker, 4 can fail.
+- ZooKeeper ensemble members communicate on **ports 2181, 2888, 3888** by default.
+- The **Metadata request can be handled by any node**, enabling clients to discover the designated leader for topic partitions.
+- With `replication.factor=3`, `min.insync.replicas=2`, `acks=all`, a `NOT_ENOUGH_REPLICAS` exception is thrown if **2 brokers are down**.
+- Setting `unclean.leader.election.enable=true` allows **non-ISR replicas to become leader**, ensuring availability but risking data loss.
+
 
 ### CLI:
 
@@ -109,6 +117,7 @@
 - **Kafka consumer partition assignment strategies** include `RangeAssignor`, `RoundRobinAssignor`, `StickyAssignor`, and `CooperativeStickyAssignor`.
 - **Committed consumer group offsets** take precedence over `auto.offset.reset`.
 - **For at-most-once**, commit offsets before processing messages.
+- For at-least-once processing, **commit offsets after processing messages**.
 - **Consumers can subscribe to multiple topics** via regex or a topic list.
 - **Consumer offsets are stored** in the `consumer_offsets` topic, schemas are stored in the `_schemas` topic.
 - **Use `max.poll.records`** to limit the number of records returned in a single call to `poll()`.
@@ -132,6 +141,8 @@
 - **Use `poll()` in a loop** to continuously consume messages from the Kafka broker.
 - **Handle rebalances gracefully** by using `RebalanceListener` to perform necessary actions during partition assignment and revocation.
 - **Calling `close()`** on consumer immediately triggers a partition rebalance as the consumer will not be available anymore.
+- If there are no initial offsets or the current offset does not exist, setting `auto.offset.reset=none` will make the consumer **throw an exception**.
+- When used with default options and no specified group ID, the `kafka-console-consumer` generates a **random consumer group**.
 
 ### Kafka Connect:
 
@@ -162,6 +173,8 @@
 - **Use `value.converter.schemas.enable`** to control whether the schema is included with each message for Avro, JSON, and Protobuf.
 - **Configure `key.converter` and `value.converter`** to specify the serialization format used by the connectors.
 - **Leverage Kafka Connect transformations** to perform lightweight message modifications without needing custom code.
+- Connector configurations are defined in the worker configuration file or REST requests as **key-value mappings**.
+- Kafka Connect can provide **exactly-once semantics for sink and source connectors** if they are designed to take advantage of the framework's capabilities.
 
 ### Streams:
 
@@ -194,9 +207,18 @@
 - **The Kafka Streams `GlobalKTable` abstraction** represents a fully replicated, non-partitioned changelog stream.
 - Use KStream when you need to process each record independently, perform stateless transformations, or handle unbounded data.
 - Use KTable when you need to perform aggregations, joins, or maintain a materialized view of the latest values for each key.
+- When joining streams/tables, **input data must be co-partitioned with the same number of partitions**. (Except for GlobalKTable)
+- **Branch, FlatMapValues, GroupBy** are examples of stateless operations in Kafka Streams.
+- To convert a KStream to a KTable, options include `KStream.toTable()`, **writing to Kafka and reading as KTable**, or performing a dummy aggregation.
+- For Kafka Streams output topics, it's recommended to set `cleanup.policy=compact` to align with **KTable semantics**.
+- Kafka Streams achieves parallelism by **splitting the topology into tasks** executed by threads across application instances.
 
 ### KSQL:
+
+- ksqlDB is a dialect inspired by ANSI SQL but introduces differences like **"windowing" for streaming data processing**.
+- ksqlDB **doesn't support structured keys**, making it impossible to create a stream from a windowed aggregate.
 - **ksqlDB simplifies stream processing applications** on Kafka by allowing developers to write SQL queries. Key use cases include materialized caches, streaming ETL, and event-driven microservices.
+- **ksqlDB supports windowing operations** like `TUMBLING`, `HOPPING`, and `SESSION` windows for aggregations over time.
 - **SHOW STREAMS and EXPLAIN statements** in ksqlDB communicate directly with the ksqlDB server, not Kafka.
 - **Idle ksqlDB servers** consume few resources. Only servers corresponding to the number of partitions actively process a query.
 - **ksqlDB supports exactly-once processing**, configurable with the `processing.guarantee` setting.
@@ -207,7 +229,6 @@
 - **Use SET `auto.offset.reset`='earliest'** for KSQL to read a topic from the start.
 - **KSQL-related data and metadata are stored** in Kafka topics, not in Zookeeper, databases, or Schema Registry.
 - **ksqlDB supports Pull and Push queries**. Pull queries are one-time queries that return a result immediately, while Push queries are continuous queries that output results to a new stream or table.
-- **ksqlDB supports windowing operations** like `TUMBLING`, `HOPPING`, and `SESSION` windows for aggregations over time.
 - **The ksqlDB REST API** allows interacting with ksqlDB servers programmatically.
 - **ksqlDB supports User Defined Functions (UDFs)** for custom processing logic.
 - **ksqlDB queries are scalable and fault-tolerant** since they leverage the underlying Kafka infrastructure.
@@ -216,6 +237,9 @@
 - **The `INSERT INTO` statement** in ksqlDB writes records into an existing stream or table.
 - **The `CREATE CONNECTOR` statement** in ksqlDB creates a new Kafka Connect connector.
 - **ksqlDB supports JOIN operations** between streams and tables, including `INNER JOIN`, `LEFT JOIN`, and `OUTER JOIN`.
+- To use Avro data with ksqlDB, **Schema Registry must be installed** and `ksql.schema.registry.url` configured to point to it.
+- The ksqlDB command topic stores metadata for **persistent queries based on `CREATE STREAM AS SELECT` and `CREATE TABLE AS SELECT`**.
+- Maximum parallelism in ksqlDB depends on the **number of topic partitions**.
 
 ### Metrics:
 - **Confluent Control Center** enables centralized management and monitoring of Kafka components.
@@ -265,6 +289,9 @@
 - **Setting `compression.type` to `lz4`** provides a good balance of compression ratio and CPU usage.
 - **The `partitioner.class` configuration** allows specifying a custom partitioner for determining which partition a record should be sent to.
 - **Producers can be created using the `KafkaProducer` class** in the Kafka Java API.
+- `RecordTooLargeException` is a **non-retriable exception**, meaning the message will not be sent again.
+- The `send()` method returns a **Future object with RecordMetadata**.
+- To receive leader acknowledgment of writes, set `acks=1`.
 
 ### Schema Registry:
 - **Supported schema formats in Confluent Platform** include Avro, JSON, and Protobuf.
@@ -290,6 +317,8 @@
 - **The Schema Registry Maven Plugin** generates Java classes from Avro schemas for use in Kafka producers and consumers.
 - **The Schema Registry supports multiple subjects per topic**, allowing different schemas for keys and values.
 - **Confluent Replicator** can be used to replicate schemas between Schema Registry clusters.
+- **Avro deserializer fetches missing schemas from the registry**.
+- Adding a field without a default is a **forward compatible Avro schema change**.
 
 ### Security:
 - **Encryption is configured** using listener configuration and managing truststores/keystores to protect data in transit.
@@ -300,7 +329,8 @@
 - **SAML is not a valid authentication mechanism in Kafka**. Valid options are SASL/GSSAPI, SASL/SCRAM, and SSL.
 - **Kafka clients use HTTPS (SSL/TLS) to securely connect to the Confluent REST Proxy**.
 - **Enabling SSL encryption in Kafka disables the zero-copy optimization** since data must be loaded into the JVM to encrypt/decrypt.
-- **Kafka supports authentication using SSL certificates, SASL/PLAIN, SASL/SCRAM, SASL/GSSAPI (Kerberos)**.
+- - Kafka supports authentication using **SSL certificates, SASL/PLAIN, SASL/SCRAM, SASL/GSSAPI (Kerberos)**.
+- The security protocol of each listener is defined in the `listener.security.protocol.map` configuration, with options like **PLAINTEXT, SSL, SASL_PLAINTEXT, SASL_SSL**.
 - **Kafka supports authorization using ACLs (Access Control Lists)** to control access to resources like topics and consumer groups.
 - **Encryption of data at rest can be achieved using disk encryption** or by configuring Kafka to encrypt its data files.
 - **Kafka supports SSL/TLS encryption for client-broker and broker-broker communication**.
@@ -345,7 +375,7 @@
 - **The number of partitions in a Kafka topic can only be increased**, not decreased, using the kafka-topics.sh command.
 - **Configure topic-level retention.ms**, not just broker-level log.retention.ms, to set retention for a specific topic to 1 hour (3600000 ms).
 - **Only the leader replica handles produce and consume requests** for a partition. Follower replicas do not actively serve clients.
-- **To find partitions without a leader**, use: `kafka-topics.sh --zookeeper localhost:2181 --describe --unavailable-partitions`.
+- **To find partitions without a leader**, use: `kafka-topics.sh --bootstrap-server localhost:9092 --describe --unavailable-partitions`.
 - **Partition rebalance for a consumer group** is triggered by increasing partitions, adding/removing consumers, or consumer shutting down.
 - **If multiple log retention configs are set**, the smaller unit size takes precedence.
 - **Adding partitions causes new records with the same key to potentially go to different partitions**. Existing records stay put.
@@ -361,6 +391,10 @@
 - **Consumers commit offsets by interacting with the Group Coordinator broker**, not by writing directly to the `consumer_offsets` topic.
 - **The Controller is a broker elected by ZooKeeper** to be responsible for partition leadership assignment (in addition to normal tasks).
 - **Producers automatically handle broker leader changes** by requesting new leaders from any broker and resuming production.
+- `unclean.leader.election.enable=true` allows non ISR replicas to become leader, ensuring availability but losing consistency as data loss might occur
+- A Kafka broker automatically creates a topic if a producer sends a message, a consumer reads a message, or a client requests metadata for the topic, when `auto.create.topics.enable` is set to **true**.
+- Adding partitions causes **new records with the same key to potentially go to different partitions**, while existing records stay put.
+
 
 ### Other:
 - **Serialization converts objects to byte streams** for transmission, while deserialization does the opposite.

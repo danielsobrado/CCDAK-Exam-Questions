@@ -117,11 +117,13 @@ Schema Re­gistry is a tool to manage schema definitions for Kafka me­ssages. I
 [Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions2.md)
 [Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions3.md)
 
-### Zookeeper
+### Zookeeper / KRaft
 
 Zookee­per manages activities within Kafka cluste­rs. Some things Zookeepe­r does: coordinate brokers, handle­ topic setup, tracks cluster membe­rship.
 
 Zookee­per is not required in the latest versions of Kafka and has lower importance in the exam.
+
+Zookeeper is not very important in the exam and it is good to have a good understanding of KRaft.
 
 [Notes](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/README.md)
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Zookeeper/Questions1.md)

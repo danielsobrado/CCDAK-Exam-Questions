@@ -103,8 +103,6 @@ Which of the following statements about Kafka topic configurations is true?
 - C. Topic configurations are stored in Zookeeper and are not accessible through the Kafka broker
 - D. Topic configurations are stored in the Kafka broker's configuration file and require a broker restart to take effect
 
-**Answer:** B
-
 **Explanation:**
 In Kafka, topic configurations can be changed dynamically using the `kafka-configs.sh` tool without requiring a broker restart.
 
@@ -124,6 +122,8 @@ Statement C is partially correct but incomplete. Topic configurations are indeed
 
 Statement D is incorrect because topic configurations are not stored in the broker's configuration file. They are stored in Zookeeper, and changes do not require a broker restart.
 
+**Answer:** B
+
 ## Question 6
 
 What is the default cleanup policy for Kafka topics?
@@ -132,8 +132,6 @@ What is the default cleanup policy for Kafka topics?
 - B. Compact
 - C. Delete and Compact
 - D. None
-
-**Answer:** A
 
 **Explanation:**
 The default cleanup policy for Kafka topics is "Delete".
@@ -151,3 +149,6 @@ If you want to use the "Compact" policy for a topic, you need to explicitly set 
 Statements B and C are incorrect because they do not represent the default cleanup policy. "Compact" is not the default, and "Delete and Compact" is not a valid cleanup policy option.
 
 Statement D is incorrect because Kafka does have a default cleanup policy, which is "Delete". It is not the case that no cleanup policy is set by default.
+
+**Answer:** A
+

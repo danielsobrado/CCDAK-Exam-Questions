@@ -39,7 +39,7 @@
 - **Broker Startup:** During startup, brokers register themselves with ZooKeeper and load topic metadata to prepare for handling requests.
 - **Kafka Protocol:** Brokers use a binary protocol for communication, which clients and other brokers utilize to interact with the cluster.
 - **Broker Upgrades:** Brokers can be upgraded with zero downtime using a rolling upgrade process, ensuring continuous availability.
-- In a 5 node ZooKeeper ensemble, **up to 2 servers can fail while still maintaining a quorum**. In a 9 broker, 4 can fail.
+- In a 5 node ZooKeeper ensemble, **up to 2 servers can fail while still maintaining a quorum**. In a 9 broker, 4 can fail and still keep voting majority.
 - ZooKeeper ensemble members communicate on **ports 2181, 2888, 3888** by default.
 - The **Metadata request can be handled by any node**, enabling clients to discover the designated leader for topic partitions.
 - With `replication.factor=3`, `min.insync.replicas=2`, `acks=all`, a `NOT_ENOUGH_REPLICAS` exception is thrown if **2 brokers are down**.
@@ -395,7 +395,7 @@
 - Kafka supports authenticating to ZooKeeper with **SASL and mTLS individually or both together**. When using mTLS alone, every broker and CLI tool should identify itself with the **same Distinguished Name (DN)** for proper ACL'ing.
 - The Confluent Server **Authorizer** can be used to capture, protect, and preserve authorization activity into topics in a Kafka cluster, helping to track user and application access across the platform through **audit logs**.
 
-### ZooKeeper:
+### ZooKeeper:  (Being replaced by KRaft, less important now)
 - **ZooKeeper keeps track of znodes**, which have a path, can store data, and be persistent or ephemeral. Renaming znodes is not supported.
 - **In a 5 node ZooKeeper ensemble, up to 2 servers can fail while still maintaining a quorum**.
 - **ZooKeeper ensemble members communicate on ports 2181, 2888, 3888 by default**.
@@ -419,6 +419,51 @@
 - Running Kafka in production, a machine should have at least **32 GB of RAM** as a decent choice for storing and caching messages.
 - In a ZooKeeper ensemble with 9 servers, **up to 4 servers can fail** while still maintaining a quorum.
 - The command to start the ZooKeeper service is: `bin/zookeeper-server-start.sh config/zookeeper.properties`.
+
+### KRaft Configuration in Confluent Platform
+
+#### Hardware and JVM Requirements
+- **Minimum of 4 GB of RAM**
+- **Dedicated CPU core** should be considered when the server is shared
+- An **SSD disk at least 64 GB** in size is highly recommended
+- **JVM heap size of at least 1 GB** is recommended
+### Configuration Files
+- Example KRaft configuration files are located in `/etc/kafka/kraft/` after installing Confluent Platform
+ - `broker.properties`: Settings for broker-only servers
+ - `controller.properties`: Settings for controller-only servers
+ - `server.properties`: Settings for combined broker and controller servers (not supported for production)
+#### Metrics Reporter
+- The metrics reporter must be **enabled on each broker and controller** in KRaft mode to see broker metrics in Confluent Control Center
+- Uncomment the relevant lines in the properties file
+#### Socket Server Settings
+- `listeners`: Must be configured for controllers, consistent with `controller.quorum.voters` value
+- `controller.listener.names`: Required for KRaft mode, specifying listeners used by the controller
+#### Log Settings
+- `log.dirs`: Should list only one log directory for KRaft mode, as JBOD is not currently supported
+- `num.partitions`: Sets the default number of log partitions per topic for brokers (ignored by controllers)
+#### Metadata Retention Settings
+- `metadata.log.dir`: Specifies the location of the metadata log for KRaft clusters (defaults to the first `log.dirs` directory if not set)
+- `metadata.max.idle.interval.ms`: Sets how often the active controller writes no-op records to the metadata partition (default 500 ms)
+#### Settings for Other Components
+- When using KRaft instead of ZooKeeper, current, non-deprecated configuration settings must be used for:
+ - Clients and services
+ - Schema Registry
+ - Administrative tools
+ - Retrieving the Kafka cluster ID
+#### Generating and Formatting IDs
+- Before starting Kafka, use the `kafka-storage` tool to:
+ - Generate a cluster ID with `random-uuid`
+ - Format each node with the `format` command
+#### Debugging Tools
+- Kafka provides tools for debugging KRaft mode clusters:
+ - `kafka-metadata-quorum`: Describe runtime status
+ - `kafka-dump-log`: Debug log segments
+ - `kafka-metadata-shell`: Inspect the metadata partition
+#### Monitoring Metrics
+- Key metrics to monitor for KRaft mode:
+ - KRaft quorum metrics (e.g., `append-records-rate`, `commit-latency-avg`)
+ - Controller metrics (e.g., `ActiveBrokerCount`, `LastAppliedRecordOffset`)
+ - Broker metadata metrics (e.g., `last-applied-record-offset`, `metadata-load-error-count`)
 
 ### Topic:
 - **Auto topic creation** uses broker config for `num.partitions` and `default.replication.factor`.

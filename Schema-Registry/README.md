@@ -154,3 +154,128 @@ BACKWARD compatibility means that consumers using the new schema X can read data
     http://localhost:8081/compatibility/subjects/test-topic-value/versions/latest
   ```
 
+### Schema Registry In-Depth
+
+#### 1. Overview
+- Schema Registry is a centralized service for storing and managing schemas used for serializing and deserializing data in Kafka.
+- It provides a RESTful API for storing and retrieving schemas, as well as enforcing schema compatibility rules.
+- Schema Registry integrates with Kafka clients, allowing them to retrieve schemas for serialization and deserialization.
+- It supports multiple serialization formats, including Avro, Protobuf, and JSON Schema.
+- Schema Registry ensures data compatibility between producers and consumers by:
+ - Storing a schema for each unique topic-key or topic-value combination.
+ - Allowing producers and consumers to retrieve schemas based on the topic and key/value type.
+ - Enforcing compatibility rules to ensure that producers and consumers use compatible schemas.
+ - Rejecting incompatible schemas and ensuring that data can be deserialized correctly by consumers.
+
+#### 2. Schema Compatibility
+- Schema compatibility ensures that data serialized with an older schema can be deserialized using a newer schema.
+- Schema Registry supports four compatibility types:
+ - `BACKWARD`: Consumers using the new schema can read data produced with the last schema.
+   - Allows adding new fields to the schema.
+   - Allows making a previously required field optional.
+   - Allows removing a field with a default value.
+ - `FORWARD`: Consumers using the last schema can read data produced with the new schema.
+   - Allows removing fields from the schema.
+   - Allows making a previously optional field required.
+ - `FULL`: Both `BACKWARD` and `FORWARD` compatibilities are maintained.
+   - Allows adding new optional fields.
+   - Allows removing fields with default values.
+ - `NONE`: No compatibility checks are performed.
+- Compatibility can be configured globally or per subject (topic-key or topic-value).
+- Schema evolution is supported by allowing compatible schema changes, such as adding optional fields or removing fields with default values.
+- When a producer tries to register an incompatible schema:
+ - Schema Registry rejects the registration request.
+ - The producer receives an error indicating that the schema is incompatible.
+ - The producer must update its schema to be compatible with the existing schema before successfully registering the schema and producing data.
+
+#### 3. Subject Naming Strategies
+- Subjects in Schema Registry represent a unique combination of a topic and a key or value schema.
+- Schema Registry supports three subject naming strategies:
+ - `TopicNameStrategy` (default): The subject name is the topic name suffixed with `-key` or `-value`.
+   - All messages in a topic must have the same schema.
+   - Suitable when all messages in a topic have the same schema.
+ - `RecordNameStrategy`: The subject name is the fully-qualified name of the record schema.
+   - Allows different topics to use the same schema.
+   - All topics with the same record name must have the same schema version.
+   - Useful when multiple topics share the same schema.
+ - `TopicRecordNameStrategy`: The subject name is the topic name concatenated with the record name.
+   - Allows different topics to have different schemas for the same record name.
+   - Provides flexibility for schema evolution per topic.
+- The subject naming strategy determines how schemas are grouped and evolved within Schema Registry.
+
+#### 4. Schema Registry REST API
+- Schema Registry exposes a RESTful API for interacting with schemas and subjects.
+- Key endpoints include:
+ - `POST /subjects/(string: subject)/versions`: Register a new schema version under the specified subject.
+ - `GET /subjects/(string: subject)/versions/(versionId: version)`: Retrieve a specific version of the schema registered under the given subject.
+ - `POST /compatibility/subjects/(string: subject)/versions/(versionId: version)`: Test schema compatibility against a specified version.
+ - `GET /schemas/ids/(int: id)`: Retrieve the schema string associated with the given schema ID.
+ - `GET /subjects/(string: subject)/versions/latest`: Retrieve the latest version of a schema for a given subject.
+ - `GET /subjects/(string: subject)/versions`: Retrieve the version number of the latest schema for a given subject.
+- The API allows registering schemas, retrieving schemas by ID or version, and testing schema compatibility.
+
+#### 5. Serializers and Deserializers
+- Schema Registry provides serializers and deserializers for Avro, Protobuf, and JSON Schema.
+- Serializers and deserializers are used by Kafka producers and consumers to convert between Kafka Connect data formats and Kafka's byte[].
+- Key classes include:
+ - `KafkaAvroSerializer` and `KafkaAvroDeserializer` for Avro.
+ - `KafkaProtobufSerializer` and `KafkaProtobufDeserializer` for Protobuf.
+ - `KafkaJsonSchemaSerializer` and `KafkaJsonSchemaDeserializer` for JSON Schema.
+- Serializers and deserializers are configured with the Schema Registry URL and handle schema registration and retrieval automatically.
+- When a serializer tries to serialize data with an unregistered schema:
+ - The serializer automatically registers the schema with Schema Registry before serializing the data.
+ - The serializer makes a call to the Schema Registry API to register the schema and retrieve the schema ID.
+ - If the schema registration is successful, the serializer proceeds with serializing the data using the registered schema.
+ - If the schema registration fails (e.g., due to incompatibility), the serializer throws an exception, and the data is not serialized.
+
+#### 6. Multi-Datacenter Setup
+- Schema Registry supports multi-datacenter deployments for high availability and disaster recovery.
+- In a multi-datacenter setup, each datacenter has its own Schema Registry cluster, and the clusters are configured to replicate schemas asynchronously.
+- Schema changes are propagated from the primary cluster to the secondary clusters using Kafka's internal replication mechanism.
+- Producers and consumers in each datacenter interact with their local Schema Registry cluster for schema registration and retrieval.
+- Schema replication in a multi-datacenter setup works as follows:
+ - One datacenter is designated as the primary (or master) datacenter, and the others are secondary (or slave) datacenters.
+ - When a schema is registered or updated in the primary datacenter, the Schema Registry cluster in the primary datacenter writes the schema to a special Kafka topic (`_schemas` by default).
+ - The Schema Registry clusters in the secondary datacenters consume the schemas from the `_schemas` topic and apply the changes locally.
+ - Schema replication ensures that all datacenters have a consistent view of the schemas, even in the presence of network partitions or datacenter failures.
+
+#### 7. Schema Registry Security
+- Schema Registry supports authentication and authorization to secure access to schemas and the API.
+- Authentication mechanisms include:
+ - Basic Auth: Username and password-based authentication.
+ - SSL/TLS: Encryption and authentication using certificates.
+ - SASL: Authentication using Kerberos or other SASL mechanisms.
+- Authorization can be configured to control access to specific subjects and API endpoints based on user roles and permissions.
+- Schema Registry can integrate with external authentication and authorization systems, such as LDAP or OAuth.
+- To enable authentication in Schema Registry:
+ - Set the `kafkastore.security.protocol` configuration property to the desired security protocol (e.g., `SSL`, `SASL_SSL`).
+ - Configure the appropriate authentication settings based on the chosen protocol. For example, for basic auth, set `kafkastore.basic.auth.user.info` to the username and password.
+ - Configure authorization by setting `kafkastore.acl.authorizer.class` to the fully-qualified class name of the authorizer implementation.
+ - Clients accessing the Schema Registry API must provide the necessary credentials or certificates to authenticate and authorize their requests.
+
+#### 8. Confluent Control Center Integration
+- Schema Registry integrates with Confluent Control Center, a web-based user interface for managing and monitoring Kafka clusters.
+- Control Center provides a graphical interface for viewing and managing schemas, subject compatibility, and schema evolution.
+- It allows searching for schemas, viewing schema details, and testing schema compatibility.
+- Control Center also provides monitoring and alerting capabilities for Schema Registry, including metrics on schema registration, retrieval, and compatibility checks.
+- To view the schema history for a subject in Confluent Control Center:
+ - Navigate to the "Schema Registry" section.
+ - Select the desired subject from the list of available subjects.
+ - In the subject details page, the schema history is displayed, including the version number, schema, and timestamp of each registered schema version.
+ - Different versions of the schema can be compared to see the changes between them.
+ - Control Center provides a user-friendly interface to explore the schema history and track the evolution of schemas over time.
+
+#### 9. Best Practices
+- Use a meaningful and consistent subject naming convention based on your use case and subject naming strategy.
+- Define schemas with appropriate compatibility rules to allow for schema evolution while maintaining compatibility.
+- Use Avro, Protobuf, or JSON Schema for strong typing and schema validation.
+- Ensure that producers and consumers are configured with the correct serializers and deserializers that match the schemas.
+- Monitor Schema Registry metrics and logs to identify any issues or performance bottlenecks.
+- Implement proper security measures, such as authentication and authorization, to protect sensitive schema information.
+- Use Schema Registry in conjunction with Kafka Connect and ksqlDB to enable seamless data integration and stream processing with schema validation.
+- Common schema evolution use cases include:
+ - Adding a new optional field to a schema: Producers can start including the new field in the data, while consumers can handle data with or without the field.
+ - Removing an existing field from a schema: Producers can stop including the field in the data, and consumers can handle data with or without the field (assuming a default value is provided).
+ - Renaming a field: Add a new field with the new name and mark the old field as deprecated. Consumers can handle both the old and new field names until the old field is completely removed.
+ - Changing the data type of a field: This requires careful consideration and may involve a multi-step process, such as adding a new field with the new data type and gradually migrating producers and consumers to use the new field.
+ - Evolving schemas in a backward or forward compatible manner allows for smooth updates and reduces the risk of data incompatibility between producers and consumers.

@@ -30,7 +30,7 @@ Kafka provides a set of command-line tools that allow administrators and develop
 
 | Command | Explanation |
 |---------|-------------|
-| **kafka-topics.sh** | **A tool for managing Kafka topics.** |
+| **kafka-topics.sh** | A tool for managing Kafka topics. |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. This is the recommended option, replacing `--zookeeper`. |
 | --create | Creates a new topic. |
 | --delete | Deletes an existing topic. |
@@ -43,26 +43,29 @@ Kafka provides a set of command-line tools that allow administrators and develop
 | --partitions | Specifies the number of partitions for the topic. |
 | --replication-factor | Specifies the replication factor for each partition in the topic. |
 | --config | Specifies topic-level configuration properties. |
-| **kafka-console-producer.sh** | **A command-line tool that allows you to produce messages to a Kafka topic.** |
+| **kafka-console-producer.sh** | A command-line tool that allows you to produce messages to a Kafka topic. |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. |
 | --topic | Specifies the name of the topic to produce messages to. |
 | --producer-property | Specifies a producer configuration property. |
-| **kafka-console-consumer.sh** | **A command-line tool that allows you to consume messages from a Kafka topic.** |
+| **kafka-console-consumer.sh** | A command-line tool that allows you to consume messages from a Kafka topic. |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. |
 | --topic | Specifies the name of the topic to consume messages from. |
 | --from-beginning | Starts consuming messages from the beginning of the topic. |
 | --group | Specifies the consumer group ID for the consumer. |
 | --consumer-property | Specifies a consumer configuration property. |
-| **kafka-consumer-groups.sh** | **A tool for managing Kafka consumer groups.** |
-| --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. |
+| **kafka-consumer-groups.sh** | A tool for managing Kafka consumer groups. |
+| --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. This is a required flag. |
+| --group | Specifies the ID of the consumer group to describe or manage. This is a required flag for most operations. |
 | --describe | Describes consumer group details, including the current offset and lag for each partition. |
-| --group | Specifies the ID of the consumer group to describe. |
+| --list | Lists all consumer groups. |
 | --reset-offsets | Resets the offset for a consumer group. |
 | --to-earliest | Used with `--reset-offsets` to reset the offset to the earliest message in each partition. |
 | --to-latest | Used with `--reset-offsets` to reset the offset to the latest message in each partition. |
 | --to-offset | Used with `--reset-offsets` to reset the offset to a specific value for each partition. |
 | --shift-by | Used with `--reset-offsets` to shift the offset by a relative value for each partition. |
-| --execute | Executes the offset reset operation. |
+| --execute | Executes the offset reset operation. Without this flag, the reset operation is only displayed but not executed. |
+| --all-topics | Used with `--describe` to describe the group state for all topics. |
+| --all-groups | Used with `--list` to list all consumer groups. |
 
 Note: While ZooKeeper is still a valid option for managing Kafka clusters, it's no longer the most up-to-date approach. The Kafka community is moving towards the self-managed KRaft mode, which simplifies the architecture and improves scalability.
 

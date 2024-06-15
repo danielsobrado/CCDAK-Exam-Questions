@@ -15,9 +15,32 @@ When a consumer wants to join a group, it sends a JoinGroup request to the group
 
 A `PartitionAssignor` is a class that, given consumers and the topics they subscribed to, decides which partitions will be assigned to which consumer. Kafka has two default assignment strategies:
 
-- **RangeAssignor (default):** Assigns each consumer a consecutive subset of partitions from each topic it subscribes to. For example, if consumers C1 and C2 are subscribed to two topics, T1 and T2, and each topic has three partitions, then C1 will be assigned partitions 0 and 1 from both topics, while C2 will be assigned partition 2 from both topics. Because each topic has an uneven number of partitions, the first consumer ends up with more partitions than the second when the number of consumers does not neatly divide the number of partitions in each topic.
+#### 1. Range Assignor
+* **How It Works**: Divides the sorted list of partitions into contiguous ranges and assigns each range to a consumer. The assignment is sequential based on the sorted order of consumer IDs.
+* **Key Points**: Simple and predictable; however, it can lead to imbalanced workloads if the number of partitions is not a multiple of the number of consumers. It was the default partition assignor in Kafka versions prior to 2.4.
+* **Example Scenario**: Imagine a topic with 12 partitions (P0 to P11) and 3 consumers (C0, C1, C2). The assignment might look like this: C0: P0, P1, P2, P3   -   C1: P4, P5, P6, P7  -  C2: P8, P9, P10, P11
 
-- **RoundRobinAssignor:** Takes all the partitions from all subscribed topics and assigns them to consumers sequentially, one by one. If C1 and C2 described previously used RoundRobin assignment, C1 would have partitions 0 and 2 from topic T1 and partition 1 from topic T2. C2 would have partition 1 from topic T1 and partitions 0 and 2 from topic T2. In general, if all consumers are subscribed to the same topics (a very common scenario), RoundRobin assignment will result in all consumers having the same number of partitions (or at most one partition difference).
+#### 2. Round Robin Assignor
+* **How It Works**: Assigns partitions to consumers in a round-robin fashion across all consumers, ensuring each consumer gets a partition before any consumer gets a second one.
+* **Key Points**: Provides better load balancing compared to the Range Assignor, especially when the number of partitions is not evenly divisible by the number of consumers. However, it can lead to rebalancing when consumers are added or removed.
+* **Example Scenario**: Using the same topic with 12 partitions (P0 to P11) and 3 consumers (C0, C1, C2), the assignment would be: C0: P0, P3, P6, P9   -   C1: P1, P4, P7, P10   -   C2: P2, P5, P8, P11
+
+###### 3. Sticky Assignor
+* **How It Works**: Aims to maintain a sticky relationship between consumers and partitions across rebalances, minimizing the number of partitions that get reassigned to different consumers.
+* **Key Points**: Reduces the amount of data that needs to be re-fetched when partitions are reassigned; offers a good balance between fairness and stability. It was introduced in Kafka 2.4 and became the default assignor, replacing the Range Assignor.
+* **Example Scenario**: After an initial assignment, if a new consumer (C3) joins, the Sticky Assignor would try to minimize partition movement. It might reassign only a few partitions from the existing consumers to the new one, like this: C0: P0, P3, P6   -   C1: P1, P4, P7   -   C2: P2, P5, P11   -   C3: P8, P9, P10
+
+#### 4. Cooperative Sticky Assignor
+* **How It Works**: Similar to the Sticky Assignor but allows for more cooperative rebalancing. It minimizes the impact on consumers by only reassigning partitions that need to be moved instead of revoking all partitions and redistributing them.
+* **Key Points**: Designed to reduce the impact of rebalancing, allowing consumers to continue consuming while rebalance is in progress, and reducing the time it takes to complete a rebalance. It was introduced in Kafka 2.4 as an improvement over the Sticky Assignor.
+* **Example Scenario**: When a consumer leaves the group, the Cooperative Sticky Assignor would only reassign the partitions that were consumed by the leaving consumer, without affecting the assignments of other consumers. This minimizes the rebalancing impact on the consumer group.
+
+#### Mnemonic to Remember
+**"RRSC" - Round, Range, Sticky, Cooperative**
+* **Round** for **Round Robin**: Think of a round table where everyone gets a slice of cake one by one.
+* **Range** for **Range Assignor**: Imagine dividing a chocolate bar into contiguous pieces where each person gets a range of pieces.
+* **Sticky** for **Sticky Assignor**: Like sticky notes, once a partition is assigned to a consumer, it tries to "stick" with them across rebalances.
+* **Cooperative** for **Cooperative Sticky Assignor**: Think of a team project where everyone cooperates, making changes only when necessary, thus minimizing disruption.
 
 ### Important Consumer Properties
 

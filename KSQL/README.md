@@ -228,3 +228,4 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
   - Enable query logging by setting the `ksql.logging.processing.topic.auto.create` and `ksql.logging.processing.stream.auto.create` properties to `true`.
   - Investigate the Kafka consumer group lag for the input topics to identify if the queries are falling behind in processing.
   - Use the ksqlDB REST API or CLI to execute `SELECT` statements and verify the query results.
+

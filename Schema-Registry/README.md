@@ -6,7 +6,7 @@ Confluent Schema Registry and Avro serialization provide a robust way to ensure 
 
 - **Centralized Schema Management**: Schema Registry stores and manages Avro, JSON Schema, and Protobuf schemas, ensuring that producers and consumers agree on schema formats.
 - **Schema Evolution**: Supports schema evolution with backward, forward, and full compatibility checks, preventing breaking changes.
-- **Integration with Kafka**: Seamlessly integrates with Kafka, enabling schemas to be applied to Kafka messages, ensuring data consistency across the system.
+- **Integration with Kafka**: Iintegrates with Kafka, enabling schemas to be applied to Kafka messages, ensuring data consistency across the system.
 
 The following schema formats are supported out-of-the-box with Confluent Platform, with serializers, deserializers, and command line tools available for each format:
 

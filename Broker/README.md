@@ -113,6 +113,18 @@ A Kafka Broker is a term for a server in a Kafka cluster that hosts topics and p
 
 - **JMX Metrics**: Kafka exposes a wide range of metrics via JMX, which can be used to monitor broker health, performance, and resource usage.
 - **Log Clean-Up**: Monitoring log segment sizes and cleanup policies is crucial to avoid running out of disk space. Adjusting `log.retention.hours`, `log.retention.bytes`, and related settings helps manage disk usage.
+- 
+| Broker Metric | Explanation |
+|---------------|-------------------|
+| ACTIVE CONTROLLER COUNT | The broker with an Active Controller Count of 1 is the current controller of the Kafka cluster. The controller is responsible for managing the state of partitions and replicas, and electing leaders.|
+| REQUEST HANDLER IDLE RATIO | This metric indicates the percentage of time the broker's request handlers are idle. A low idle ratio suggests the broker is under heavy load and may need additional resources or optimization.|
+| ALL TOPICS BYTES IN | The All Topics Bytes In metric measures the incoming byte rate for all topics on the broker. High values indicate a need to scale out the Kafka cluster by adding more brokers. |
+| ALL TOPICS BYTES OUT | This metric measures the outgoing byte rate for all topics on the broker, which reflects the consumer traffic. High consumer traffic may require increasing consumer instances or optimizing consumer configurations. |
+| ALL TOPICS MESSAGES IN | The All Topics Messages In metric measures the incoming message rate for all topics on the broker.|
+| PARTITION COUNT | This metric indicates the number of partitions assigned to a broker. Evenly distributing partitions across brokers is important for maintaining a balanced cluster. |
+| LEADER COUNT | The Leader Count metric shows the number of partitions for which the broker is the leader. Leaders handle all read and write requests for partitions. |
+| OFFLINE PARTITIONS | Offline partitions are partitions without an active leader. A high number of offline partitions can indicate issues with broker health or network connectivity.|
+| REQUEST METRICS | Request metrics, such as request rate and request latency, provide insights into the performance of the broker and can help identify potential bottlenecks. |
 
 ### High Availability Considerations
 

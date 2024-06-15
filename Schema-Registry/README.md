@@ -48,9 +48,14 @@ Avro supports six types of complex data structures: records, enums, arrays, maps
 #### Schema Evolution Support
 - Both Schema Registry and Avro support schema evolution, allowing schemas to be updated while maintaining compatibility, thus preventing breaking changes.
 
-- **Backward**: Adding optional fields with defaults, compatible with existing data and code.
-- **Forward**: Removing optional fields, compatible with existing data and code that doesn't use the removed fields.
-- **Breaking**: such as removing required fields, changing field types incompatibly, or adding new required fields.w
+- **Backward**: New schema can read data written in old schema. This means your applications can read old data even after the schema has been updated. Adding optional fields with defaults, compatible with existing data and code.
+1. Removing a field
+2. Making a required field optional
+3. Widening the range of an integer or long field
+- **Forward**: Old schema can read data written in new schema. This allows applications using an older schema to read data that was produced with a newer schema. Removing optional fields, compatible with existing data and code that doesn't use the removed fields.
+1. Adding a new optional field
+2. Adding a new required field with a default value
+- **Breaking**: Such as removing required fields, changing field types incompatibly, or adding new required fields.
   
 **Enums: ** Adding enum symbols is backward-compatible. Removing enum symbols is a breaking change. Reordering enum symbols is a breaking change. "Add, Remove (break), Reorder (break)" (ARR)
 Since Avro 1.9.1 (>= 1.9.1): Default value for enums. Writer's symbol not in reader's enum => Use default value if specified, else error.

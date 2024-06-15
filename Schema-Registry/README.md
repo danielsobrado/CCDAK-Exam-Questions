@@ -57,6 +57,14 @@ Avro supports six types of complex data structures: records, enums, arrays, maps
 2. Adding a new required field with a default value
 - **Breaking**: Such as removing required fields, changing field types incompatibly, or adding new required fields.
   
+#### Mnemonic: "CF-PS" (Consumer First, Producer Second)
+In most cases, it's safer to update the consumer first and then the producer. This approach ensures that the consumer can handle both the old and new schema versions, minimizing the risk of disruption.
+To remember the general rule for updating consumers and producers, use the mnemonic "CF-PS":
+* **C (Consumer)**: Update the Consumer first
+* **F (Forward)**: Consumer can handle forward compatible changes
+* **P (Producer)**: Update the Producer second
+* **S (Special)**: In Special cases, like backward compatible changes or urgent fixes, update the producer first
+
 **Enums: ** Adding enum symbols is backward-compatible. Removing enum symbols is a breaking change. Reordering enum symbols is a breaking change. "Add, Remove (break), Reorder (break)" (ARR)
 Since Avro 1.9.1 (>= 1.9.1): Default value for enums. Writer's symbol not in reader's enum => Use default value if specified, else error.
 

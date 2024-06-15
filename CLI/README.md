@@ -30,7 +30,7 @@ Kafka provides a set of command-line tools that allow administrators and develop
 
 | Command | Explanation |
 |---------|-------------|
-| kafka-topics.sh | A tool for managing Kafka topics. |
+| **kafka-topics.sh** | **A tool for managing Kafka topics.** |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. This is the recommended option, replacing `--zookeeper`. |
 | --create | Creates a new topic. |
 | --delete | Deletes an existing topic. |
@@ -43,17 +43,17 @@ Kafka provides a set of command-line tools that allow administrators and develop
 | --partitions | Specifies the number of partitions for the topic. |
 | --replication-factor | Specifies the replication factor for each partition in the topic. |
 | --config | Specifies topic-level configuration properties. |
-| kafka-console-producer.sh | A command-line tool that allows you to produce messages to a Kafka topic. |
+| **kafka-console-producer.sh** | **A command-line tool that allows you to produce messages to a Kafka topic.** |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. |
 | --topic | Specifies the name of the topic to produce messages to. |
 | --producer-property | Specifies a producer configuration property. |
-| kafka-console-consumer.sh | A command-line tool that allows you to consume messages from a Kafka topic. |
+| **kafka-console-consumer.sh** | **A command-line tool that allows you to consume messages from a Kafka topic.** |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. |
 | --topic | Specifies the name of the topic to consume messages from. |
 | --from-beginning | Starts consuming messages from the beginning of the topic. |
 | --group | Specifies the consumer group ID for the consumer. |
 | --consumer-property | Specifies a consumer configuration property. |
-| kafka-consumer-groups.sh | A tool for managing Kafka consumer groups. |
+| **kafka-consumer-groups.sh** | **A tool for managing Kafka consumer groups.** |
 | --bootstrap-server | Specifies a comma-separated list of Kafka broker addresses. |
 | --describe | Describes consumer group details, including the current offset and lag for each partition. |
 | --group | Specifies the ID of the consumer group to describe. |

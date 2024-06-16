@@ -20,7 +20,6 @@ Kafka Streams is a client library designed to build real-time applications and m
 Stream-table duality:
 
 - **Stream as Table:** A stream can be viewed as a changelog of a table, where each data record in the stream captures a state change of the table. A stream can be turned into a 'real' table by replaying the changelog from the beginning to reconstruct the table.
-
 - **Table as Stream:** A table can be viewed as a snapshot of the latest value for each key in a stream. A table can be turned into a 'real' stream by iterating over each key-value entry in the table.
 
 ### Fundamental Components

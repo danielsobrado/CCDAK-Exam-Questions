@@ -88,8 +88,8 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
 - Streams and tables can be created from a Kafka topic using a `CREATE STREAM` or `CREATE TABLE` statement.
 - The `WITH` clause is used to specify properties like the Kafka topic, number of partitions, and serialization format.
 - Key columns are optional for streams but required for tables. They are defined using the `KEY` keyword.
-- For tables, null keys are not allowed and will cause the record to be dropped. For streams, null keys are allowed.
-- In tables, null values are considered tombstones and mark the record for deletion. In streams, null values have no special meaning.
+- **For tables, null keys are not allowed and will cause the record to be dropped**. For streams, null keys are allowed.
+- **In tables, null values are considered tombstones and mark the record for deletion** . In streams, null values have no special meaning.
 - Question: Can you create a stream or table without an underlying Kafka topic?
   - No, every stream or table in ksqlDB must be backed by a Kafka topic.
   - The Kafka topic can be pre-existing, or ksqlDB can create it automatically based on the stream or table definition.
@@ -118,7 +118,7 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
    - Have some limitations on supported SQL statements (e.g., no `JOINs`, `GROUP BY`, or `WINDOW` clauses).
    - Results are not persisted to a topic and are not shared; identical queries from different clients are executed independently.
    - Question: Can pull queries be executed on any stream or table?
-     - Pull queries can only be executed on materialized streams or tables that have a defined primary key.
+     - Pull queries **can only be executed on materialized streams or tables that have a defined primary key**.
      - They cannot be executed on non-materialized streams or tables without a primary key.
 
 - Question: What happens if a persistent query fails or is terminated unexpectedly?
@@ -166,6 +166,9 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
   - Primary key joins require co-partitioning.
   - Foreign key joins allow joining on a non-primary key field in the value of one table.
   - Defined using a `CREATE TABLE AS SELECT` statement with a `JOIN` clause.
+
+- While Stream-KGlobalTable offers significant convenience and flexibility for join operations by eliminating the co-partitioning requirement, it also means that each application instance requires enough memory to hold the entire dataset.
+- Foreign Key Joins: Do not require co-partitioning based on the primary key of each table. 
 
 - Question: What is the default join window size for stream-stream joins in ksqlDB?
   - The default join window size is 24 hours.

@@ -8,7 +8,9 @@ Kafka topics are categorized into partitions for scalability and replicated acro
 - **Scalability**: The `partition` count of a topic influences how data is distributed across the cluster and impacts parallel processing capabilities.
 - **Data Consistency**: The `acks` setting affects how producers receive acknowledgments from brokers, impacting data consistency guarantees.
 - **Order Guarantee:** Kafka guarantees that any consumer of a given topic-partition will always read that partition's events in exactly the same order as they were written.
+  - If maintaining strict order within a partition is critical, set max.in.flight.requests.per.connection to 1. This ensures that while a message is retrying, no other messages can be sent that might overtake the retried message. (Unless `enable.idempotence` is enabled, as it prevents message reordering caused by retries.)
 - **Partition-Specific Order:** Order is guaranteed only within a partition, not across partitions.
+  - Repartitioning can disrupt the order of messages in Kafka, primarily because it changes the way records are assigned to partitions.
 - **Variable Message Count:** Partitions do not need to have the same number of messages.
 - **Partition-Specific Offsets:** Offsets only have meaning within a specific partition.
 - **Data Retention:** Messages are kept only for a limited time in Kafka, with the default being one week.
@@ -54,7 +56,11 @@ After adding partitions later, it cannot be guaranteed that old messages will be
 
 #### Log Compaction and Retention
 
-- **`cleanup.policy`**: Supports log compaction (`"compact"`) to retain at least the last known value for each key within a topic, crucial for stateful applications.
+- **`cleanup.policy`**: Supports log compaction (`"compact"`) to retain at least the last known value for each key within a topic, crucial for stateful applications. 
+  - The default `cleanup.policy` for Kafka topics is "delete". (Kafka will delete records that are older than the retention period specified by `retention.ms`.)
+  - Use `kafka-topics.sh` CLI tool or Admin API to change the policy for existing topics.
+  - The `delete` policy might also be used in tandem to prevent the state store from growing indefinitely, especially when windowed operations are involved. (Use `"compact,delete"` )
+  - Kafka Streams often requires that the latest state be recoverable even after restarts or rebalancing, making compaction a necessity.
 - **`min.cleanable.dirty.ratio`**: Determines the ratio of log segments eligible for compaction. Lower values trigger compaction sooner, helping maintain a cleaner log with less overhead.
 
 #### Segment Management and Efficiency

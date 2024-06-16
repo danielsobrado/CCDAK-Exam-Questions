@@ -71,17 +71,15 @@ To remember the general rule for updating consumers and producers, use the mnemo
 **Enums: ** Adding enum symbols is backward-compatible. Removing enum symbols is a breaking change. Reordering enum symbols is a breaking change. "Add, Remove (break), Reorder (break)" (ARR)
 Since Avro 1.9.1 (>= 1.9.1): Default value for enums. Writer's symbol not in reader's enum => Use default value if specified, else error.
 
-| Compatibility   | Change                            | Description                                                                                           |
-|-----------------|-----------------------------------|-------------------------------------------------------------------------------------------------------|
-| Backward        | Delete fields                     | Removing fields is a backward compatible change.                                                     |
-| Backward        | Add optional fields               | Adding optional fields is a backward compatible change.                                              |
-| Forward         | Add fields                        | Adding new fields is a forward compatible change.                                                    |
-| Forward         | Delete optional fields            | Removing optional fields is a forward compatible change.                                             |
-| Full            | Add optional fields               | Adding optional fields is both a backward and forward compatible change.                            |
-| Full            | Delete optional fields            | Removing optional fields is both a backward and forward compatible change.                           |
-| Full (Avro/Protobuf) | Add/remove fields with defaults   | In Avro and Protobuf, adding or removing a field with a default value is a fully compatible change. |
-| Transitive      | Backward/Forward/Full compatibility | Transitive variants of compatibility consider all previous schema versions, not just the last one.  |
-| None            | All changes                       | No compatibility checks are performed. All schema changes are allowed.                               |
+| Compatibility   | Change                            |
+|-----------------|-----------------------------------|
+| Backward        | Delete fields                     | 
+| Backward        | Add optional fields               | 
+| Forward         | Add fields                        | 
+| Forward         | Delete optional fields            | 
+| Full            | Add optional fields               |
+| Full            | Delete optional fields            |
+| Transitive      | Backward/Forward/Full compatibility | 
 
 Backward: Deleting fields, Adding optional fields  - Upgrade first: Consumers.   (Default for topics, for Streams only Backward is allowed)
 Forward: Adding fields, Deleting optional fields - Upgrade first: Producers.  

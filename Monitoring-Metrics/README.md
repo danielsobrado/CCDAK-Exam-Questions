@@ -38,7 +38,7 @@ Monitoring and Metrics in Kafka Kafka exposes rich metrics to monitor the health
 
 ### Broker Metrics:
 - `UnderReplicatedPartitions`: Number of partitions that are under-replicated. Use case: Identifying replication issues. Alert if greater than 0.
-- `ActiveControllerCount`: Number of active controllers in the cluster. Use case: Ensuring controller failover is working correctly. Should be 1. Alert if not 1.
+- `ActiveControllerCount`: Number of active controllers in the cluster. Use case: Ensuring controller failover is working correctly. Should be 1. Alert if not 1. (The **unique** controller takes care of Leader Election, Cluster Metadata, Rebalancing Partitions and Handling Broker Failures)
 - `OfflinePartitionsCount`: Number of partitions without an active leader. Use case: Detecting availability issues. Should be 0. Alert if greater than 0.
 - `RequestHandlerAvgIdlePercent`: Average idle percentage of the request handler thread pool. Use case: Monitoring request handling capacity. Low values may indicate resource contention.
 - `NetworkProcessorAvgIdlePercent`: Average idle percentage of the network thread pool. Use case: Monitoring network processing capacity. Low values suggest potential network bottlenecks.

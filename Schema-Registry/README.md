@@ -48,6 +48,9 @@ Avro supports six types of complex data structures: records, enums, arrays, maps
 #### Schema Evolution Support
 - Both Schema Registry and Avro support schema evolution, allowing schemas to be updated while maintaining compatibility, thus preventing breaking changes.
 
+Backward compatibility: Focus on what the **new system can handle from the old**. It’s about not breaking old producers or data.
+Forward compatibility: Concentrate on what the **old system can handle from the new**. It’s about not breaking old consumers with new data.
+
 - **Backward**: New schema can read data written in old schema. This means your applications can read old data even after the schema has been updated. Adding optional fields with defaults, compatible with existing data and code.
 1. Removing a field
 2. Making a required field optional
@@ -68,6 +71,21 @@ To remember the general rule for updating consumers and producers, use the mnemo
 **Enums: ** Adding enum symbols is backward-compatible. Removing enum symbols is a breaking change. Reordering enum symbols is a breaking change. "Add, Remove (break), Reorder (break)" (ARR)
 Since Avro 1.9.1 (>= 1.9.1): Default value for enums. Writer's symbol not in reader's enum => Use default value if specified, else error.
 
+| Compatibility   | Change                            | Description                                                                                           |
+|-----------------|-----------------------------------|-------------------------------------------------------------------------------------------------------|
+| Backward        | Delete fields                     | Removing fields is a backward compatible change.                                                     |
+| Backward        | Add optional fields               | Adding optional fields is a backward compatible change.                                              |
+| Forward         | Add fields                        | Adding new fields is a forward compatible change.                                                    |
+| Forward         | Delete optional fields            | Removing optional fields is a forward compatible change.                                             |
+| Full            | Add optional fields               | Adding optional fields is both a backward and forward compatible change.                            |
+| Full            | Delete optional fields            | Removing optional fields is both a backward and forward compatible change.                           |
+| Full (Avro/Protobuf) | Add/remove fields with defaults   | In Avro and Protobuf, adding or removing a field with a default value is a fully compatible change. |
+| Transitive      | Backward/Forward/Full compatibility | Transitive variants of compatibility consider all previous schema versions, not just the last one.  |
+| None            | All changes                       | No compatibility checks are performed. All schema changes are allowed.                               |
+
+Backward: Deleting fields, Adding optional fields  - Upgrade first: Consumers.   (Default for topics, for Streams only Backward is allowed)
+Forward: Adding fields, Deleting optional fields - Upgrade first: Producers.  
+
 #### Efficient Data Serialization
 - Avro provides a compact, fast, binary data format, significantly reducing the payload size and improving data serialization and deserialization efficiency. 
 
@@ -82,30 +100,8 @@ Since Avro 1.9.1 (>= 1.9.1): Default value for enums. Writer's symbol not in rea
        http://localhost:8081/subjects/test-topic-value/versions
   ```
 
-#### Managing Schema Compatibility
-- Adjust compatibility settings within the Schema Registry to ensure consumer compatibility with updated schemas.
-
 #### Avro in Kafka Producers and Consumers
 - Utilize Avro serializers and deserializers in Kafka clients, integrating seamlessly with the Schema Registry for schema management.
-
-### Best Practices for Schema Management
-
-- **Forward Planning**: Design schemas with evolution in mind, utilizing Avro's capabilities for adding, removing, and modifying fields without disrupting existing consumers.
-- **Compatibility Settings**: Leverage Schema Registry's compatibility checks to avoid introducing incompatible schema changes.
-
-When using Avro or other schema formats, managing schemas and their evolution is essential:
-
-The default compatibility type in Confluent Schema Registry is **BACKWARD**. Allowed changes for BACKWARD compatibility are:
-
-- Deleting fields
-- Adding optional fields
-
-BACKWARD compatibility means that consumers using the new schema X can read data produced with the new schema X or the previous schema X - 1.
-
-### Troubleshooting Common Issues
-
-- **Compatibility Conflicts**: Address schema compatibility issues by revising the compatibility levels or schema changes.
-- **Configuration Missteps**: Ensure proper configuration of Kafka clients for Avro serialization and Schema Registry integration.
 
 ### Essential Schema Registry and Avro Operations
 
@@ -141,16 +137,6 @@ BACKWARD compatibility means that consumers using the new schema X can read data
   ```
 - **Schema Compatibility**: Configuring compatibility settings in Schema Registry to ensure that schema updates are compatible with consumer expectations.
 - **Using Avro with Kafka Producers and Consumers**: Implementing Kafka producers and consumers using Avro serialization requires using specific serializers and deserializers that integrate with Schema Registry.
-
-### Best Practices
-
-- **Compatibility Management**: Carefully manage schema compatibility settings to avoid introducing breaking changes.
-- **Schema Design**: Design schemas with future evolution in mind, making use of Avro's capabilities to add, remove, or modify fields without impacting existing consumers.
-
-### Troubleshooting
-
-- **Schema Compatibility Issues**: Resolving issues related to schema updates and compatibility by adjusting the schema compatibility settings or refining the schema update process.
-- **Integration Issues**: Ensuring that producers and consumers are correctly configured to use Schema Registry and Avro serializers/deserializers.
 
 ### Useful Commands
 
@@ -200,6 +186,9 @@ BACKWARD compatibility means that consumers using the new schema X can read data
  - Schema Registry rejects the registration request.
  - The producer receives an error indicating that the schema is incompatible.
  - The producer must update its schema to be compatible with the existing schema before successfully registering the schema and producing data.
+
+Think of "BA" in "BAckward" as standing for "Adding". (Adding, optional, defaults.)
+`FORWARD`: "FORward is for FOllowing defaults" (Adding, defaults.)
 
 #### 3. Subject Naming Strategies
 - Subjects in Schema Registry represent a unique combination of a topic and a key or value schema.

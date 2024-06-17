@@ -143,6 +143,7 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
 - Aggregations are performed using the `GROUP BY` clause in a persistent query.
 - Aggregation results are stored in a table, which is backed by a Kafka topic.
 - ksqlDB supports user-defined functions (UDFs) and user-defined aggregation functions (UDAFs) for custom processing logic.
+- ksqlDB has a limitation in that it doesn't support structured keys, preventing the creation of a stream from a windowed aggregate.
 - Question: Can you perform aggregations on windowed data in ksqlDB?
   - Yes, ksqlDB supports windowed aggregations using the `WINDOW` clause.
   - Windows can be defined based on time (e.g., tumbling, hopping, session windows) or custom window boundaries.

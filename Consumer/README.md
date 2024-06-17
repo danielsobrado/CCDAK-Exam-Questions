@@ -123,6 +123,8 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 - Changes in topic partition counts.
 - Manual rebalance triggers like calling `unsubscribe()`.
 
+ Consumer group rebalances are managed by the Kafka consumers themselves, not by the Controller. When a consumer joins or leaves a consumer group, the consumers coordinate among themselves to redistribute the partitions they are consuming from.
+
 #### Managing Consumer Offsets
 
 - **Auto-Commit Strategy**: By default, Kafka consumers automatically commit offsets at regular intervals, but manual offset management can provide finer control over when and how offsets are committed, which is essential for precise processing records management.
@@ -157,6 +159,15 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 ### High Watermark in Kafka
 
 The **high watermark (HW)** is a critical concept in Kafka, ensuring data consistency and reliability. It represents the offset of the last message that has been successfully replicated to all **In-Sync Replicas (ISR)** of a partition.
+
+### Metadata request
+
+When a consumer has the wrong partition leader, it sends a metadata request to any Kafka broker. The response includes metadata for each partition, grouped by topic:
+
+- **Leader**: The current leader broker's node ID for the partition (-1 if no leader exists).
+- **Replicas**: The alive slave brokers for the partition's leader.
+- **ISR**: The subset of caught-up replicas.
+- **Broker**: The node ID, hostname, and port of a Kafka broker.
 
 #### Key Points:
 

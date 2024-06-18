@@ -189,6 +189,15 @@ To report errors within a connector's converter, transforms, or within the sink 
 - Tasks are the actual units of work that perform data copying.
 - The `max.tasks` parameter determines the maximum number of tasks a connector can create.
 
+To understand Kafka Connect's internals, let's define its key concepts:
+
+- **Connectors**: Manage tasks to coordinate data streaming.
+- **Tasks**: Define how data is moved between Kafka and external systems.
+- **Workers**: Running processes that execute connectors and tasks.
+- **Converters**: Translate data between Connect and external systems.
+- **Transforms**: Modify messages produced by or sent to a connector.
+- **Dead Letter Queue**: Handle connector errors.
+
 ### 2. Connector Development
 - Connectors are implemented as Java classes that extend either `SourceConnector` or `SinkConnector`.
 - The `taskClass()` method returns the class of the `Task` implementation (`SourceTask` or `SinkTask`).

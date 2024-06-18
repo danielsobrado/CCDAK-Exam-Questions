@@ -160,6 +160,12 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 
 The **high watermark (HW)** is a critical concept in Kafka, ensuring data consistency and reliability. It represents the offset of the last message that has been successfully replicated to all **In-Sync Replicas (ISR)** of a partition.
 
+### Group Coordinator and Group Leader
+
+The **group coordinator** is a designated **broker** that receives heartbeats from all `consumers` within a `consumer group`. Each `consumer group` is assigned a single group coordinator. If a consumer fails to send heartbeats, the coordinator initiates a rebalance process.
+
+When a consumer wishes to join a `consumer group`, it sends a `JoinGroup` request to the group coordinator. The first consumer to join the group is appointed as the group leader.
+
 ### Metadata request
 
 When a consumer has the wrong partition leader, it sends a metadata request to any Kafka broker. The response includes metadata for each partition, grouped by topic:

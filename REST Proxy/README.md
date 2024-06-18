@@ -48,6 +48,7 @@ The Kafka REST Proxy provides a RESTful interface to a Kafka cluster, enabling t
 #### Data Formats
 - The REST Proxy supports various data formats for producing and consuming messages, including JSON, Avro, and binary.
 - It integrates with the Confluent Schema Registry for seamless Avro serialization and deserialization.
+- The REST Proxy requires to receive data over REST that is already base64 encoded, hence it is the responsibility of the producer to encode the data.
 
 #### Authentication and Authorization
 - The REST Proxy supports multiple authentication mechanisms, such as Basic Auth, OAuth, and SSL/TLS, for secure access control.

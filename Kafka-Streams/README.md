@@ -122,6 +122,8 @@ Kafka Streams scales by allowing multiple threads of execution within one instan
 
 The Streams engine parallelizes the execution of a topology by splitting it into tasks. The number of tasks is determined by the Streams engine and depends on the number of partitions in the topics that the application processes. Each task is responsible for a subset of the partitions: the task subscribes to those partitions and consumes events from them. For every event it consumes, the task executes all the processing steps that apply to this partition in order before eventually writing the result to the sink. These tasks are the basic unit of parallelism in Kafka Streams, as each task can execute independently of others.
 
+To achieve the maximum parallelism in a Kafka Streams application, you can set the `num.stream.threads` configuration parameter to the desired parallelism, **not necessarily the number of partitions**.
+
 ## Understand the Available Operations
 - KStream operations:
  - `map`: Applies a one-to-one transformation to each record in the stream.
@@ -202,5 +204,6 @@ The Streams engine parallelizes the execution of a topology by splitting it into
 
 - **State Management**: Leverage state stores and interactive queries efficiently to manage state.
 - **Scaling and Performance**: Apply strategies to scale applications horizontally and optimize performance through tuning and configuration adjustments.
+- It is recommended to store Kafka Streams application state on a **persistent volume** to minimize recovery time by only restoring the missing state upon failure or restart.
 
 Kafka Streams offers a comprehensive set of tools and functionalities for building robust, real-time streaming applications, leveraging Kafka's strengths in handling vast streams of data efficiently and reliably.

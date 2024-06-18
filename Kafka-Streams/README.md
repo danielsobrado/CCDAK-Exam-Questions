@@ -124,6 +124,20 @@ The Streams engine parallelizes the execution of a topology by splitting it into
 
 To achieve the maximum parallelism in a Kafka Streams application, you can set the `num.stream.threads` configuration parameter to the desired parallelism, **not necessarily the number of partitions**.
 
+### Repartitioning
+
+When Kafka Streams requires repartitioning, it:
+1. Writes the repartitioned data to a new topic with new keys and partitions.
+2. Creates a new set of tasks to read and process events from the new topic.
+
+This process divides the topology into two subtopologies, each with its own tasks. The second subtopology depends on the output of the first.
+
+The two sets of tasks can still run independently and in parallel because:
+- The first set writes data to the new topic at its own pace.
+- The second set consumes and processes events from the new topic independently.
+
+There is no communication or shared resources between the tasks, allowing them to run on separate threads or servers.
+
 ## Understand the Available Operations
 - KStream operations:
  - `map`: Applies a one-to-one transformation to each record in the stream.

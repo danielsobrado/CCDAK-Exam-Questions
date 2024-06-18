@@ -198,6 +198,8 @@ To understand Kafka Connect's internals, let's define its key concepts:
 - **Transforms**: Modify messages produced by or sent to a connector.
 - **Dead Letter Queue**: Handle connector errors.
 
+Connectors in Kafka Connect are responsible for breaking down the data copying job into tasks that can be distributed to workers.
+
 ### 2. Connector Development
 - Connectors are implemented as Java classes that extend either `SourceConnector` or `SinkConnector`.
 - The `taskClass()` method returns the class of the `Task` implementation (`SourceTask` or `SinkTask`).

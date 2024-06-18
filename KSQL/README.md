@@ -70,6 +70,33 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
 - **Anomaly Detection**: Implement anomaly detection systems by processing and analyzing data in real-time, identifying outliers or unusual patterns.
 - **Data Enrichment**: Enrich streaming data by joining it with static datasets or additional streams, adding value and context to the data.
 
+### Headless mode
+
+ksqlDB offers two deployment modes:
+
+1. **Headless ksqlDB deployment (Application Mode):**
+   - This is the recommended mode for production deployments.
+   - You write your queries in a SQL file and start ksqlDB server instances with this file as an argument.
+   - Each server instance reads the SQL file, compiles the ksqlDB statements into Kafka Streams applications, and starts executing the generated applications.
+
+2. **Interactive ksqlDB deployment:**
+   - In this mode, you interact with the ksqlDB servers through a REST API.
+   - You can interact directly using REST clients, the ksqlDB CLI, or Confluent Control Center.
+   - This mode is suitable for development, testing, and exploratory purposes.
+
+`ksqlDB` supports a locked-down, "headless" deployment mode that disables interactive access to the `ksqlDB` cluster. This mode is useful in production environments where you want to ensure that only predefined queries are executed and prevent direct user interaction with the cluster.
+
+In a typical workflow:
+1. A team of users develops and tests their queries interactively on a shared testing `ksqlDB` cluster using the CLI.
+2. When ready for production deployment, the verified queries are version-controlled and stored in a `.sql` file.
+3. The `.sql` file is provided to the `ksqlDB` servers during startup using either:
+   - The `--queries-file` command-line argument, or
+   - The `ksql.queries.file` setting in the `ksqlDB` configuration file.
+
+When a `ksqlDB` server is running with a predefined script (`.sql` file), it automatically disables its REST endpoint and interactive use. This lockdown mechanism ensures that the server only executes the predefined queries and prevents any direct interaction with the production `ksqlDB` cluster.
+In headless mode, ksqlDB stores metadata in the config topic. The config topic stores the ksqlDB properties provided to ksqlDB when the application was first started. 
+ksqlDB uses these configs to ensure that your ksqlDB queries are built compatibly on every restart of the server.
+
 ### ksqlDB In-Depth
 
 #### 1. ksqlDB Overview
@@ -218,6 +245,7 @@ The `DESCRIBE EXTENDED` statement in ksqlDB provides detailed information about 
   - `num-active-queries`: The number of active queries running in ksqlDB.
 - ksqlDB provides a REST API for managing and monitoring the system, including retrieving cluster information, listing streams and tables, and executing queries.
 - The ksqlDB CLI can be used to interact with the system, execute queries, and view query results and logs.
+- If ksqlDB doesn't clean up its internal topics make sure that your Kafka cluster is configured with the property delete.topic.enable=true.
 - Logs can be configured and monitored to troubleshoot issues and track the execution of queries.
 - ksqlDB supports configurable error handling, such as deserialization errors and production exceptions, through the use of dead letter queues (DLQs).
 - Question: How can you monitor the resource utilization of ksqlDB servers?

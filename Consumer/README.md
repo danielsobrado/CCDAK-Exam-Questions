@@ -129,11 +129,12 @@ Rebalancing, a critical aspect of Kafka consumer groups for ensuring even data p
 
 - **Auto-Commit Strategy**: By default, Kafka consumers automatically commit offsets at regular intervals, but manual offset management can provide finer control over when and how offsets are committed, which is essential for precise processing records management.
 - **Offset Reset Behavior**: Determines how consumers behave when no initial offset is found. `auto.offset.reset` can significantly impact consumer startup behavior, especially in scenarios where precise data replay or skipping is required.
+- The consumer is responsible for committing the offsets to the `__consumer_offsets` topic. However, **the consumer does not directly write the offset information** to the topic. Instead, it sends the offset information to the **group coordinator broker**, which then writes the offsets to the `__consumer_offsets` topic on behalf of the consumer.
 
 #### Multi-threading and Consumer Safety
 
 - **Single-threaded Nature**: Each Kafka consumer instance is not thread-safe. The recommended practice is one consumer per thread to avoid concurrency issues.
-- **Consumer Thread Safety**: While the consumer itself is not thread-safe, certain operations like `wakeup()` can be safely called from another thread to interrupt an ongoing operation, such as a long `poll()`.
+- **Consumer Thread Safety**: While the consumer itself is not thread-safe, certain operations like `wakeup()` can be safely called from another thread to interrupt an ongoing operation, such as a long `poll()`.  (`WakeupException` will be thrown)
 
 #### High Availability and Fault Tolerance
 

@@ -102,9 +102,9 @@ Here's how the `connect-offsets` topic is used:
 
 The `connect-offsets` topic is automatically created by Kafka Connect when a source connector is deployed. It is an internal topic managed by Kafka Connect and should not be modified or consumed by external applications.
 
-It's important to note that the `connect-offsets` topic is specific to source connectors. Sink connectors, which write data to external systems, do not use this topic for offset management (option D).
+It's important to note that the `connect-offsets` topic is specific to source connectors. Sink connectors, which write data to external systems, do not use this topic for offset management (option 4).
 
-The `connect-configs` topic (option A) is used to store the configuration of the connectors, while the `connect-status` topic (option B) stores the status of the connector tasks. These are separate topics from `connect-offsets`.
+The `connect-configs` topic (option 1) is used to store the configuration of the connectors, while the `connect-status` topic (option 2) stores the status of the connector tasks. These are separate topics from `connect-offsets`.
 
 ## Question 35
 
@@ -141,9 +141,9 @@ Here's how Kafka Connect handles connector scalability:
    - Each task consumes resources on the worker node where it is running.
    - It's important to balance the number of tasks with the available resources to avoid overloading the Kafka Connect cluster.
 
-Kafka Connect does not automatically create multiple instances of a connector based on the load (option A) or dynamically adjust the number of tasks based on the connector's performance (option C). The number of tasks is manually configured using the `tasks.max` parameter.
+Kafka Connect does not automatically create multiple instances of a connector based on the load (option 1) or dynamically adjust the number of tasks based on the connector's performance (option 3). The number of tasks is manually configured using the `tasks.max` parameter.
 
-Additionally, Kafka Connect does not require a separate cluster for each connector (option D). Multiple connectors can run within the same Kafka Connect cluster, and the tasks of different connectors can be distributed across the available worker nodes.
+Additionally, Kafka Connect does not require a separate cluster for each connector (option 4). Multiple connectors can run within the same Kafka Connect cluster, and the tasks of different connectors can be distributed across the available worker nodes.
 
 ## Question 36
 
@@ -181,8 +181,8 @@ Here's what happens when a Kafka Connect worker node fails:
    - The connectors and tasks that were previously running on the failed worker node are now running on the active worker nodes.
    - Kafka Connect ensures that data processing continues without interruption, maintaining the overall functionality and reliability of the system.
 
-It's important to note that the connectors and tasks are not permanently lost when a worker node fails (option A). Kafka Connect's fault tolerance mechanisms ensure that they are redistributed and continue running on the available worker nodes.
+It's important to note that the connectors and tasks are not permanently lost when a worker node fails (option 1). Kafka Connect's fault tolerance mechanisms ensure that they are redistributed and continue running on the available worker nodes.
 
-The failed worker node is not automatically replaced with a new worker node (option C). Instead, the workload is redistributed among the existing worker nodes in the cluster.
+The failed worker node is not automatically replaced with a new worker node (option 3). Instead, the workload is redistributed among the existing worker nodes in the cluster.
 
-The failure of a single worker node does not bring down the entire Kafka Connect cluster (option D). The cluster remains operational, and the workload is redistributed to maintain continuous operation.
+The failure of a single worker node does not bring down the entire Kafka Connect cluster (option 4). The cluster remains operational, and the workload is redistributed to maintain continuous operation.

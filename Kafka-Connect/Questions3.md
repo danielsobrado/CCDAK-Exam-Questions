@@ -126,8 +126,8 @@ This scenario requires a combination of a Source Connector and a Sink Connector:
 
 The other options are incorrect:
 
-- B would be importing from Kafka to the source system and then from HDFS to Kafka, which is the wrong direction.
-- C and D use the same connector type twice, which doesn't make sense for moving data from a source to Kafka to a sink.
+- 2 would be importing from Kafka to the source system and then from HDFS to Kafka, which is the wrong direction.
+- 3 and 4 use the same connector type twice, which doesn't make sense for moving data from a source to Kafka to a sink.
 
 ## Question 28
 
@@ -149,11 +149,11 @@ The number of tasks can be controlled by the `max.tasks` configuration property 
 
 The reason for this is that the JDBC connector reads data from the table sequentially, and splitting the data across multiple tasks based on columns would not provide any parallelism benefits.
 
-Statement B is incorrect because the number of tasks is not determined by the number of columns in the table.
+Statement 2 is incorrect because the number of tasks is not determined by the number of columns in the table.
 
-Statement C is partially correct, but it doesn't apply to the JDBC connector specifically. The `max.tasks` configuration is used by some connectors to control the maximum number of tasks, but the JDBC connector always creates one task per table.
+Statement 3 is partially correct, but it doesn't apply to the JDBC connector specifically. The `max.tasks` configuration is used by some connectors to control the maximum number of tasks, but the JDBC connector always creates one task per table.
 
-Statement D is incorrect because the number of tasks is not related to the number of partitions in the Kafka topic. The JDBC connector's task reads data from the table and writes it to the topic, regardless of the topic's partitioning.
+Statement 4 is incorrect because the number of tasks is not related to the number of partitions in the Kafka topic. The JDBC connector's task reads data from the table and writes it to the topic, regardless of the topic's partitioning.
 
 ## Question 29
 

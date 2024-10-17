@@ -159,63 +159,54 @@ Statement 4 is incorrect because the number of tasks is not related to the numbe
 
 What happens if the `max.tasks` configuration is set to a value less than the number of tables being copied by a JDBC source connector?
 
-- 1. The connector will create one task per table, ignoring the `max.tasks` setting
-- 2. The connector will create tasks only for a subset of the tables, up to the `max.tasks` limit
-- 3. The connector will distribute the tables evenly among the available tasks
-- 4. The connector will fail with an error due to the insufficient number of tasks
+1. The connector will create one task per table, ignoring the `max.tasks` setting
+2. The connector will create tasks up to the `max.tasks` limit, potentially leaving some tables without dedicated tasks
+3. The connector will distribute the tables evenly among the available tasks
+4. The connector will fail with an error due to the insufficient number of tasks
 
-**Answer:** 2
+**Answer:** 3
 
 **Explanation:**
-When the `max.tasks` configuration is set to a value less than the number of tables being copied by a JDBC source connector, the connector will create tasks only for a subset of the tables, up to the `max.tasks` limit.
+When the `max.tasks` configuration is set to a value less than the number of tables being copied by a JDBC source connector, the connector will distribute the tables evenly among the available tasks.
 
-The JDBC connector assigns tables to tasks based on the `max.tasks` configuration. If `max.tasks` is less than the number of tables, the connector will prioritize some tables over others.
+Key points:
+- The connector respects the `max.tasks` setting and creates up to that number of tasks.
+- All tables are processed; no tables are left without tasks.
+- Tables are assigned to tasks in a way that balances the load.
+- Each task will handle multiple tables, processing them sequentially.
 
-Here's how it works:
+Example:
+If there are 10 tables and `max.tasks` is set to 5:
+- The connector creates 5 tasks.
+- Each task is assigned 2 tables.
+- All tables are processed, and the workload is distributed evenly among the tasks.
 
-1. The connector retrieves the list of tables to be copied based on the connector's configuration.
-2. If the number of tables is less than or equal to `max.tasks`, the connector creates one task per table.
-3. If the number of tables exceeds `max.tasks`, the connector selects a subset of tables up to the `max.tasks` limit and creates tasks only for those tables.
-4. The remaining tables will not have dedicated tasks and will not be copied.
-
-The specific subset of tables chosen when `max.tasks` is exceeded depends on the connector's implementation and may vary based on factors such as table order or naming.
-
-Statement 1 is incorrect because the connector does not ignore the `max.tasks` setting. It will create tasks only up to the specified limit.
-
-Statement 3 is incorrect because the connector does not distribute tables evenly among tasks. Each task is assigned to a specific table.
-
-Statement 4 is incorrect because the connector does not fail with an error when `max.tasks` is less than the number of tables. It will proceed with copying a subset of the tables.
+This approach ensures that all data is ingested into Kafka, maintaining data integrity and completeness while respecting the `max.tasks` limit.
 
 ## Question 30
 
 How can you increase the parallelism of a JDBC source connector to improve the performance of copying data from a database to Kafka?
 
-- 1. Increase the `max.tasks` configuration of the connector
-- 2. Increase the number of partitions in the target Kafka topic
-- 3. Increase the `tasks.max` configuration of the Kafka Connect workers
-- 4. Use multiple instances of the JDBC connector, each copying a different subset of tables
+1. Increase the `max.tasks` configuration of the connector
+2. Increase the number of partitions in the target Kafka topic
+3. Increase the `tasks.max` configuration of the Kafka Connect workers
+4. Use multiple instances of the JDBC connector, each copying a different subset of tables
 
-**Answer:** 4
+**Answer:** 1 and 4
 
 **Explanation:**
-To increase the parallelism of a JDBC source connector and improve the performance of copying data from a database to Kafka, you can use multiple instances of the JDBC connector, each copying a different subset of tables.
+To increase the parallelism of a JDBC source connector and improve performance, you can use a combination of approaches:
 
-The JDBC connector creates one task per table, and each task reads data from the table sequentially. Increasing the `max.tasks` configuration or the number of partitions in the target Kafka topic will not provide any parallelism benefits for a single JDBC connector instance.
+1. Increase the `max.tasks` configuration of the connector:
+   - This allows the connector to create more tasks within a single instance.
+   - Each task can process data independently, increasing parallelism.
 
-Instead, you can deploy multiple instances of the JDBC connector, each configured to copy a different subset of tables. This way, the tables will be distributed among the connector instances, and each instance will have its own set of tasks reading data in parallel.
+4. Use multiple instances of the JDBC connector, each copying a different subset of tables:
+   - Distributes the workload across multiple connector instances.
+   - Each instance can run tasks in parallel, further enhancing performance.
 
-Here's how you can achieve this:
+Combining both options can maximize parallelism and performance, although it's important to manage the complexity that comes with multiple connector instances.
 
-1. Create multiple instances of the JDBC connector in your Kafka Connect cluster.
-2. Configure each connector instance to copy a specific subset of tables by specifying the table names or a pattern in the connector's configuration.
-3. Ensure that the subsets of tables assigned to each connector instance do not overlap to avoid duplicate data copying.
-4. Start all the connector instances, and they will work in parallel, each copying its assigned subset of tables to Kafka.
-
-- 2. distributing the tables among multiple connector instances, you can leverage the parallelism of the Kafka Connect framework and improve the overall throughput of data copying from the database to Kafka.
-
-Statement 1 is incorrect because increasing `max.tasks` will not provide parallelism benefits for a single JDBC connector instance. The connector will still create one task per table.
-
-Statement 2 is incorrect because increasing the number of partitions in the target Kafka topic does not affect the parallelism of the JDBC connector. The connector's tasks write data to the topic sequentially.
-
-Statement 3 is incorrect because increasing `tasks.max` of the Kafka Connect workers will not automatically increase the parallelism of the JDBC connector. The connector's parallelism is determined by the number of tasks it creates based on the number of tables.
-
+Additional notes:
+- Option 2 (increasing partitions) can help with downstream consumer parallelism but doesn't directly affect the connector's parallelism.
+- Option 3 (increasing `tasks.max` of Kafka Connect workers) allows the cluster to handle more tasks but doesn't increase the connector's parallelism unless combined with Option 1.

@@ -92,12 +92,12 @@ A multinational corporation is looking to aggregate sales data from multiple reg
 The correct answer is **2.  Use Kafka Connect with a mix of Source Connectors suitable for each regional system's technology to ingest data directly into Kafka.**
 
 ## Question 8:
-- 1. online media platform wishes to analyze user interactions (clicks, views, and comments) in real-time to dynamically adjust content recommendations. The platform generates a high volume of interaction data, necessitating scalable and real-time processing. What architecture best suits this requirement?
+An online media platform wishes to analyze user interactions (clicks, views, and comments) in real-time to dynamically adjust content recommendations. The platform generates a high volume of interaction data, necessitating scalable and real-time processing. What architecture best suits this requirement?
 
 1. Utilize a Kafka Connect Source Connector to ingest interaction data into Kafka, then process this data with Kafka Streams to update content recommendations in real-time.
-2.  Directly stream interaction data into Kafka using a custom API, then use ksqlDB to perform real-time analysis and generate content recommendations.
-3.  Implement batch processing jobs to periodically analyze interaction data stored in an external database, and then use Kafka to distribute batch analysis results for content recommendation updates.
-4.  Configure Kafka Connect Sink Connectors to collect interaction data into a big data platform first, then process the data using external stream processing tools before updating content recommendations.
+2. Directly stream interaction data into Kafka using a custom API, then use ksqlDB to perform real-time analysis and generate content recommendations.
+3. Implement batch processing jobs to periodically analyze interaction data stored in an external database, and then use Kafka to distribute batch analysis results for content recommendation updates.
+4. Configure Kafka Connect Sink Connectors to collect interaction data into a big data platform first, then process the data using external stream processing tools before updating content recommendations.
 
 **Response:**
 
@@ -107,9 +107,9 @@ The correct answer is **1. Utilize a Kafka Connect Source Connector to ingest in
 A utility company monitors a network of IoT devices deployed across an energy grid. The devices send telemetry data (e.g., power usage, system health) every minute. The company wants to aggregate this data for near-real-time monitoring and anomaly detection. Which Kafka-based solution efficiently achieves this goal?
 
 1. Configure Kafka Connect Sink Connectors to collect telemetry data from the IoT devices into Kafka, followed by a Kafka Streams application to aggregate and analyze the data.
-2.  Use Kafka Connect Source Connectors appropriate for the IoT devices' communication protocols to ingest telemetry data into Kafka, then employ Kafka Streams for data aggregation and anomaly detection.
-3.  Develop custom Kafka Producers within the IoT devices to send data directly to Kafka topics, then use external tools to pull and analyze the data from Kafka.
-4.  Implement a centralized database to collect IoT telemetry data first, then use Kafka Connect Source Connectors to ingest the data from the database into Kafka for further processing.
+2. Use Kafka Connect Source Connectors appropriate for the IoT devices' communication protocols to ingest telemetry data into Kafka, then employ Kafka Streams for data aggregation and anomaly detection.
+3. Develop custom Kafka Producers within the IoT devices to send data directly to Kafka topics, then use external tools to pull and analyze the data from Kafka.
+4. Implement a centralized database to collect IoT telemetry data first, then use Kafka Connect Source Connectors to ingest the data from the database into Kafka for further processing.
 
 **Response:**
 

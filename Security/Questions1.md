@@ -65,17 +65,15 @@ In the Confluent Schema Registry, what is the default compatibility setting for 
 - C. FULL
 - D. NONE
 
-**Answer:** C
+**Answer:** A
 
 **Explanation:**
-In the Confluent Schema Registry, when a new schema is registered for a subject, the default compatibility setting is FULL. This means that a new schema must be both backward and forward compatible with the existing schema(s) for that subject.
+The Confluent Schema Registry default compatibility type is BACKWARD . The main reason that BACKWARD compatibility mode is the default, and preferred for Kafka, is so that you can rewind consumers to the beginning of the topic.
 
 - BACKWARD compatibility means that data written with a new schema can be read by code using an old schema.
 - FORWARD compatibility means that data written with an old schema can be read by code using a new schema.
 - FULL compatibility means that both BACKWARD and FORWARD compatibilities are required.
 - NONE means that no compatibility checking is performed.
-
-So by default, the Schema Registry enforces the strictest level of compatibility for new schemas. This can be changed on a per-subject basis or globally.
 
 ## Question 5
 

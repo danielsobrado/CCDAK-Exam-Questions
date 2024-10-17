@@ -16,11 +16,15 @@ The `__consumer_offsets` topic in Kafka is used to store consumer group metadata
 - The latest committed offset for each consumer group, so consumers can resume from where they left off.
 - The list of consumers currently active in each consumer group, to facilitate group management.
 
+- C. The mapping of partitions to consumer groups
+Kafka uses the __consumer_offsets topic to store information about which consumer groups are consuming from which topic partitions. This ensures that consumers can be mapped to the correct partitions for coordinated consumption in a consumer group.
+
 The other options are not stored in this topic:
 
-- C: The mapping of partitions to consumer groups is managed by the Kafka coordinator, not stored in this topic.
+- C: The mapping of partitions to consumer groups is managed by the Kafka coordinator, not stored in this topic.  - TRUE
 - D: The last produced message for each partition is not related to consumer offsets and is not stored here.
 - E: Only the latest offset is stored, not the earliest.
+- B. The list of consumers in each consumer group: This information is not stored in the __consumer_offsets topic. The consumers and their membership in a group are managed by the group coordinator.
 
 ## Question 2
 

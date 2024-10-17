@@ -11,12 +11,30 @@ An e-commerce company uses Kafka to process customer orders. During sales events
 The correct answer is **3. Scale out the Kafka broker cluster by adding more brokers during high-volume periods and scale in when the volume decreases.**
 
 ## Question 12:
+
 A streaming media company uses Kafka to ingest viewer watch history for real-time recommendation updates. Viewer engagement varies greatly, with peak times during new content releases. To handle variable ingestion rates, which configuration should be optimized?
 
 1. Adjust the replication factor of the watch history topic in real-time to handle the increased data volume.
 2. Increase and decrease the number of Kafka Connect Sink Connector tasks to efficiently write watch history data into Kafka.
 3. Scale the number of Kafka Streams applications processing the watch history data according to the ingestion rate.
 4. Dynamically modify the number of partitions in the watch history topic to manage the load during peak engagement times.
+
+**Correct Answer:** 3. Scale the number of Kafka Streams applications processing the watch history data according to the ingestion rate.
+
+**Explanation:**
+
+Kafka Streams applications are responsible for processing data from Kafka topics in real-time. By scaling the number of Kafka Streams application instances, the company can adjust the processing capacity to match the variable ingestion rates, especially during peak times.
+
+Key benefits of this approach:
+- Scaling up during high engagement ensures that the system can handle increased data volumes without latency.
+- Scaling down during low engagement periods optimizes resource utilization and reduces costs.
+- This method allows for dynamic adjustment based on processing load rather than modifying Kafka's underlying configurations, which can be more complex and less responsive to real-time fluctuations.
+
+**Why other options are less suitable:**
+
+1. Adjusting the replication factor in real-time is not practical and does not directly address the issue of variable ingestion rates. Replication factor affects data redundancy and fault tolerance, not processing capacity.
+2. Kafka Connect Sink Connectors are used to export data from Kafka to external systems, not for ingesting data into Kafka. This option is not relevant for the given scenario of ingesting viewer watch history.
+3. Dynamically modifying the number of partitions is operationally complex and can cause data rebalancing issues. It's not recommended to change partition counts frequently in response to fluctuating loads.
 
 **Response:**
 

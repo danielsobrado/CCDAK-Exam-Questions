@@ -172,22 +172,6 @@ Kafka Streams is a Java library for building real-time, highly scalable, fault-t
 
 ## Question 9
 
-What is the primary language used for writing Kafka Streams applications?
-
-- A. Python
-- B. Java
-- C. Scala
-- D. SQL
-
-**Answer:** B
-
-**Explanation:**
-Kafka Streams is a Java library for building real-time, highly scalable, fault-tolerant, distributed applications for stream processing. The primary language for writing Kafka Streams applications is Java.
-
-- A, C, D are incorrect because while Kafka Streams integrates with other JVM languages like Scala, and there are some Python wrappers available, the native and primary language is Java.
-
-## Question 10
-
 What is the role of RocksDB in Kafka Streams?
 
 - A. It is used for storing output topics.

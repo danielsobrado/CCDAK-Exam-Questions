@@ -66,9 +66,9 @@ Where are the Kafka Connect connector configurations stored?
 **Explanation:**
 Kafka Connect uses a special Kafka topic named `connect-configs` to store connector and task configurations. When a connector is created or updated, the configurations are persisted in this topic.
 
-- A is incorrect because connector configs are not stored in separate files on the worker nodes.
-- B is incorrect as connector configs are not stored in the Kafka broker's config directory.
-- C is incorrect because while Kafka Connect uses Zookeeper for some coordination tasks, connector configs specifically are not stored in Zookeeper.
+- 1 is incorrect because connector configs are not stored in separate files on the worker nodes.
+- 2 is incorrect as connector configs are not stored in the Kafka broker's config directory.
+- 3 is incorrect because while Kafka Connect uses Zookeeper for some coordination tasks, connector configs specifically are not stored in Zookeeper.
 
 ## Question 25
 
@@ -84,9 +84,9 @@ You want to use Kafka Connect to export data from a Kafka topic to a relational 
 **Explanation:**
 In Kafka Connect, a Sink Connector is used to consume data from Kafka topics and deliver it to an external system, such as a relational database, a search index, or a file system.
 
-- A Source Connector is used to import data from an external system into Kafka topics, which is the opposite of what's needed here.
-- C is incorrect because Transformation Connectors are not a real type in Kafka Connect. Transformations can be applied to a connector configuration, but they are not a separate connector type.
-- D is incorrect because "Import Connector" is not a real term in Kafka Connect.
+- 1 Source Connector is used to import data from an external system into Kafka topics, which is the opposite of what's needed here.
+- 3 is incorrect because Transformation Connectors are not a real type in Kafka Connect. Transformations can be applied to a connector configuration, but they are not a separate connector type.
+- 4 is incorrect because "Import Connector" is not a real term in Kafka Connect.
 
 ## Question 26
 
@@ -102,9 +102,9 @@ You need to stream data from a Twitter feed into a Kafka topic for real-time pro
 **Explanation:**
 A Kafka Connect Source Connector is used to import data from an external source, such as a database, a Twitter feed, or a messaging system, and publish that data to Kafka topics.
 
-- A Sink Connector is used to export data from Kafka topics to an external system, which is the opposite of what's needed here.
-- C is incorrect because Transformation Connectors are not a real type in Kafka Connect. Transformations can be applied to a connector configuration, but they are not a separate connector type.
-- D is incorrect because "Export Connector" is not a real term in Kafka Connect.
+- 1 Sink Connector is used to export data from Kafka topics to an external system, which is the opposite of what's needed here.
+- 3 is incorrect because Transformation Connectors are not a real type in Kafka Connect. Transformations can be applied to a connector configuration, but they are not a separate connector type.
+- 4 is incorrect because "Export Connector" is not a real term in Kafka Connect.
 
 ## Question 27
 

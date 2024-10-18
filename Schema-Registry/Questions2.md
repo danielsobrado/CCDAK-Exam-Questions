@@ -76,7 +76,7 @@ Confluent Schema Registry supports Protobuf and JSON Schema in addition to Avro.
 
 - Options B and D are incorrect as Thrift and XML Schema are not supported by the Schema Registry. Option A is supported by both, but JSON Schema is a type specifically supported by the Schema Registry and not by Apache Avro.
 
-**Answer:** C
+**Answer:** C,A
 
 ## Question 16
 

@@ -2,9 +2,9 @@
 
 This guide­ offers insights into Kafka's different parts and functions, allowing you to practice­ questions, helping your preparation for the CCDAK exam. 90 minutes - 60 questions - Around 75% pass rate required. (My own guess)
 
-Take into account that the questions above came from asking AI to ask me questions while I was doing sports, I saw it usefulness to learn the required concepts and I decided to publish them.
+Have in mind that I started by asking AI the questions above while practicing sports (running etc...), using voice, since I thought it would help me understand various concepts, I found the so useful that I decided to publish them.
 
-These questions are not real exam questions or even similar questions, but will help you pass the exam, the terms you'll get familiar with, will help you master the material needed to pass the exam, it helped me and other people that gave me feedback and also contributed with PRs for incorrect questions and clarifications. Many thanks to all of you.
+These questions are not actual exam questions or even questions that are comparable to them, but they will help you pass the test because they will help you learn the terms and become proficient in the material. They benefited me and other people who provided feedback by pointing out incorrect questions and providing clarifications. Thank you so much, everyone.
 
 You can prepare on the [theory of CCDAK here] (https://www.danielsobrado.com/blog/guide-ccdak-concluent-kafka-developer-certification/)
 
@@ -141,6 +141,8 @@ Zookeeper is not very important in the exam and it is good to have a good unders
 [CCDAK](https://github.com/varmaprr/Confluent-Kafka-Certification)
 
 And finally check the [Last minute review](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/LAST_MINUTE_REVIEW.md)
+
+Disclaimer: I have no affiliation with Confluent or the CCDAK test, and my notes and questions are entirely my own and may contain inaccuracies.
 
 ## Contributing
 

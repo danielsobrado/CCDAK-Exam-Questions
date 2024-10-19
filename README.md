@@ -142,7 +142,9 @@ Zookeeper is not very important in the exam and it is good to have a good unders
 
 And finally check the [Last minute review](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/LAST_MINUTE_REVIEW.md)
 
-Disclaimer: I have no affiliation with Confluent or the CCDAK test, and my notes and questions are entirely my own and may contain inaccuracies.
+## Disclaimer
+
+I have no affiliation with Confluent or the CCDAK test, and my notes and questions are entirely my own and may contain inaccuracies.
 
 ## Contributing
 

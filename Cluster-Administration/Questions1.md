@@ -11,7 +11,7 @@ Which of the following is stored in Zookeeper for a Kafka cluster? (Select two)
 **Answer:** B, D
 
 **Explanation:**
-In a Kafka cluster, Zookeeper is used to store critical cluster metadat- A. This includes:
+In a Kafka cluster, Zookeeper is used to store critical cluster metadata. This includes:
 
 - Kafka broker information: Details about each broker in the cluster.
 - Topic-level configurations: Topic configurations such as retention policies, replication factors, etc.

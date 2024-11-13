@@ -82,13 +82,13 @@ The `SELECT * FROM my_stream EMIT CHANGES;` query continuously outputs the curre
 
 Which clause in KSQL is used to define the duration of a hopping window?
 
-- A. WITHIN
+- A. SIZE
 - B. DURATION
 - C. HOP
 - D. WINDOW
 
 **Explanation:**
-The `WITHIN` clause is used to define the duration of a hopping window in KSQL.
+The `SIZE` clause is used to define the duration of a hopping window in KSQL.
 
 - B, C, and D are incorrect because they are not valid clauses for defining the duration of a hopping window in KSQL.
 

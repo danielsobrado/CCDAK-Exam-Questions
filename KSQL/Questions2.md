@@ -98,17 +98,44 @@ The `SIZE` clause is used to define the duration of a hopping window in KSQL.
 
 How can you perform an inner join between two streams in KSQL?
 
-- A. CREATE STREAM new_stream AS SELECT * FROM stream1 INNER JOIN stream2 ON stream1.key = stream2.key;
-- B. CREATE STREAM new_stream AS SELECT * FROM stream1 JOIN stream2 ON stream1.key = stream2.key;
-- C. CREATE STREAM new_stream AS SELECT * FROM stream1 LEFT JOIN stream2 ON stream1.key = stream2.key;
-- D. CREATE STREAM new_stream AS SELECT * FROM stream1 CROSS JOIN stream2 ON stream1.key = stream2.key;
+A. `CREATE STREAM new_stream AS SELECT * FROM stream1 INNER JOIN stream2 WITHIN 5 MINUTES ON stream1.key = stream2.key;`
+
+B. `CREATE STREAM new_stream AS SELECT * FROM stream1 JOIN stream2 ON stream1.key = stream2.key;`
+
+C. `CREATE STREAM new_stream AS SELECT * FROM stream1 LEFT JOIN stream2 WITHIN 5 MINUTES ON stream1.key = stream2.key;`
+
+D. `CREATE STREAM new_stream AS SELECT * FROM stream1 CROSS JOIN stream2 ON stream1.key = stream2.key;`
+
+---
 
 **Explanation:**
-The correct syntax to perform an inner join between two streams in KSQL is `CREATE STREAM new_stream AS SELECT * FROM stream1 JOIN stream2 ON stream1.key = stream2.key;`.
 
-- A is incorrect because it explicitly uses `INNER JOIN`, which is not necessary as `JOIN` implies an inner join by default. C and D are incorrect because they describe different types of joins.
+The correct syntax to perform an inner join between two streams in KSQL is:
 
-**Answer:** B
+**Option A:**
+
+```sql
+CREATE STREAM new_stream AS
+SELECT *
+FROM stream1
+INNER JOIN stream2
+WITHIN 5 MINUTES
+ON stream1.key = stream2.key;
+```
+
+- **`INNER JOIN`**: Specifies that an inner join is to be performed between `stream1` and `stream2`.
+- **`WITHIN 5 MINUTES`**: Defines a time window of 5 minutes for the join. This is mandatory for stream-to-stream joins in KSQL to handle the temporal nature of streaming data.
+- **`ON stream1.key = stream2.key`**: The join condition based on matching keys.
+
+**Option B** is incorrect because it lacks the `WITHIN` clause, which is required when performing stream-to-stream joins in KSQL. Without the `WITHIN` clause, the join operation cannot properly align the streaming data over time.
+
+**Option C** is incorrect because it uses a `LEFT JOIN`, which performs a **left outer join**, not an inner join. This means it would include all records from `stream1` and the matching records from `stream2`, which is not the same as an inner join.
+
+**Option D** is incorrect because `CROSS JOIN` is not supported between streams in KSQL. Additionally, even if it were, a cross join produces the Cartesian product of the two streams, which is not an inner join.
+
+**Answer:**
+
+**A.** `CREATE STREAM new_stream AS SELECT * FROM stream1 INNER JOIN stream2 WITHIN 5 MINUTES ON stream1.key = stream2.key;`
 
 ## Question 18
 

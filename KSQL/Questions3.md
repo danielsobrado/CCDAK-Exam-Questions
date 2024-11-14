@@ -48,22 +48,6 @@ The `EXTRACT(YEAR FROM timestamp)` function in KSQL is used to extract the year 
 
 ## Question 24
 
-What does the `REPARTITION` clause do in a KSQL query?
-
-- A. It creates a new topic with a different partition count
-- B. It redistributes the records based on a new key
-- C. It merges multiple partitions into one
-- D. It splits a partition into multiple partitions
-
-**Explanation:**
-The `REPARTITION` clause in a KSQL query redistributes the records based on a new key, allowing for more balanced data distribution and improved query performance.
-
-- A, C, and D are incorrect because they describe different partition-related operations.
-
-**Answer:** B
-
-## Question 25
-
 How do you handle null values in KSQL?
 
 - A. Use the `IS NULL` and `IS NOT NULL` predicates
@@ -78,7 +62,7 @@ In KSQL, you can handle null values using the `IS NULL` and `IS NOT NULL` predic
 
 **Answer:** D
 
-## Question 26
+## Question 25
 
 Which KSQL function calculates the total sum of a column's values?
 
@@ -94,7 +78,7 @@ The `SUM()` function in KSQL calculates the total sum of a column's values.
 
 **Answer:** A
 
-## Question 27
+## Question 26
 
 What is the default retention period for KSQL streams?
 
@@ -110,7 +94,7 @@ The default retention period for KSQL streams is 1 day. This means data in the s
 
 **Answer:** B
 
-## Question 28
+## Question 27
 
 How can you filter records in a KSQL stream?
 
@@ -126,7 +110,7 @@ Records in a KSQL stream can be filtered using the `WHERE` clause, which allows 
 
 **Answer:** B
 
-## Question 29
+## Question 28
 
 Which KSQL function can be used to format timestamps?
 
@@ -139,21 +123,5 @@ Which KSQL function can be used to format timestamps?
 The `DATE_FORMAT()` function in KSQL can be used to format timestamps. It allows you to specify a pattern for formatting the date and time.
 
 - A, B, and D are incorrect because they are not valid KSQL functions for formatting timestamps.
-
-**Answer:** C
-
-## Question 30
-
-What is the purpose of the `PARTITION BY` clause in KSQL queries?
-
-- A. To filter records based on a condition
-- B. To group records by a specified key
-- C. To repartition the data based on a new key
-- D. To order the results by a specified column
-
-**Explanation:**
-The `PARTITION BY` clause in KSQL queries is used to repartition the data based on a new key. This is useful for ensuring data is evenly distributed across partitions for better performance.
-
-- A, B, and D are incorrect because they describe different functionalities in KSQL.
 
 **Answer:** C

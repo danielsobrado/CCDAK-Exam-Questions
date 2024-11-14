@@ -87,12 +87,36 @@ What is the default retention period for KSQL streams?
 - C. 1 week
 - D. 2 days
 
-**Explanation:**
-The default retention period for KSQL streams is 1 day. This means data in the stream will be retained for 24 hours before being eligible for deletion.
+### Explanation:
 
-- A, C, and D are incorrect because they do not reflect the default retention period.
+In KSQL, streams are abstractions over Kafka topics. By default, the retention period for Kafka topics—and therefore KSQL streams—is **7 days**. This means that the data in a KSQL stream is retained for 7 days before it is eligible for deletion, unless you configure a different retention period when creating the stream or alter the topic settings.
 
-**Answer:** B
+**Key Points:**
+
+- **Default Retention Period**: 7 days.
+- **Inheritance from Kafka**: KSQL streams inherit the retention settings from the underlying Kafka topics.
+- **Configuration**: You can adjust the retention period by setting the `RETENTION` property when creating a stream or by modifying the topic configuration directly.
+
+**Example of Setting Retention Period:**
+
+```sql
+CREATE STREAM my_stream (
+  ...
+) WITH (
+  kafka_topic='my_topic',
+  value_format='JSON',
+  retention='168 HOURS'  -- Retention period of 7 days
+);
+```
+
+**Other Options Explained:**
+
+- **B. 1 day**: Not the default retention period but can be set manually.
+- **C. 1 week**: Equivalent to 7 days, but the default is specified in days.
+- **D. 2 days**: Not the default retention period but can be configured if needed.
+
+
+**A. 7 days**
 
 ## Question 27
 

@@ -68,21 +68,22 @@ In a Kafka cluster, the Controller is a critical component for managing cluster 
 
 Choose the correct answers.
 
-Response:
-
+### Response:
 The correct answers are **2. Elected by Zookeeper ensemble.** and **3. Responsible for partition leader election.**
 
-Explanation:
+### Explanation:
 
 1. **Incorrect**. The Controller in a Kafka cluster is not elected by a broker majority. The election process is not based on a majority vote among the brokers themselves.
 
-2. **Correct**. The Controller is elected by the Zookeeper ensemble. Kafka uses Zookeeper to manage cluster metadata and to perform leader election for both the controller and partition leaders. When the current Controller fails or loses connection to Zookeeper, a new Controller is elected by Zookeeper from among the live members of the cluster.
+2. **Correct**. The Controller is elected by the Zookeeper ensemble. Kafka uses Zookeeper to manage cluster metadata and to perform leader election for the controller. When the current Controller fails or loses connection to Zookeeper, a new Controller is elected by Zookeeper from among the live members of the cluster.
 
 3. **Correct**. One of the primary responsibilities of the Controller is to manage partition leader elections. When a partition leader fails, the Controller is responsible for choosing a new leader from the set of in-sync replicas (ISRs) and updating the cluster metadata accordingly.
 
 4. **Incorrect**. Managing consumer group offsets is not a responsibility of the Controller. Consumer group offsets are maintained by Kafka brokers, with the offsets being stored either in a dedicated __consumer_offsets topic within Kafka (for newer versions) or Zookeeper (for older versions).
 
 5. **Incorrect**. Automatically assigning replicas to brokers based on load is not directly managed by the Controller. Replica assignment is typically done at topic creation time or during manual rebalancing operations. While the Controller does manage some aspects of replica management, such as initiating reassignment tasks, the automatic balancing of load is not a direct responsibility of the Controller but can be achieved through tools like Kafka's built-in partition reassignment tool or third-party solutions.
+
+Note: While this answer describes the traditional Kafka deployment using Zookeeper, newer versions of Kafka (with KIP-500/KRaft) can operate without Zookeeper, using a different controller election mechanism.
 
 ## Question 4:
 In the context of Kafka's distributed architecture, broker elections are vital for cluster health and stability. Consider the following advanced scenarios where Kafka's internal mechanisms must decide on leadership roles:

@@ -8,7 +8,7 @@ B. Use the kafka-configs.sh --describe command
 C. Use the zookeeper-shell.sh command to navigate to the topic's configuration znode
 D. Look in the Kafka broker's log files for the topic configuration
 
-**Correct Answer: B**
+**Answer: B**
 
 **Explanation:**
 
@@ -141,17 +141,30 @@ To list all the topics in a Kafka cluster, you should use the `kafka-topics.sh` 
 
 ## Question 7
 
+**Question:**  
 How can you describe the configuration of a topic named "test" using the Kafka CLI?
 
-- A. kafka-topics.sh --describe --topic test --zookeeper localhost:2181
-- B. kafka-topics.sh --describe --topic test --bootstrap-server localhost:9092
-- C. kafka-configs.sh --describe --entity-type topics --entity-name test --zookeeper localhost:2181
-- D. kafka-configs.sh --describe --entity-type topics --entity-name test --bootstrap-server localhost:9092
+A. kafka-topics.sh --describe --topic test --zookeeper localhost:2181
+
+B. kafka-topics.sh --describe --topic test --bootstrap-server localhost:9092
+
+C. kafka-configs.sh --describe --entity-type topics --entity-name test --zookeeper localhost:2181
+
+D. kafka-configs.sh --describe --entity-type topics --entity-name test --bootstrap-server localhost:9092
 
 **Answer:** D
 
-**Explanation:**
+## Explanation
+
 To describe the configuration of a topic, you should use the `kafka-configs.sh` command with the `--describe` option. The `--entity-type` option should be set to "topics", and the `--entity-name` option should be set to the name of the topic. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, while `--zookeeper` is deprecated.
+
+**Option A**: This is incorrect for two reasons:
+1. It uses `kafka-topics.sh` instead of `kafka-configs.sh`
+2. It uses the deprecated `--zookeeper` option
+
+**Option B**: While this uses the correct `--bootstrap-server` option, it still uses `kafka-topics.sh` which shows topic metadata but not configuration properties.
+
+**Option C**: This uses the correct tool (`kafka-configs.sh`) but with the deprecated `--zookeeper` option, which should not be used in current Kafka versions.
 
 ## Question 8
 

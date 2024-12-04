@@ -156,6 +156,8 @@ D. kafka-configs.sh --describe --entity-type topics --entity-name test --bootstr
 
 To describe the configuration of a topic, you should use the `kafka-configs.sh` command with the `--describe` option. The `--entity-type` option should be set to "topics", and the `--entity-name` option should be set to the name of the topic. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, while `--zookeeper` is deprecated.
 
+**Explanation:**
+
 **Option A**: This is incorrect for two reasons:
 1. It uses `kafka-topics.sh` instead of `kafka-configs.sh`
 2. It uses the deprecated `--zookeeper` option

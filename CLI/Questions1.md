@@ -1,32 +1,34 @@
-## Question 1
+## Question 1: Viewing Kafka Topic Configuration
 
+**Question:**  
 How can you view the current configuration of a Kafka topic?
 
-- A. Use the `kafka-topics.sh --describe` command
-- B. Use the `kafka-configs.sh --describe` command
-- C. Use the `zookeeper-shell.sh` command to navigate to the topic's configuration znode
-- D. Look in the Kafka broker's log files for the topic configuration
+A. Use the kafka-topics.sh --describe command
+B. Use the kafka-configs.sh --describe command
+C. Use the zookeeper-shell.sh command to navigate to the topic's configuration znode
+D. Look in the Kafka broker's log files for the topic configuration
+
+**Correct Answer: B**
 
 **Explanation:**
-To view the current configuration of a Kafka topic, you can use the `kafka-topics.sh --describe` command.
 
-The `kafka-topics.sh` tool is a command-line utility provided by Kafka for managing topics. The `--describe` option of this tool allows you to retrieve information about a specific topic, including its configuration settings.
+To view the current configuration of a Kafka topic, you should use the kafka-configs.sh --describe command. This tool is designed to manage and display configurations for Kafka entities, including topics, brokers, and clients.
 
-When you run `kafka-topics.sh --describe --topic <topic-name>`:
+When you run:
+```bash
+kafka-configs.sh --bootstrap-server <broker> --entity-type topics --entity-name <topic-name> --describe
+```
 
-1. The tool connects to a Kafka broker and sends a request to describe the specified topic.
-2. The broker retrieves the topic's metadata and configuration from Zookeeper.
-3. The tool displays the topic's information, including partitions, replicas, and configuration settings.
+It retrieves and displays the configuration properties for the specified topic, such as:
+- Retention policy (retention.ms)
+- Cleanup policy (cleanup.policy)
+- Compression type
 
-The output of the command will show the topic's configuration properties and their values, such as retention policy, cleanup policy, and compression type.
+**Option A**: The kafka-topics.sh --describe command provides metadata about the topic, such as partition count, replication factor, and leadership information, but does not show configuration properties like retention settings.
 
-Statement B is incorrect because `kafka-configs.sh --describe` is used to describe broker or client configurations, not topic configurations.
+**Option C**: Using zookeeper-shell.sh to inspect topic configurations directly in Zookeeper is not recommended. This approach is outdated, especially as newer Kafka versions no longer rely on Zookeeper.
 
-Statement C is incorrect because while topic configurations are stored in Zookeeper, using the `zookeeper-shell.sh` command to navigate the znodes is a low-level approach and not the recommended way to view topic configurations.
-
-Statement D is incorrect because topic configurations are not stored in the Kafka broker's log files. They are stored in Zookeeper and can be accessed through the Kafka tools.
-
-**Answer:** A
+**Option D**: Topic configurations are not stored in the Kafka broker's log files. These files contain runtime logs, not configuration data.
 
 ## Question 2
 

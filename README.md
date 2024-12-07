@@ -120,6 +120,7 @@ Schema Re­gistry is a tool to manage schema definitions for Kafka me­ssages. I
 [Questions 1](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions1.md)
 [Questions 2](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions2.md)
 [Questions 3](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions3.md)
+[Questions 4](https://github.com/danielsobrado/CCDAK-Exam-Questions/blob/main/Schema-Registry/Questions4.md)
 
 ### Zookeeper / KRaft
 

@@ -1,47 +1,5 @@
 ## Question 11
 
-What is the difference between `Read` and `Write` ACL operations in Kafka?
-
-- A. `Read` allows consuming messages, while `Write` allows producing messages
-- B. `Read` allows producing messages, while `Write` allows consuming messages
-- C. `Read` allows modifying topic configurations, while `Write` allows deleting topics
-- D. `Read` and `Write` are equivalent and can be used interchangeably
-
-**Explanation:**
-In Kafka, the `Read` ACL operation allows a client to consume messages from a specific topic, while the `Write` ACL operation allows a client to produce messages to a specific topic. The `Read` permission grants the client the ability to read and fetch messages from the topic, including the metadata required for consumption. On the other hand, the `Write` permission authorizes the client to send messages to the topic and update its content. It's important to note that `Read` and `Write` operations are distinct and serve different purposes. A client with `Read` permission cannot produce messages, and a client with `Write` permission cannot consume messages. The permissions are specific to the respective operations and should be granted based on the client's intended actions.
-
-**Answer:** A
-
-## Question 12
-
-How can you grant a client permission to describe topics and consumer groups in a Kafka cluster?
-
-- A. Assign the `DescribeConfigs` ACL operation to the client
-- B. Grant the `Describe` ACL operation to the client
-- C. Provide the `AlterConfigs` ACL operation to the client
-- D. Give the `IdempotentWrite` ACL operation to the client
-
-**Explanation:**
-To grant a client permission to describe topics and consumer groups in a Kafka cluster, you need to assign the `Describe` ACL operation to the client. The `Describe` permission allows a client to view the metadata and details of topics and consumer groups without the ability to modify or delete them. With the `Describe` ACL, a client can send requests to the Kafka brokers to retrieve information such as the list of partitions, replica assignments, and configuration settings for topics. It can also query the state and membership of consumer groups. The `Describe` ACL is commonly used by monitoring and administrative tools to gather information about the Kafka cluster's state without making any changes to the topics or consumer groups.
-
-**Answer:** B
-
-## Question 13
-
-What is the purpose of the `ssl.keystore.location` and `ssl.keystore.password` configurations in Kafka?
-
-- A. To specify the location and password of the truststore for verifying client certificates
-- B. To specify the location and password of the keystore for broker authentication
-- C. To specify the location and password of the keystore for client authentication
-- D. To specify the location and password of the truststore for broker authentication
-
-**Explanation:**
-In Kafka, the `ssl.keystore.location` and `ssl.keystore.password` configurations are used to specify the location and password of the keystore for broker authentication. When SSL/TLS is enabled for inter-broker communication or client-broker communication, each Kafka broker needs to have a keystore that contains its private key and certificate. The `ssl.keystore.location` configuration points to the file path of the keystore on the broker's file system, while the `ssl.keystore.password` configuration provides the password required to access the keystore. These configurations are essential for setting up SSL/TLS authentication on the broker side, allowing the broker to securely authenticate itself to clients and other brokers.
-
-**Answer:** B
-
-## Question 14
-
 What is the role of the `ssl.truststore.location` and `ssl.truststore.password` configurations in Kafka?
 
 - A. To specify the location and password of the keystore for storing the broker's private key
@@ -54,7 +12,7 @@ The `ssl.truststore.location` and `ssl.truststore.password` configurations in Ka
 
 **Answer:** D
 
-## Question 15
+## Question 12
 
 How can you enable SSL/TLS encryption for communication between Kafka brokers?
 
@@ -68,7 +26,7 @@ To enable SSL/TLS encryption for communication between Kafka brokers, you need t
 
 **Answer:** B
 
-## Question 16
+## Question 13
 
 What is the purpose of the `ssl.client.auth` configuration in Kafka?
 
@@ -90,7 +48,7 @@ The `ssl.client.auth` configuration in Kafka is used to configure the client aut
 
 **Area:** Security
 
-## Question 17
+## Question 14
 
 What happens when `ssl.client.auth` is set to `required` in the Kafka broker configuration?
 
@@ -104,7 +62,7 @@ When the `ssl.client.auth` configuration is set to `required` in the Kafka broke
 
 **Answer:** A
 
-## Question 18
+## Question 15
 
 What is the default value of the `ssl.client.auth` configuration in Kafka?
 
@@ -118,7 +76,7 @@ The default value of the `ssl.client.auth` configuration in Kafka is `none`. Whe
 
 **Answer:** A
 
-## Question 19
+## Question 16
 
 What is the purpose of the `sasl.kerberos.service.name` configuration in Kafka?
 
@@ -132,7 +90,7 @@ The `sasl.kerberos.service.name` configuration in Kafka is used to define the se
 
 **Answer:** D
 
-## Question 20
+## Question 17
 
 What is the role of the `sasl.jaas.config` configuration in Kafka SASL authentication?
 
@@ -143,5 +101,47 @@ What is the role of the `sasl.jaas.config` configuration in Kafka SASL authentic
 
 **Explanation:**
 The `sasl.jaas.config` configuration in Kafka is used to specify the JAAS (Java Authentication and Authorization Service) configuration for SASL authentication. JAAS is a pluggable authentication framework used by Kafka to configure and handle authentication mechanisms. The `sasl.jaas.config` configuration allows you to provide the necessary authentication details, such as the login module, principal, and credentials, directly in the Kafka configuration. It eliminates the need for a separate JAAS configuration file. The value of `sasl.jaas.config` is a string that represents the JAAS configuration, including the login module class, principal, and any additional options required for authentication. It is a convenient way to configure SASL authentication settings directly in the Kafka broker or client configuration.
+
+**Answer:** C
+
+## Question 18
+
+What is the purpose of the `sasl.mechanism` configuration in Kafka SASL authentication?
+
+- A. To specify the SASL mechanism to be used for authentication (e.g., PLAIN, SCRAM)
+- B. To configure the SASL client and server callbacks for authentication
+- C. To set the path to the JAAS configuration file for SASL authentication
+- D. To enable or disable SASL authentication in Kafka
+
+**Explanation:**
+The `sasl.mechanism` configuration in Kafka is used to specify the SASL mechanism to be used for authentication. SASL (Simple Authentication and Security Layer) is a framework that provides authentication and optional encryption for network protocols. Kafka supports multiple SASL mechanisms, such as PLAIN, SCRAM (Salted Challenge Response Authentication Mechanism), and GSSAPI (Kerberos). The `sasl.mechanism` configuration allows you to choose the specific SASL mechanism that Kafka should use for authentication. For example, setting `sasl.mechanism=PLAIN` configures Kafka to use the PLAIN mechanism, which transmits credentials in plaintext. Setting `sasl.mechanism=SCRAM-SHA-256` configures Kafka to use the SCRAM mechanism with SHA-256 hashing for secure password-based authentication. The available SASL mechanisms depend on the Kafka version and the security libraries installed.
+
+**Answer:** A
+
+## Question 19
+
+What security protocol does Kafka use by default for communication between clients and brokers?
+
+- A. SSL/TLS
+- B. SASL_PLAINTEXT
+- C. PLAINTEXT
+- D. SASL_SSL
+
+**Explanation:**
+- B. default, Kafka uses the PLAINTEXT security protocol for communication between clients and brokers. The PLAINTEXT protocol does not provide any encryption or authentication and sends data in plain text over the network. It is the simplest and most basic security protocol in Kafka, offering no security measures out of the box. While PLAINTEXT is the default protocol, it is not recommended for production environments or sensitive data transmission. Instead, it is strongly advised to use more secure protocols like SSL/TLS (SSL) or SASL (SASL_PLAINTEXT or SASL_SSL) to ensure data confidentiality, integrity, and authentication between clients and brokers.
+
+**Answer:** C
+
+## Question 20
+
+Which security protocol in Kafka provides encryption for data in transit but does not offer authentication?
+
+- A. PLAINTEXT
+- B. SASL_PLAINTEXT
+- C. SSL
+- D. SASL_SSL
+
+**Explanation:**
+In Kafka, the SSL security protocol provides encryption for data in transit between clients and brokers but does not offer authentication. When the SSL protocol is used, all the data exchanged between clients and brokers is encrypted using SSL/TLS, ensuring confidentiality and integrity of the data. However, SSL alone does not handle authentication of the clients or brokers. It focuses solely on encrypting the communication channel. To achieve authentication in conjunction with encryption, you need to use the SASL_SSL protocol, which combines SSL encryption with SASL authentication. Alternatively, you can use SSL with separate authentication mechanisms like client certificates or Kerberos.
 
 **Answer:** C

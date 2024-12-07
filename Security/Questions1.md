@@ -56,78 +56,8 @@ In Kafka, ACLs can be defined for resource types like Topic, Consumer Group, Clu
 - A, B, C are all valid resource types for ACLs.
 - D is invalid because ACLs are defined at the topic level, not individual partition level. The topic resource type covers all its partitions.
 
+
 ## Question 4
-
-In the Confluent Schema Registry, what is the default compatibility setting for new schemas?
-
-- A. BACKWARD
-- B. FORWARD
-- C. FULL
-- D. NONE
-
-**Answer:** A
-
-**Explanation:**
-The Confluent Schema Registry default compatibility type is BACKWARD . The main reason that BACKWARD compatibility mode is the default, and preferred for Kafka, is so that you can rewind consumers to the beginning of the topic.
-
-- BACKWARD compatibility means that data written with a new schema can be read by code using an old schema.
-- FORWARD compatibility means that data written with an old schema can be read by code using a new schema.
-- FULL compatibility means that both BACKWARD and FORWARD compatibilities are required.
-- NONE means that no compatibility checking is performed.
-
-## Question 5
-
-Where does the Confluent Schema Registry store its own configuration?
-
-- A. In Zookeeper
-- B. In a Kafka topic
-- C. On the filesystem
-- D. In a database
-
-**Answer:** A
-
-**Explanation:**
-The Confluent Schema Registry uses Zookeeper to store its own configuration. When the Schema Registry starts up, it reads its configuration from a Zookeeper path, which defaults to `/schema-registry`.
-
-Some of the key configuration properties stored in Zookeeper include:
-
-- `kafkastore.topic`: The Kafka topic that the Schema Registry uses to store schema data.
-- `master.eligibility`: Whether the instance is eligible to be the master.
-- `host.name`: The host name to use for the Schema Registry instance.
-- `port`: The port to run the Schema Registry instance on.
-
-So while the Schema Registry uses a Kafka topic to store the actual schema data, it uses Zookeeper for its own configuration.
-
-- B is incorrect because while the Schema Registry does use a Kafka topic, it's for schema data, not its own configuration.
-- C and D are incorrect because the Schema Registry does not use the filesystem or a database for its configuration.
-
-## Question 6
-
-How does the Confluent Schema Registry ensure high availability?
-
-- A. By running multiple instances and electing a master
-- B. By relying on the availability of the underlying Kafka cluster
-- C. By replicating data across multiple Zookeeper instances
-- D. By using a distributed consensus protocol among instances
-
-**Answer:** A
-
-**Explanation:**
-The Confluent Schema Registry is designed to be highly available by allowing multiple instances to run in a cluster mode. When running in cluster mode:
-
-- Each instance of the Schema Registry is equal - there is no designated leader or follower.
-- Instances communicate with each other via Kafka.
-- One instance is elected the "master" at any given time. The master is responsible for handling all write requests (new schemas, config changes, etc.).
-- All instances can serve read requests, whether they are the master or not.
-- If the master goes down, a new master is automatically elected from the remaining instances.
-
-This master election process ensures that there is always one instance responsible for consistency of writes, while reads can be served from any instance for high availability and scalability.
-
-- B is incorrect because while the Schema Registry does rely on Kafka, it has its own high availability mechanism beyond just relying on Kafka's availability.
-- C is incorrect because while the Schema Registry does use Zookeeper, it doesn't replicate its own data across Zookeeper instances for high availability.
-- D is incorrect because the Schema Registry doesn't use a distributed consensus protocol like Raft or Paxos among its instances. It uses a simpler master election process.
-
-## Question 7
 
 What is the purpose of ACLs (Access Control Lists) in Kafka?
 
@@ -141,7 +71,7 @@ ACLs (Access Control Lists) in Kafka are used to authenticate clients and author
 
 **Answer:** B
 
-## Question 8
+## Question 5
 
 How are ACLs stored and managed in Kafka?
 
@@ -155,7 +85,7 @@ In Kafka, ACLs are stored in Zookeeper and managed through the Kafka broker conf
 
 **Answer:** A
 
-## Question 9
+## Question 6
 
 What happens when a client tries to perform an operation that is not allowed by the configured ACLs?
 
@@ -169,7 +99,7 @@ When a client tries to perform an operation that is not allowed by the configure
 
 **Answer:** B
 
-## Question 10
+## Question 7
 
 What is the purpose of the `CreateTopics` ACL operation in Kafka?
 
@@ -182,3 +112,45 @@ What is the purpose of the `CreateTopics` ACL operation in Kafka?
 The `CreateTopics` ACL operation in Kafka is used to allow a client to create new topics in a Kafka cluster. When a client has been granted the `CreateTopics` permission, it is authorized to send requests to the Kafka brokers to create new topics. This ACL operation is typically assigned to administrative clients or applications responsible for managing the topic lifecycle in a Kafka cluster. By default, Kafka brokers are configured to require `CreateTopics` permission for any client attempting to create a new topic. This ensures that only authorized clients can create topics and helps maintain control over the topic management process in the cluster.
 
 **Answer:** A
+
+## Question 8
+
+What is the difference between `Read` and `Write` ACL operations in Kafka?
+
+- A. `Read` allows consuming messages, while `Write` allows producing messages
+- B. `Read` allows producing messages, while `Write` allows consuming messages
+- C. `Read` allows modifying topic configurations, while `Write` allows deleting topics
+- D. `Read` and `Write` are equivalent and can be used interchangeably
+
+**Explanation:**
+In Kafka, the `Read` ACL operation allows a client to consume messages from a specific topic, while the `Write` ACL operation allows a client to produce messages to a specific topic. The `Read` permission grants the client the ability to read and fetch messages from the topic, including the metadata required for consumption. On the other hand, the `Write` permission authorizes the client to send messages to the topic and update its content. It's important to note that `Read` and `Write` operations are distinct and serve different purposes. A client with `Read` permission cannot produce messages, and a client with `Write` permission cannot consume messages. The permissions are specific to the respective operations and should be granted based on the client's intended actions.
+
+**Answer:** A
+
+## Question 9
+
+How can you grant a client permission to describe topics and consumer groups in a Kafka cluster?
+
+- A. Assign the `DescribeConfigs` ACL operation to the client
+- B. Grant the `Describe` ACL operation to the client
+- C. Provide the `AlterConfigs` ACL operation to the client
+- D. Give the `IdempotentWrite` ACL operation to the client
+
+**Explanation:**
+To grant a client permission to describe topics and consumer groups in a Kafka cluster, you need to assign the `Describe` ACL operation to the client. The `Describe` permission allows a client to view the metadata and details of topics and consumer groups without the ability to modify or delete them. With the `Describe` ACL, a client can send requests to the Kafka brokers to retrieve information such as the list of partitions, replica assignments, and configuration settings for topics. It can also query the state and membership of consumer groups. The `Describe` ACL is commonly used by monitoring and administrative tools to gather information about the Kafka cluster's state without making any changes to the topics or consumer groups.
+
+**Answer:** B
+
+## Question 10
+
+What is the purpose of the `ssl.keystore.location` and `ssl.keystore.password` configurations in Kafka?
+
+- A. To specify the location and password of the truststore for verifying client certificates
+- B. To specify the location and password of the keystore for broker authentication
+- C. To specify the location and password of the keystore for client authentication
+- D. To specify the location and password of the truststore for broker authentication
+
+**Explanation:**
+In Kafka, the `ssl.keystore.location` and `ssl.keystore.password` configurations are used to specify the location and password of the keystore for broker authentication. When SSL/TLS is enabled for inter-broker communication or client-broker communication, each Kafka broker needs to have a keystore that contains its private key and certificate. The `ssl.keystore.location` configuration points to the file path of the keystore on the broker's file system, while the `ssl.keystore.password` configuration provides the password required to access the keystore. These configurations are essential for setting up SSL/TLS authentication on the broker side, allowing the broker to securely authenticate itself to clients and other brokers.
+
+**Answer:** B

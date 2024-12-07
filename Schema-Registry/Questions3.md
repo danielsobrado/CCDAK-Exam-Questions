@@ -152,3 +152,22 @@ For example, if a field's data type is changed from an integer to a string, the 
 Therefore, changing the data type of a field in an Avro schema is an incompatible change that breaks both backward and forward compatibility. It requires careful consideration and coordination between producers and consumers to handle the schema evolution properly.
 
 **Answer:** D
+
+## Question 30
+
+In the Confluent Schema Registry, what is the default compatibility setting for new schemas?
+
+- A. BACKWARD
+- B. FORWARD
+- C. FULL
+- D. NONE
+
+**Answer:** A
+
+**Explanation:**
+The Confluent Schema Registry default compatibility type is BACKWARD . The main reason that BACKWARD compatibility mode is the default, and preferred for Kafka, is so that you can rewind consumers to the beginning of the topic.
+
+- BACKWARD compatibility means that data written with a new schema can be read by code using an old schema.
+- FORWARD compatibility means that data written with an old schema can be read by code using a new schema.
+- FULL compatibility means that both BACKWARD and FORWARD compatibilities are required.
+- NONE means that no compatibility checking is performed.

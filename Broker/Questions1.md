@@ -119,7 +119,7 @@ Response:
 D and E are incorrect options based on Kafka's current architecture and leader election protocols.
 
 ## Question 5:
-A Kafka producer is configured to use the `acks=all` setting while publishing messages to a topic partition that has a replication factor of 3. Broker A hosts the current leader for this partition, while Brokers B and C host the replicas. Due to unforeseen circumstances, both Broker B and Broker C go offline simultaneously. What is the impact on the producer's ability to successfully publish messages to this partition?
+A Kafka producer is configured to use the `acks=all` setting while publishing messages to a topic partition that has a replication factor of 3. The topic is also configured with `min.insync.replicas=2`. Broker A hosts the current leader for this partition, while Brokers B and C host the replicas. Due to unforeseen circumstances, both Broker B and Broker C go offline simultaneously.
 
 1. The producer will be able to publish messages, but with potential data loss.
 2. The producer will temporarily be unable to publish messages until at least one replica broker comes back online.

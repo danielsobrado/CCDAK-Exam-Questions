@@ -72,48 +72,6 @@ Certainly! Here are 3 more questions based on question 41 in the document:
 
 ## Question 26
 
-What is the purpose of the `max.poll.records` setting in the Kafka consumer configuration?
-
-- A. To specify the maximum number of records to return in a single poll
-- B. To control the maximum amount of data the consumer can receive per second
-- C. To set the maximum number of partitions the consumer can subscribe to
-- D. To determine the maximum number of consumers allowed in a consumer group
-
-**Explanation:**
-The `max.poll.records` setting in the Kafka consumer configuration is used to specify the maximum number of records to return in a single poll. When the consumer calls the `poll()` method to fetch records from Kafka, it will retrieve at most `max.poll.records` records. This setting allows you to control the maximum number of records that the consumer will process in each iteration. By default, `max.poll.records` is set to 500. Adjusting this value can help balance the trade-off between latency and throughput. Setting a higher value can increase throughput by allowing the consumer to process more records in each poll, but it may also increase latency if the processing of each batch takes longer.
-
-**Answer:** A
-
-## Question 27
-
-How does the `max.poll.interval.ms` setting affect the behavior of a Kafka consumer?
-
-- A. It specifies the maximum amount of time the consumer can wait before polling for new records
-- B. It sets the maximum interval between two consecutive polls before the consumer is considered dead
-- C. It determines the maximum time allowed for message processing before committing offsets
-- D. It controls the maximum number of records the consumer can poll in a single request
-
-**Explanation:**
-The `max.poll.interval.ms` setting in the Kafka consumer configuration specifies the maximum interval between two consecutive polls before the consumer is considered dead. If the consumer does not call the `poll()` method within this interval, the consumer will be marked as failed and removed from the consumer group. This setting is used to detect and handle consumer failures. By default, `max.poll.interval.ms` is set to 5 minutes (300000 milliseconds). If a consumer takes longer than this interval to process a batch of records, it needs to call `poll()` again within the specified interval to avoid being considered dead. Setting an appropriate value for `max.poll.interval.ms` ensures that consumers are actively participating in the consumer group and helps detect and recover from consumer failures.
-
-**Answer:** B
-
-## Question 28
-
-What happens when a Kafka consumer is marked as dead due to exceeding the `max.poll.interval.ms` interval?
-
-- A. The consumer is automatically rebalanced, and its partitions are reassigned to other consumers in the group
-- B. The consumer receives an exception and must manually rejoin the consumer group
-- C. The consumer's offset commits are rolled back, and it starts consuming from the beginning of the assigned partitions
-- D. The consumer is permanently removed from the consumer group and cannot rejoin
-
-**Explanation:**
-When a Kafka consumer is marked as dead due to exceeding the `max.poll.interval.ms` interval, the consumer is automatically rebalanced, and its partitions are reassigned to other consumers in the consumer group. The Kafka consumer group coordinator detects that the consumer has failed to poll within the specified interval and triggers a rebalance operation. During the rebalance, the partitions assigned to the dead consumer are revoked and redistributed among the remaining active consumers in the group. This ensures that the workload is evenly distributed and that the consumer group continues to make progress. The dead consumer is removed from the group, and it needs to rejoin the group and receive new partition assignments to start consuming again.
-
-**Answer:** A
-
-## Question 29
-
 What triggers a partition rebalance in a Kafka consumer group?
 
 - A. Adding a new topic to the Kafka cluster
@@ -126,7 +84,7 @@ A partition rebalance in a Kafka consumer group is triggered when there is a cha
 
 **Answer:** C
 
-## Question 30
+## Question 27
 
 What happens to the partition assignments during a consumer group rebalance?
 

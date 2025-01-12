@@ -1,6 +1,6 @@
 ## Question 1
 
-Where are the ACLs stored in a Kafka cluster by default?
+Where are the ACLs stored in a Kafka cluster by default at Zookeeper mode cluster?
 
 - A. In the Kafka topic `_acls`
 - B. Inside the broker's data directory  
@@ -73,15 +73,12 @@ ACLs (Access Control Lists) in Kafka are used to authenticate clients and author
 
 ## Question 5
 
-How are ACLs stored and managed in Kafka?
+How are ACLs stored and managed in Kafka for KRaft mode?
 
-- A. ACLs are stored in Zookeeper and managed through the Kafka broker configuration
-- B. ACLs are stored in a dedicated Kafka topic and managed using Kafka command-line tools
-- C. ACLs are stored in a separate ACL server and managed through a REST API
-- D. ACLs are stored in the Kafka broker's local file system and managed using configuration files
-
-**Explanation:**
-In Kafka, ACLs are stored in Zookeeper and managed through the Kafka broker configuration. When ACLs are configured, they are stored in a dedicated znode in Zookeeper, typically under the `/kafka-acl` path. The Kafka brokers read the ACL information from Zookeeper and enforce the access control rules on incoming client requests. Any changes to ACLs, such as adding or removing permissions, are made through the Kafka broker configuration and are propagated to Zookeeper. Kafka provides command-line tools, such as `kafka-acls.sh`, to manage ACLs by interacting with Zookeeper. These tools allow you to create, list, and delete ACLs for specific resources and principals.
+A. ACLs are stored in a Controller node's local file system and managed using Kafka command-line tools
+B. ACLs are stored in the `__cluster_metadata` topic and managed using Kafka command-line tools
+C. ACLs are stored in a dedicated ACL server and managed through a REST API
+D. ACLs are stored in the Kafka broker's local file system and managed using configuration files
 
 **Answer:** A
 

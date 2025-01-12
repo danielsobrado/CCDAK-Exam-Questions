@@ -72,7 +72,7 @@ It's important to note that having more partitions than consumers is a valid and
 A topic has 10 partitions and a replication factor of 3. There are 2 consumers in a consumer group subscribed to this topic. The cluster has 5 brokers. How would the partitions be assigned to the consumers to achieve maximum throughput?
 
 - A. Consumer 1: Partitions 0-4, Consumer 2: Partitions 5-9
-- B. Consumer 1: Partitions 0, 2, 4, 6, 8, Consumer 2: Partitions 1, 3, 5, 7, 9
+- B. Consumer 1: Partitions 0-9 and 0-1 replicas, Consumer 2: Partitions 0-9 and 3. replicas
 - C. Consumer 1: Partitions 0, 1, 2, Consumer 2: Partitions 3, 4, 5, Unassigned: 6, 7, 8, 9
 - D. Consumer 1: Partitions 0-9
 
@@ -90,7 +90,7 @@ This way, each consumer handles 5 partitions, and all partitions are being consu
 
 The replication factor and the number of brokers do not directly affect the partition assignment to consumers. The replication factor is about data durability and the number of brokers is about the cluster's capacity, but the consumer-partition assignment is handled independently by the consumer group coordinator.
 
-- B is a valid distribution but does not provide any additional throughput compared to A.
+- B is not acceptable because consumer groups do not consume from different replicas.
 - C is suboptimal because it leaves some partitions unassigned, reducing total throughput.
 - D is incorrect because it assigns all partitions to a single consumer, eliminating the benefits of parallel consumption.
 

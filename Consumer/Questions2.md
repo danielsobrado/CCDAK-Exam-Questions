@@ -62,21 +62,12 @@ What is the default behavior of the auto.offset.reset configuration in Kafka con
 - C. It throws an exception if no committed offset is found
 - D. It waits for a committed offset to be available before starting consumption
 
-**Answer:** C
+**Answer:** B
 
 **Explanation:**
-In Kafka consumers, the auto.offset.reset configuration determines the behavior when no committed offset is found for a partition. By default, if auto.offset.reset is not explicitly set, the consumer will throw an exception if it tries to consume from a partition without a committed offset.
+The default behavior of the auto.offset.reset configuration in Kafka consumers is to set the value to "latest". This means that if there is no committed offset available for a consumer group, the consumer will start reading from the latest offset of the partition. This behavior causes the consumer to read only new messages that are produced after the consumer starts.
 
-The default behavior is designed to prevent accidental data loss or duplicate processing. If a consumer starts consuming from a partition without a committed offset, it may miss messages or consume messages that have already been processed by another consumer.
-
-To change this behavior, you can explicitly set the auto.offset.reset configuration to one of the following values:
-
-- "earliest": The consumer will start consuming from the earliest available offset in the partition if no committed offset is found. This ensures that the consumer processes all messages from the beginning of the partition.
-- "latest": The consumer will start consuming from the latest offset in the partition if no committed offset is found. This means that the consumer will only process new messages that arrive after it starts consuming.
-
-It's important to carefully consider the appropriate value for auto.offset.reset based on your application's requirements. Setting it to "earliest" may result in reprocessing messages, while setting it to "latest" may skip messages that were produced before the consumer started.
-
-If you want to avoid exceptions and have more control over the starting offset, you can use the Kafka consumer's seek() method to manually set the offset before starting consumption.
+However, it is important to note that this behavior can be changed by setting auto.offset.reset to "earliest" if you want the consumer to start reading from the beginning of the partition when no committed offset is found.
 
 ## Question 14
 

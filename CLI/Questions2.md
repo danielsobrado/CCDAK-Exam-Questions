@@ -7,10 +7,15 @@ How can you delete a topic named "test" using the Kafka CLI?
 - C. kafka-configs.sh --delete --entity-type topics --entity-name test --bootstrap-server localhost:9092
 - D. kafka-console-producer.sh --delete --topic test --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 To delete a topic using the Kafka CLI, you should use the `kafka-topics.sh` command with the `--delete` option. The `--bootstrap-server` option specifies the Kafka broker(s) to connect to.
+
+</details>
 
 ## Question 12
 
@@ -21,10 +26,15 @@ What command can you use to reset offsets for a consumer group in Kafka?
 - C. kafka-console-consumer.sh --reset-offsets
 - D. kafka-configs.sh --reset-offsets
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To reset offsets for a consumer group, you should use the `kafka-consumer-groups.sh` command with the `--reset-offsets` option.
+
+</details>
 
 ## Question 13
 
@@ -35,10 +45,15 @@ How can you check the consumer group lag for a specific consumer group using the
 - C. kafka-configs.sh --describe --group <group-id> --bootstrap-server localhost:9092
 - D. kafka-console-consumer.sh --describe --group <group-id> --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To check the consumer group lag, you should use the `kafka-consumer-groups.sh` command with the `--describe` option and specify the `--group` option along with the consumer group ID.
+
+</details>
 
 ## Question 14
 
@@ -49,10 +64,15 @@ Which command is used to increase the number of partitions for an existing topic
 - C. kafka-configs.sh --alter --entity-type topics --entity-name <topic-name> --partitions <number-of-partitions> --bootstrap-server localhost:9092
 - D. kafka-console-producer.sh --alter --topic <topic-name> --partitions <number-of-partitions> --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To increase the number of partitions for an existing topic, you should use the `kafka-topics.sh` command with the `--alter` option and specify the `--partitions` option with the new number of partitions.
+
+</details>
 
 ## Question 15
 
@@ -63,10 +83,15 @@ How can you view the log of a specific Kafka topic?
 - C. kafka-topics.sh --describe --topic <topic-name> --bootstrap-server localhost:9092
 - D. kafka-console-producer.sh --log --topic <topic-name> --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 To view the log of a specific Kafka topic, you can use the `kafka-console-consumer.sh` command with the `--from-beginning` option to start consuming messages from the earliest available offset in the topic.
+
+</details>
 
 ## Question 16
 
@@ -77,10 +102,15 @@ Which command can be used to change the configuration of a Kafka broker?
 - C. kafka-topics.sh --alter --entity-type brokers --entity-name <broker-id> --add-config <key>=<value> --bootstrap-server localhost:9092
 - D. kafka-topics.sh --alter --entity-type brokers --entity-name <broker-id> --add-config <key>=<value> --zookeeper localhost:2181
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To change the configuration of a Kafka broker, you should use the `kafka-configs.sh` command with the `--alter` option, specifying the `--entity-type` as brokers and the `--entity-name` as the broker ID. The `--bootstrap-server` option specifies the Kafka broker(s) to connect to.
+
+</details>
 
 ## Question 17
 
@@ -91,10 +121,15 @@ How can you reassign partitions in a Kafka cluster?
 - C. kafka-console-producer.sh --execute --reassignment-json-file <file-path> --bootstrap-server localhost:9092
 - D. kafka-configs.sh --execute --reassignment-json-file <file-path> --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To reassign partitions in a Kafka cluster, you should use the `kafka-reassign-partitions.sh` command with the `--execute` option and provide the path to the reassignment JSON file.
+
+</details>
 
 ## Question 18
 
@@ -105,10 +140,15 @@ Which command can be used to create a consumer group in Kafka?
 - C. kafka-topics.sh --create-group --group <group-id> --bootstrap-server localhost:9092
 - D. Kafka consumer groups are created automatically when a consumer joins the group for the first time.
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** D
 
 **Explanation:**
 Kafka consumer groups are created automatically when a consumer joins the group for the first time. There is no specific CLI command to create a consumer group manually.
+
+</details>
 
 ## Question 19
 
@@ -119,10 +159,15 @@ How can you move messages from one Kafka topic to another using the CLI?
 - C. kafka-topics.sh --move --source-topic <source-topic> --destination-topic <destination-topic> --bootstrap-server localhost:9092
 - D. kafka-console-producer.sh --move --source-topic <source-topic> --destination-topic <destination-topic> --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 To move messages from one Kafka topic to another using the CLI, you can use a combination of `kafka-console-consumer.sh` to consume messages from the source topic and `kafka-console-producer.sh` to produce them to the destination topic.
+
+</details>
 
 ## Question 20
 
@@ -132,6 +177,9 @@ What is the purpose of the `--offset` option in the `kafka-console-consumer.sh` 
 - B. To specify the offset at which messages should be deleted
 - C. To specify the offset at which messages should be produced
 - D. To reset the offset for a consumer group
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 

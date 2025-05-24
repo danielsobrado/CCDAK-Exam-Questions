@@ -12,7 +12,8 @@ What is the minimum number of brokers required in the cluster to ensure that the
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **3. 3**.
 
@@ -24,6 +25,9 @@ With `default.replication.factor=2`, each partition will have two replicas (one 
 Since `min.insync.replicas=2`, a minimum of two replicas (including the leader) must be in-sync for a write to be considered successful. Therefore, the cluster needs at least three brokers to guarantee that there will always be at least two replicas available, even if one broker fails.
 
 If the cluster had only two brokers and one failed, the remaining broker would not be able to satisfy the `min.insync.replicas` requirement, and writes would fail.
+
+</details>
+
 
 ## Question 12:
 A Kafka cluster has the following configuration:
@@ -39,7 +43,8 @@ How many replicas will be created in total across all brokers for a newly create
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **4. 18**.
 
@@ -56,6 +61,9 @@ To calculate the total number of replicas, we multiply the number of partitions 
 
 Therefore, a newly created topic with the default settings will have a total of 18 replicas distributed across the brokers in the cluster.
 
+</details>
+
+
 ## Question 13:
 A Kafka cluster has the following configuration:
 - `unclean.leader.election.enable=false`
@@ -69,7 +77,8 @@ What is the implication of this setting when a partition leader fails and there 
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **1. The partition will remain unavailable until the failed leader recovers.**
 
@@ -83,6 +92,9 @@ However, if there are no ISRs available when the leader fails, Kafka has two opt
 2. If `unclean.leader.election.enable` is set to `false`, Kafka will not elect a leader from the out-of-sync replicas and will instead keep the partition unavailable until the failed leader recovers or a new ISR becomes available.
 
 In this scenario, since `unclean.leader.election.enable` is set to `false`, and there are no ISRs available, the partition will remain unavailable until the failed leader recovers. This ensures data consistency but may impact availability until the leader is back online.
+
+</details>
+
 
 ## Question 14:
 A Kafka broker is configured with the following settings:
@@ -98,7 +110,8 @@ What is the maximum amount of data that can be fetched by the broker for replica
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **1. 1 MB**.
 
@@ -112,6 +125,9 @@ The `num.replication.fetchers` setting specifies the number of fetcher threads u
 Each fetcher thread can fetch up to `replica.fetch.max.bytes` of data in a single request. So, even though there are 4 fetcher threads (`num.replication.fetchers=4`), each thread is still limited by the `replica.fetch.max.bytes` value.
 
 Therefore, the maximum amount of data that can be fetched by the broker for replication purposes in a single request is 1 MB, as specified by `replica.fetch.max.bytes`.
+
+</details>
+
 
 ## Question 15:
 A Kafka cluster is configured with the following settings:
@@ -128,7 +144,8 @@ Assuming a topic has a constant message production rate, which of the following 
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **4. All of the above**.
 
@@ -148,6 +165,9 @@ Therefore, a log segment will be eligible for deletion if any of the following c
 
 All three factors independently contribute to the eligibility of a log segment for deletion.
 
+</details>
+
+
 ## Question 16
 
 A client connects to a broker in a Kafka cluster and sends a produce request for a topic partition. The broker responds with a 'Not Enough Replicas' error. What does the client do next?
@@ -156,6 +176,9 @@ A client connects to a broker in a Kafka cluster and sends a produce request for
 - B. Sends metadata request to the same broker to refresh its metadata
 - C. Sends produce request to the controller broker
 - D. Sends metadata request to the Zookeeper to find the controller broker
+
+<details>
+<summary>Response:</summary>
 
 **Answer:** B
 
@@ -166,6 +189,8 @@ When a Kafka client receives a 'Not Enough Replicas' error from a broker, it mea
 - C is incorrect because the client doesn't directly send requests to the controller broker.
 - D is incorrect because the client communicates with Zookeeper only for the initial bootstrap, not for regular operations.
 
+</details>
+
 ## Question 17
 
 A Kafka consumer is consuming from a topic partition. It sends a fetch request to the broker and receives a 'Replica Not Available' error. What is the consumer's next action?
@@ -174,6 +199,9 @@ A Kafka consumer is consuming from a topic partition. It sends a fetch request t
 - B. Sends an offset commit request to trigger partition rebalancing
 - C. Sends a metadata request to refresh its view of the cluster
 - D. Closes the connection and tries connecting to a different broker
+
+<details>
+<summary>Response:</summary>
 
 **Answer:** C
 
@@ -184,6 +212,8 @@ When a consumer receives a 'Replica Not Available' error, it means the broker it
 - B is incorrect because committing offsets is not directly related to handling this error and doesn't trigger rebalancing.
 - D is incorrect because closing the connection is not necessary. The consumer can refresh metadata over the existing connection.
 
+</details>
+
 ## Question 18
 
 What happens if you produce to a topic that does not exist, and the broker setting `auto.create.topics.enable` is set to `false`?
@@ -192,6 +222,9 @@ What happens if you produce to a topic that does not exist, and the broker setti
 - B. The broker will reject the produce request and the producer will throw an exception
 - C. The producer will automatically create the topic
 - D. The producer will wait until the topic is created
+
+<details>
+<summary>Response:</summary>
 
 **Answer:** B
 
@@ -202,6 +235,8 @@ When `auto.create.topics.enable` is set to `false` on the Kafka brokers, they wi
 - C is incorrect because the producer does not have the ability to create topics, only the broker does.
 - D is incorrect because the producer will not wait, it will immediately throw an exception.
 
+</details>
+
 ## Question 19
 
 What is the default value of `auto.create.topics.enable` in Kafka?
@@ -210,6 +245,9 @@ What is the default value of `auto.create.topics.enable` in Kafka?
 - B. `false`
 - C. It is not set by default
 - D. It depends on the Kafka version
+
+<details>
+<summary>Response:</summary>
 
 **Answer:** A
 
@@ -220,6 +258,8 @@ In Kafka, `auto.create.topics.enable` is set to `true` by default. This means th
 - C is incorrect because the property does have a default value.
 - D is incorrect because the default value is consistent across Kafka versions.
 
+</details>
+
 ## Question 20
 
 When a topic is automatically created due to `auto.create.topics.enable` being `true`, what configurations are used for the new topic?
@@ -228,6 +268,9 @@ When a topic is automatically created due to `auto.create.topics.enable` being `
 - B. The default configurations set on the broker
 - C. A combination of producer/consumer configurations and broker defaults
 - D. No configurations are set, the topic is created with empty configuration
+
+<details>
+<summary>Response:</summary>
 
 **Answer:** B
 
@@ -241,3 +284,5 @@ Any topic-level configurations set by the producer or consumer are ignored durin
 
 - A and C are incorrect because the producer/consumer configurations are not used for automatic topic creation.
 - D is incorrect because the topic is not created with empty configuration, but with the broker's default configurations.
+
+</details>

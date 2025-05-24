@@ -14,9 +14,14 @@ Assuming that the consumer processes messages from both topics in a manner that 
 
 Choose the correct answer.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **2. Using a custom partitioner that assigns messages to the same partition number in both topics based on key.**
+
+</details>
+
+</details>
 
 ## Question 2:
 For a streaming application processing data from two co-partitioned topics, `TopicX` and `TopicY`, which configuration ensures that the stream processing application maintains message ordering and correlation between these topics?
@@ -28,9 +33,14 @@ For a streaming application processing data from two co-partitioned topics, `Top
 
 Choose the correct answer.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **4. Ensuring both topics use the same key for related messages and are consumed by the same consumer group.**
+
+</details>
+
+</details>
 
 ## Question 3:
 In a Kafka Streams application that enriches user clickstream data by joining it with user profile information, what should be the characteristics of the topic storing user profiles for optimal join operations?
@@ -51,12 +61,17 @@ Choose the best topic configuration for `user-profiles-topic`.
 2. cleanup.policy = delete
 3. cleanup.policy = compact
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **3. cleanup.policy = compact.**
 
 **Explanation:**
 The `user-profiles-topic`, being used as a `KTable`, represents a changelog of user profile information. Using a `cleanup.policy` of `compact` ensures that the topic retains only the latest state of each user profile, which is essential for performing accurate and efficient joins with the clickstream data.
+
+</details>
+
+</details>
 
 ## Question 4:
 When developing a Kafka Streams application that aggregates transaction amounts by user ID from a financial transactions topic, which key-serde configuration ensures optimal processing and state store management?
@@ -78,12 +93,17 @@ Select the correct Serde configuration for both the input topic and the state st
 2. Key Serde = Serdes.Long(), Value Serde = Serdes.Double()
 3. Key Serde = Serdes.String(), Value Serde = Serdes.String()
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **1. Key Serde = Serdes.String(), Value Serde = Serdes.BigDecimal().**
 
 **Explanation:**
 The application processes financial transactions where the key is presumably a user ID (as a String) and the value is a transaction amount (as a BigDecimal). Using `Serdes.String()` for the key and `Serdes.BigDecimal()` for the value ensures that the data is correctly serialized/deserialized for both Kafka topic interaction and state store management, facilitating efficient and accurate aggregations.
+
+</details>
+
+</details>
 
 ## Question 5:
 In a Kafka Streams application designed to monitor and alert on abnormal application log levels, logs are streamed from a source topic. Each record contains the log level (e.g., ERROR, WARN, INFO) and the log message. The application filters for ERROR level logs and forwards them to an output topic for immediate action. Consider the following Kafka Streams code snippet:
@@ -102,12 +122,17 @@ What is the most appropriate configuration for the `application-logs` source top
 2. cleanup.policy = compact
 3. min.insync.replicas = 2
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **1. retention.bytes = -1.**
 
 **Explanation:**
 Given that the application is monitoring and alerting on abnormal log levels, particularly focusing on ERROR logs, the source topic `application-logs` does not specifically benefit from log compaction (`cleanup.policy = compact`) or a higher replication guarantee (`min.insync.replicas = 2`) for performance. Setting `retention.bytes = -1` ensures that logs are not prematurely removed based on size, which is crucial for a monitoring application that may need to process a high volume of logs and should not miss any ERROR logs due to log rolling based on size constraints.
+
+</details>
+
+</details>
 
 ## Question 6:
 For a Kafka Streams application that processes customer orders to calculate real-time metrics such as total orders per hour, considering the following code:
@@ -130,12 +155,17 @@ Which configuration ensures that the state store `orders-per-hour-metrics` is op
 2. state.store.log.compaction = true
 3. commit.interval.ms = 100
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **1. state.store.replication.factor = 3.**
 
 **Explanation:**
 For stateful operations such as windowed aggregation (`ordersPerHour`), ensuring that the state store (`orders-per-hour-metrics`) is replicated across multiple brokers is crucial for both performance and fault tolerance. Setting `state.store.replication.factor = 3` increases the resilience of the state store, allowing for faster recovery in the event of a broker failure and ensuring that real-time metrics calculations are less likely to be interrupted. While log compaction (`state.store.log.compaction = true`) is not a valid configuration for state stores, and reducing the commit interval (`commit.interval.ms = 100`) could improve throughput, it is the replication factor of the state store that most directly impacts its performance and reliability in a production environment.
+
+</details>
+
+</details>
 
 ## Question 7
 
@@ -146,6 +176,9 @@ Is Kafka Streams DSL ANSI SQL compliant?
 - C. Partially
 - D. It depends on the version
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
@@ -153,6 +186,10 @@ Kafka Streams DSL, which is used for writing stream processing applications, is 
 
 - A is incorrect as Kafka Streams DSL is not designed to be ANSI SQL compliant.
 - C and D are incorrect because the non-compliance is not partial or version-dependent. It's a design choice.
+
+</details>
+
+</details>
 
 ## Question 8
 
@@ -163,12 +200,19 @@ What is the primary language used for writing Kafka Streams applications?
 - C. Scala
 - D. SQL
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 Kafka Streams is a Java library for building real-time, highly scalable, fault-tolerant, distributed applications for stream processing. The primary language for writing Kafka Streams applications is Java.
 
 - A, C, D are incorrect because while Kafka Streams integrates with other JVM languages like Scala, and there are some Python wrappers available, the native and primary language is Java.
+
+</details>
+
+</details>
 
 ## Question 9
 
@@ -179,6 +223,9 @@ What is the role of RocksDB in Kafka Streams?
 - C. It is used for storing the Kafka Streams application code.
 - D. It is not used in Kafka Streams.
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
@@ -187,3 +234,5 @@ In Kafka Streams, RocksDB is used as the default local state store for storing i
 - A is incorrect because output topics are stored in Kafka, not RocksDB.
 - C is incorrect as application code is not stored in RocksDB.
 - D is incorrect because RocksDB is indeed used in Kafka Streams for state management.
+
+</details>

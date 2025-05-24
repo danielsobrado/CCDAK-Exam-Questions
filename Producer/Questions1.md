@@ -7,6 +7,9 @@ What happens when you set `max.in.flight.requests.per.connection` to a value gre
 - C. It can lead to out-of-order delivery of messages
 - D. It has no effect on the producer's behavior
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
@@ -15,6 +18,8 @@ Setting `max.in.flight.requests.per.connection` to a value greater than 1 in a K
 - A is incorrect because while it can improve throughput, it's not the only effect.
 - B is incorrect. In fact, it can potentially decrease latency by allowing more requests in flight.
 - D is incorrect because it does have a significant effect on the producer's behavior.
+
+</details>
 
 ## Question 2
 
@@ -25,6 +30,9 @@ What is the effect of setting `acks=0` in a Kafka producer?
 - C. The producer will not wait for any acknowledgement from the broker
 - D. The producer will throw an exception if the broker does not acknowledge the message
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
@@ -32,6 +40,8 @@ When `acks` is set to 0 in a Kafka producer, the producer will not wait for any 
 
 - A and B are incorrect because they describe the behaviors of `acks=1` and `acks=all` respectively.
 - D is incorrect because no exception is thrown in this case. The producer simply continues sending messages without waiting for acknowledgement.
+
+</details>
 
 ## Question 3
 
@@ -41,6 +51,9 @@ What is the relationship between `request.timeout.ms` and `delivery.timeout.ms` 
 - B. `delivery.timeout.ms` should always be greater than `request.timeout.ms`
 - C. They should always be set to the same value
 - D. They are independent and can be set to any value
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -53,6 +66,8 @@ If `delivery.timeout.ms` is smaller than `request.timeout.ms`, the client can ti
 - C is incorrect because they serve different purposes and can have different values.
 - D is incorrect because there is a recommended relationship between the two settings.
 
+</details>
+
 ## Question 4
 
 A Kafka producer application needs to send messages to a topic. The messages do not require any particular order. Which of the following properties are mandatory in the producer configuration? (Select two)
@@ -63,6 +78,9 @@ A Kafka producer application needs to send messages to a topic. The messages do 
 - D. `key.serializer`
 - E. `value.serializer`
 - F. `client.id`
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C, E
 
@@ -79,6 +97,8 @@ The other options are not strictly mandatory:
 - D: `key.serializer` is only required if the messages have keys. It's not mandatory if the messages don't have keys.
 - F: `client.id` is optional. It's used to identify the producer application, but the producer will work without it.
 
+</details>
+
 ## Question 5
 
 What is the purpose of setting `compression.type` in a Kafka producer configuration?
@@ -87,6 +107,9 @@ What is the purpose of setting `compression.type` in a Kafka producer configurat
 - B. To specify the compression algorithm used when storing data on Kafka brokers
 - C. To enable or disable compression for the producer
 - D. To set the compression level for the producer
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -105,6 +128,8 @@ The compression is applied by the producer before sending the data, and the brok
 - C is incorrect because `compression.type` does not enable/disable compression, it specifies the algorithm. Compression is enabled by default if an algorithm is specified.
 - D is incorrect because `compression.type` sets the algorithm, not the compression level. Some compression types (like `zstd`) have separate settings for compression level.
 
+</details>
+
 ## Question 6
 
 What is the effect of enabling compression on the producer side in Kafka?
@@ -113,6 +138,9 @@ What is the effect of enabling compression on the producer side in Kafka?
 - B. Increased consumer CPU usage
 - C. Reduced network bandwidth usage
 - D. Increased end-to-end latency
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -127,6 +155,8 @@ However, there are trade-offs:
 
 So enabling producer compression is a trade-off between network bandwidth and CPU/memory usage. It's most beneficial when network bandwidth is the bottleneck.
 
+</details>
+
 ## Question 7
 
 What is the relationship between `batch.size` and `linger.ms` in the Kafka producer configuration?
@@ -135,6 +165,9 @@ What is the relationship between `batch.size` and `linger.ms` in the Kafka produ
 - B. `linger.ms` is only relevant if `batch.size` is set to 0
 - C. `batch.size` is only relevant if `linger.ms` is set to 0
 - D. They work together to control when a batch is considered ready to send
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -151,6 +184,8 @@ A batch will be sent when either `batch.size` is reached or `linger.ms` has pass
 
 Tuning these settings can have a significant impact on producer performance and throughput.
 
+</details>
+
 ## Question 8
 
 What is the effect of increasing `batch.size` in a Kafka producer configuration?
@@ -159,6 +194,9 @@ What is the effect of increasing `batch.size` in a Kafka producer configuration?
 - B. It increases the maximum number of messages that can be sent in a single request
 - C. It increases the maximum time a batch will wait before being sent
 - D. It increases the maximum amount of memory the producer will use for buffering
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -174,6 +212,8 @@ It's important to note that `batch.size` does not affect the size of individual 
 
 Also, `batch.size` does not directly control the time a batch will wait (C). That is controlled by the `linger.ms` setting.
 
+</details>
+
 ## Question 9
 
 What is the relationship between `linger.ms` and `request.timeout.ms` in the Kafka producer configuration?
@@ -182,6 +222,9 @@ What is the relationship between `linger.ms` and `request.timeout.ms` in the Kaf
 - B. `linger.ms` should always be set higher than `request.timeout.ms`
 - C. `request.timeout.ms` should always be set higher than `linger.ms`
 - D. They control independent aspects of the producer behavior
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -199,6 +242,8 @@ A good rule of thumb is to set `request.timeout.ms` to be at least a few seconds
 - B is incorrect because it's the other way around.
 - D is incorrect because while the settings do control independent things, their values should be coordinated.
 
+</details>
+
 ## Question 10
 
 What happens if `linger.ms` is set to 0 in the Kafka producer configuration?
@@ -207,6 +252,9 @@ What happens if `linger.ms` is set to 0 in the Kafka producer configuration?
 - B. The producer will wait indefinitely for each batch to fill up before sending
 - C. The producer will send each message as soon as it is received, without batching
 - D. The producer will use the default linger time
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -222,3 +270,5 @@ In most cases, it's recommended to set `linger.ms` to a small but non-zero value
 - A is incorrect because a linger time of 0 does not prevent the producer from sending messages, it just sends them immediately.
 - B is incorrect because a linger time of 0 means the producer won't wait at all, not that it will wait indefinitely.
 - D is incorrect because 0 is a valid setting for `linger.ms`, not a signal to use the default.
+
+</details>

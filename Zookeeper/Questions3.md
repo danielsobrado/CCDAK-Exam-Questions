@@ -1,3 +1,5 @@
+</details>
+
 ## Question 21
 What happens when a new broker joins a KRaft cluster and the `controller.quorum.voters` configuration is not updated to include the new broker?
 
@@ -5,6 +7,9 @@ What happens when a new broker joins a KRaft cluster and the `controller.quorum.
 - B. The new broker joins as an observer and does not participate in the controller quorum voting
 - C. The new broker is unable to join the cluster until the configuration is updated
 - D. The new broker replaces one of the existing voters in the controller quorum
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -23,6 +28,8 @@ C is incorrect because the new broker can still join the cluster as an observer,
 
 D is incorrect because the new broker does not replace any existing voters in the controller quorum unless explicitly configured to do so.
 
+</details>
+
 ## Question 22
 What is the purpose of the `kafka.controller:type=SnapshotEngine,name=SnapshotGenerationTimeoutCount` metric in KRaft mode?
 
@@ -30,6 +37,9 @@ What is the purpose of the `kafka.controller:type=SnapshotEngine,name=SnapshotGe
 - B. It indicates the count of snapshots that failed to generate due to a timeout
 - C. It represents the number of snapshots that are currently being generated
 - D. It tracks the count of snapshots that were generated after exceeding the configured timeout
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -50,6 +60,8 @@ C is incorrect because the metric does not represent the number of snapshots cur
 
 D is incorrect because the metric specifically counts the snapshots that failed to generate within the configured timeout, not the snapshots that were generated after exceeding the timeout.
 
+</details>
+
 ## Question 23
 In KRaft mode, what happens when a broker is removed from the `controller.quorum.voters` configuration?
 
@@ -57,6 +69,9 @@ In KRaft mode, what happens when a broker is removed from the `controller.quorum
 - B. The removed broker continues to operate as a non-voter observer
 - C. The removed broker becomes a candidate and triggers a new controller election
 - D. The removed broker enters a controlled shutdown process
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -77,6 +92,8 @@ C is incorrect because the removed broker does not become a candidate or trigger
 
 D is incorrect because the removed broker does not enter a controlled shutdown process. It remains operational but without voting rights in the controller quorum.
 
+</details>
+
 ## Question 24
 What is the impact of setting the `controller.quorum.election.backoff.max.ms` configuration to a very high value in KRaft mode?
 
@@ -84,6 +101,9 @@ What is the impact of setting the `controller.quorum.election.backoff.max.ms` co
 - B. It reduces the time taken for a new controller to be elected, minimizing downtime
 - C. It prolongs the time taken for a new controller to be elected, potentially increasing downtime
 - D. It has no impact on the controller election process
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -106,6 +126,8 @@ B is incorrect because a higher value of `controller.quorum.election.backoff.max
 
 D is incorrect because the `controller.quorum.election.backoff.max.ms` configuration does have an impact on the controller election process by influencing the backoff duration.
 
+</details>
+
 ## Question 25
 What is the purpose of the `kafka.controller:type=QuorumController,name=ActiveControllerCount` metric in KRaft mode?
 
@@ -113,6 +135,9 @@ What is the purpose of the `kafka.controller:type=QuorumController,name=ActiveCo
 - B. It represents the number of brokers currently serving as controllers
 - C. It measures the count of controllers that have been active since the cluster started
 - D. It tracks the number of controller failover events that have occurred
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -135,6 +160,8 @@ C is incorrect because the metric indicates the current count of active controll
 
 D is incorrect because the metric does not track the number of controller failover events. It represents the instantaneous count of active controllers at a given point in time.
 
+</details>
+
 ## Question 26
 What is the significance of the `kafka.controller:type=QuorumController,name=LastAppliedRecordTimestamp` metric in KRaft mode?
 
@@ -142,6 +169,9 @@ What is the significance of the `kafka.controller:type=QuorumController,name=Las
 - B. It represents the timestamp of the last record replicated to all the controllers
 - C. It measures the timestamp of the last record applied by the active controller
 - D. It tracks the timestamp of the last record committed by the active controller
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -164,6 +194,8 @@ B is incorrect because the metric specifically measures the timestamp of the las
 
 D is incorrect because the metric tracks the timestamp of the last applied record, not the last committed record. The commitment of records is a separate process from the application of records by the active controller.
 
+</details>
+
 ## Question 27
 What is the purpose of the `kafka.controller:type=ControllerChannelManager,name=TotalQueueSize` metric in KRaft mode?
 
@@ -171,6 +203,9 @@ What is the purpose of the `kafka.controller:type=ControllerChannelManager,name=
 - B. It indicates the total size of the metadata log in bytes
 - C. It represents the total number of active controller connections
 - D. It tracks the total number of pending controller requests
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -193,6 +228,8 @@ C is incorrect because the metric represents the count of messages in the queue,
 
 D is incorrect because the metric specifically tracks the number of messages in the request queue, not the total number of pending controller requests across all queues or channels.
 
+</details>
+
 ## Question 28
 What is the impact of having a large value for the `controller.quorum.request.timeout.ms` configuration in KRaft mode?
 
@@ -200,6 +237,9 @@ What is the impact of having a large value for the `controller.quorum.request.ti
 - B. It reduces the time the controller waits for a quorum of voters to respond to a request
 - C. It sets the maximum time allowed for the controller to process a request
 - D. It determines the frequency at which the controller sends heartbeats to the brokers
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -224,6 +264,8 @@ C is incorrect because `controller.quorum.request.timeout.ms` does not set the m
 
 D is incorrect because `controller.quorum.request.timeout.ms` does not determine the frequency at which the controller sends heartbeats to the brokers. Heartbeat configuration is controlled by separate parameters.
 
+</details>
+
 ## Question 29
 What is the purpose of the `kafka.controller:type=QuorumController,name=LastCommittedRecordOffset` metric in KRaft mode?
 
@@ -231,6 +273,9 @@ What is the purpose of the `kafka.controller:type=QuorumController,name=LastComm
 - B. It represents the offset of the last record replicated to all the controllers
 - C. It measures the offset of the last record applied by the active controller
 - D. It tracks the offset of the last record committed by the active controller
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -253,6 +298,8 @@ B is incorrect because the metric specifically measures the offset of the last r
 
 C is incorrect because the metric represents the offset of the last committed record, not the last record applied by the active controller. The application of records is a separate process from the commitment of records.
 
+</details>
+
 ## Question 30
 What is the impact of setting `controller.quorum.fetch.timeout.ms` to a very low value in KRaft mode?
 
@@ -260,6 +307,9 @@ What is the impact of setting `controller.quorum.fetch.timeout.ms` to a very low
 - B. It reduces the time the controllers wait for a fetch response from the active controller
 - C. It sets the maximum time allowed for a controller to fetch data from the brokers
 - D. It determines the frequency at which the controllers fetch data from the active controller
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 

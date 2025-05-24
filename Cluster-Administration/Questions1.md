@@ -1,3 +1,5 @@
+</details>
+
 ## Question 1
 
 Which of the following is stored in Zookeeper for a Kafka cluster? (Select two)
@@ -7,6 +9,9 @@ Which of the following is stored in Zookeeper for a Kafka cluster? (Select two)
 - C. Topic partition assignments
 - D. Topic-level configurations
 - E. Producer client IDs
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B, D
 
@@ -22,6 +27,8 @@ The other options are stored elsewhere:
 - C: Topic partition assignments are managed by the Kafka controller, not stored in Zookeeper.
 - E: Producer client IDs are not stored in Zookeeper. They are just identifiers used by the producer clients.
 
+</details>
+
 ## Question 2
 
 In a Kafka cluster, you have a topic with 6 partitions and a replication factor of 3. How many replicas of each partition will be spread across the brokers?
@@ -30,6 +37,9 @@ In a Kafka cluster, you have a topic with 6 partitions and a replication factor 
 - B. 2 replicas per broker
 - C. 3 replicas per broker
 - D. 6 replicas per broker
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -49,6 +59,8 @@ With 6 partitions and a replication factor of 3, there will be a total of 18 rep
 
 It's important to note that the number of replicas per broker may vary depending on the number of brokers in the cluster and how Kafka distributes the replicas. Kafka aims to evenly distribute the replicas across the available brokers to balance the load and ensure optimal performance.
 
+</details>
+
 ## Question 3
 
 What happens to the replicas when a broker in a Kafka cluster goes down?
@@ -57,6 +69,9 @@ What happens to the replicas when a broker in a Kafka cluster goes down?
 - B. The replicas on the failed broker are automatically redistributed to other brokers
 - C. The replicas on the failed broker become unavailable until the broker is restarted
 - D. The replicas on the failed broker are immediately promoted to be leaders on other brokers
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -81,6 +96,8 @@ It's important to note that while the replicas on the failed broker are unavaila
 
 However, if the number of in-sync replicas falls below the configured `min.insync.replicas` setting, Kafka will stop accepting writes to the affected partitions to prevent data loss.
 
+</details>
+
 ## Question 4
 
 How does Kafka ensure data integrity and consistency across replicas?
@@ -89,6 +106,9 @@ How does Kafka ensure data integrity and consistency across replicas?
 - B. By relying on ZooKeeper for distributed consensus
 - C. By implementing a leader-follower replication model
 - D. By using a gossip protocol for eventual consistency
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 

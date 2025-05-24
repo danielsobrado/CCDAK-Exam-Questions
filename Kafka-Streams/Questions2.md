@@ -7,6 +7,9 @@ In a Kafka Streams application, where are the processing topology configurations
 - C. In the Kafka Streams application code itself
 - D. In a separate config file read by the Kafka Streams application
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
@@ -14,6 +17,8 @@ In a Kafka Streams application, the processing topology (the DAG of processing n
 
 - A, B are incorrect because Kafka Streams does not use a special topic or Zookeeper for storing topology configurations.
 - D is incorrect as the topology is not defined in a separate config file, but rather in the application code.
+
+</details>
 
 ## Question 12
 
@@ -23,6 +28,9 @@ You are implementing a Kafka Streams application. The input is a KStream from a 
 - B. `Serdes.ByteArray()`
 - C. `SpecificAvroSerde`
 - D. `GenericAvroSerde`
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -37,6 +45,8 @@ The other options are not ideal:
 - B: `Serdes.ByteArray()` could work, but it would give you raw bytes that you'd have to deserialize manually. It's better to use a specific Avro serde.
 - D: `GenericAvroSerde` could be used if you don't have specific Avro-generated classes and want to use the generic Avro record representation. But if you have specific classes, `SpecificAvroSerde` is preferred.
 
+</details>
+
 ## Question 13
 
 What is the recommended way to enhance the performance of a Kafka Streams application that does a simple map transformation on the input data?
@@ -45,6 +55,9 @@ What is the recommended way to enhance the performance of a Kafka Streams applic
 - B. Enable state store caching
 - C. Increase the commit interval
 - D. Disable logging
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -55,6 +68,8 @@ In a Kafka Streams application that performs a simple stateless transformation l
 - C is incorrect because increasing the commit interval can actually decrease performance by causing larger batches to accumulate before being processed.
 - D is incorrect because disabling logging does not directly enhance performance and can make debugging more difficult.
 
+</details>
+
 ## Question 14
 
 You are running a Kafka Streams application in a Docker container. The application performs a complex join operation and maintains a large state store. Which of the following would provide the greatest performance improvement when restarting the container?
@@ -63,6 +78,9 @@ You are running a Kafka Streams application in a Docker container. The applicati
 - B. Mount a high-performance SSD for the RocksDB directory
 - C. Increase the number of replicas for the input topics
 - D. Use a more powerful CPU for the Docker host
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -73,6 +91,8 @@ In a Kafka Streams application that maintains a large state store (e.g., for a c
 - C does not directly impact the state restore performance because the changelogs are already replicated.
 - D can help with processing speed but does not address the state restore bottleneck.
 
+</details>
+
 ## Question 15
 
 You are deploying a Kafka Streams application that joins two high-volume streams. Which of the following is LEAST likely to improve the performance of the application?
@@ -81,6 +101,9 @@ You are deploying a Kafka Streams application that joins two high-volume streams
 - B. Increasing the number of standby replicas for the state store
 - C. Tuning the `cache.max.bytes.buffering` parameter
 - D. Increasing the `num.streams.threads` parameter
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -93,6 +116,8 @@ In contrast:
 - C can improve performance by allowing more data to be buffered in memory before being flushed to the state store, reducing I/O overhead.
 - D can improve performance by allowing more partitions to be processed concurrently, up to the number of partitions of the input topics.
 
+</details>
+
 ## Question 16
 
 Which of the following stream processing operations can be considered stateful? (Select all that apply)
@@ -102,6 +127,9 @@ Which of the following stream processing operations can be considered stateful? 
 - C. Aggregate: Combining multiple messages into a single result
 - D. Join: Combining messages from two different streams based on a common key
 - E. Peek: Performing an action on each message without modifying it
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 In stream processing, stateful operations are those that maintain and update a state based on the processed messages. They require the stream processor to keep track of some information over time.
@@ -120,6 +148,8 @@ The other operations mentioned are generally considered stateless:
 
 It's important to note that the specific implementation and requirements of a stream processing application can introduce statefulness to operations that are typically considered stateless. However, in general, aggregation and join operations are inherently stateful, while filtering, mapping, and peeking are often stateless.
 
+</details>
+
 ## Question 17
 
 What is the purpose of state stores in Kafka Streams?
@@ -128,6 +158,9 @@ What is the purpose of state stores in Kafka Streams?
 - B. To cache the input messages for faster processing
 - C. To store the final output of the stream processing application
 - D. To maintain the configuration of the Kafka Streams application
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -150,6 +183,8 @@ It's important to note that state stores are not used for caching input messages
 
 **Related Area:** Kafka Streams
 
+</details>
+
 ## Question 18
 
 How does Kafka Streams handle state recovery in case of a failure?
@@ -158,6 +193,9 @@ How does Kafka Streams handle state recovery in case of a failure?
 - B. By restoring the state from a snapshot stored in Kafka
 - C. By rebuilding the state from the change log topic
 - D. By retrieving the state from an external database
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -180,6 +218,8 @@ It's important to note that Kafka Streams does not rely on replaying all the inp
 
 Additionally, Kafka Streams does not rely on external databases for state storage or recovery. The state is managed internally within Kafka Streams using the embedded key-value stores and the change log topics.
 
+</details>
+
 ## Question 19
 
 You have a Kafka Streams application that processes messages from an input topic with 6 partitions. The application performs a stateful aggregation using a KTable. How many local state stores will be created by default?
@@ -188,6 +228,9 @@ You have a Kafka Streams application that processes messages from an input topic
 - B. 3
 - C. 6
 - D. 12
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -204,6 +247,8 @@ If you increase the parallelism of the Kafka Streams application, multiple strea
 
 It's worth noting that the actual number of local state stores created may be influenced by factors such as state store configuration, stream processing topology, and the specific Kafka Streams version being used.
 
+</details>
+
 ## Question 20
 
 What is the main advantage of using Kafka Streams DSL over the Processor API for stream processing?
@@ -212,6 +257,11 @@ What is the main advantage of using Kafka Streams DSL over the Processor API for
 - B. Kafka Streams DSL offers a higher-level, declarative approach to defining stream processing logic
 - C. Kafka Streams DSL supports stateful operations, while the Processor API is limited to stateless operations
 - D. Kafka Streams DSL allows for easier integration with external systems compared to the Processor API
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
 
 **Explanation:**
 The main advantage of using Kafka Streams DSL (Domain-Specific Language) over the Processor API for stream processing is that it offers a higher-level, declarative approach to defining stream processing logic.
@@ -222,4 +272,5 @@ On the other hand, the Processor API is a lower-level API that provides more fin
 
 Both Kafka Streams DSL and the Processor API offer similar performance characteristics and support stateful operations. They also provide integration capabilities with external systems. The choice between the two depends on the specific requirements of the application and the level of control and customization needed.
 
-**Answer:** B
+
+</details>

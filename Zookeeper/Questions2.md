@@ -6,6 +6,9 @@ What is the purpose of the `kafka-dump-log` tool in KRaft mode?
 - C. To list the available Kafka topics
 - D. To monitor the Kafka cluster performance
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
@@ -23,6 +26,8 @@ C is incorrect because listing the available Kafka topics is not the responsibil
 
 D is incorrect because monitoring the Kafka cluster performance is not the primary function of the `kafka-dump-log` tool. There are dedicated monitoring tools and metrics for tracking cluster performance.
 
+</details>
+
 ## Question 12
 What is the purpose of the `kafka-metadata-shell` tool in KRaft mode?
 
@@ -30,6 +35,9 @@ What is the purpose of the `kafka-metadata-shell` tool in KRaft mode?
 - B. To list the available Kafka topics
 - C. To monitor the Kafka cluster performance
 - D. To interactively inspect the KRaft metadata
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -50,6 +58,8 @@ B is incorrect because listing the available Kafka topics is not the responsibil
 
 C is incorrect because monitoring the Kafka cluster performance is not the primary function of the `kafka-metadata-shell` tool. There are dedicated monitoring tools and metrics for tracking cluster performance.
 
+</details>
+
 ## Question 13
 What is the significance of the `kafka.controller:type=QuorumController,name=LastCommittedRecordOffset` metric in KRaft mode?
 
@@ -57,6 +67,9 @@ What is the significance of the `kafka.controller:type=QuorumController,name=Las
 - B. It represents the number of records that have been committed to the metadata partition
 - C. It measures the lag between the active controller and the last committed record in the metadata partition
 - D. It tracks the offset of the last record that was committed by the active controller
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -73,6 +86,8 @@ B is incorrect because the metric represents the offset of the last committed re
 
 C is incorrect because the metric does not measure the lag between the active controller and the last committed record. The lag is tracked by a separate metric, `kafka.controller:type=QuorumController,name=LastAppliedRecordLagMs`.
 
+</details>
+
 ## Question 14
 What is the purpose of the `metadata.max.idle.interval.ms` configuration in KRaft mode?
 
@@ -80,6 +95,9 @@ What is the purpose of the `metadata.max.idle.interval.ms` configuration in KRaf
 - B. To specify the maximum time the active controller can be idle before a new controller is elected
 - C. To configure the frequency at which the active controller writes no-op records to the metadata partition
 - D. To define the maximum interval allowed between two consecutive metadata log segments
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -98,6 +116,8 @@ B is incorrect because the configuration does not specify the maximum idle time 
 
 D is incorrect because the configuration does not define the maximum interval between consecutive metadata log segments. It controls the frequency of writing no-op records within a single log segment.
 
+</details>
+
 ## Question 15
 What is the role of the `kafka.controller:type=QuorumController,name=MaxFollowerLag` metric in KRaft mode?
 
@@ -105,6 +125,9 @@ What is the role of the `kafka.controller:type=QuorumController,name=MaxFollower
 - B. It indicates the maximum lag between the active controller and the followers in terms of metadata records
 - C. It represents the maximum number of records that a follower can lag behind the active controller
 - D. It tracks the maximum lag between the followers and the last applied record in the metadata partition
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -123,6 +146,8 @@ C is incorrect because the metric represents the actual lag in terms of the numb
 
 D is incorrect because the metric measures the lag between the active controller and the followers, not the lag between the followers and the last applied record.
 
+</details>
+
 ## Question 16
 What is the significance of the `kafka.server:type=SnapshotEmitter,name=LatestSnapshotGeneratedAgeMs` metric in KRaft mode?
 
@@ -130,6 +155,9 @@ What is the significance of the `kafka.server:type=SnapshotEmitter,name=LatestSn
 - B. It measures the time taken to generate the latest snapshot in milliseconds
 - C. It represents the age of the latest snapshot in milliseconds since the process was started
 - D. It tracks the time elapsed since the latest snapshot was loaded in milliseconds
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -148,6 +176,8 @@ C is incorrect because the metric represents the age of the snapshot since it wa
 
 D is incorrect because the metric tracks the age of the generated snapshot, not the time elapsed since the snapshot was loaded.
 
+</details>
+
 ## Question 17
 What is the purpose of the `kafka.controller:type=KafkaController,name=ControlledShutdownCount` metric in KRaft mode?
 
@@ -155,6 +185,9 @@ What is the purpose of the `kafka.controller:type=KafkaController,name=Controlle
 - B. It indicates the number of brokers that have completed a controlled shutdown
 - C. It represents the number of brokers that are currently in the process of controlled shutdown
 - D. It tracks the number of controlled shutdown failures experienced by the controller
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -173,6 +206,8 @@ C is incorrect because the metric represents the number of brokers that have com
 
 D is incorrect because the metric tracks the count of successful controlled shutdowns, not the number of controlled shutdown failures.
 
+</details>
+
 ## Question 18
 What is the significance of the `kafka.controller:type=KafkaController,name=GlobalTopicCount` metric in KRaft mode?
 
@@ -180,6 +215,9 @@ What is the significance of the `kafka.controller:type=KafkaController,name=Glob
 - B. It indicates the number of global topics that are not associated with any specific cluster
 - C. It measures the number of topics that have global replication enabled
 - D. It tracks the count of topics that are globally accessible across all Kafka clusters
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -198,6 +236,8 @@ C is incorrect because the metric does not measure the number of topics with glo
 
 D is incorrect because the metric tracks the count of topics within a single Kafka cluster, not across all Kafka clusters. Topics are typically specific to a particular cluster and are not globally accessible across different clusters.
 
+</details>
+
 ## Question 19
 What is the purpose of the `kafka.controller:type=KafkaController,name=TopicDeletionCount` metric in KRaft mode?
 
@@ -205,6 +245,9 @@ What is the purpose of the `kafka.controller:type=KafkaController,name=TopicDele
 - B. It indicates the number of topics that have been successfully deleted
 - C. It represents the count of failed topic deletion attempts
 - D. It tracks the number of topics that are currently in the process of being deleted
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -225,10 +268,14 @@ C is incorrect because the metric represents the count of successful topic delet
 
 D is incorrect because the metric tracks the number of topics that have been successfully deleted, not the topics currently in the process of being deleted.
 
+</details>
+
 ## Question 20
 What is the significance of the `kafka.controller:type=KafkaController,name=TopicChangeRate` metric in KRaft mode?
 
 - A. It measures the rate at which new topics are being created in the Kafka cluster
 - B. It indicates the rate at which existing topics are being modified or updated
 - C. It represents the rate at which topics are being deleted from the Kafka cluster
-- D. It tracks the overall rate of topic-related changes, including creation, modification,
+- D. It tracks the overall rate of topic-related changes, including creation, modification
+
+</details>

@@ -6,6 +6,9 @@ What is the purpose of the `process.roles` configuration in KRaft mode?
 - C. To define the listeners used by the controller
 - D. To configure the metrics reporter for the server
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
@@ -17,6 +20,8 @@ In KRaft mode, the `process.roles` configuration is used to specify whether the 
 
 B, C, and D are incorrect because they do not describe the purpose of the `process.roles` configuration. The unique identifier is set using `node.id`, the listeners used by the controller are defined by `controller.listener.names`, and the metrics reporter is configured separately.
 
+</details>
+
 ## Question 2
 What is the recommended value for `process.roles` in a production KRaft cluster?
 
@@ -24,6 +29,9 @@ What is the recommended value for `process.roles` in a production KRaft cluster?
 - B. `broker` for broker nodes and `controller` for controller nodes
 - C. `controller` for all nodes
 - D. Leave `process.roles` unconfigured
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -38,6 +46,8 @@ C is incorrect because having all nodes as controllers would not leave any nodes
 
 D is incorrect because leaving `process.roles` unconfigured would mean the cluster is not running in KRaft mode, and would default to the older ZooKeeper-based controller quorum.
 
+</details>
+
 ## Question 3
 What is the purpose of the `controller.quorum.voters` configuration in KRaft mode?
 
@@ -45,6 +55,9 @@ What is the purpose of the `controller.quorum.voters` configuration in KRaft mod
 - B. To set the minimum number of in-sync replicas for the controller quorum
 - C. To define the list of voters in the controller quorum
 - D. To configure the metrics reporter for the controllers
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -63,6 +76,8 @@ B is incorrect because the minimum number of in-sync replicas is not applicable 
 
 D is incorrect because the metrics reporter is configured separately and is not related to the `controller.quorum.voters` configuration.
 
+</details>
+
 ## Question 4
 What is the minimum number of controllers required for a KRaft cluster?
 
@@ -70,6 +85,9 @@ What is the minimum number of controllers required for a KRaft cluster?
 - B. 2
 - C. 3
 - D. 4
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -82,6 +100,8 @@ Having only 1 or 2 controllers (options A and B) would not provide fault toleran
 
 Having 4 controllers (option D) is a valid configuration but is not the minimum required. The typical recommendation is to have 3 or 5 controllers in a KRaft cluster, depending on the desired level of fault tolerance.
 
+</details>
+
 ## Question 5
 What happens if a majority of the controllers in a KRaft cluster become unavailable?
 
@@ -89,6 +109,9 @@ What happens if a majority of the controllers in a KRaft cluster become unavaila
 - B. The cluster automatically elects a new set of controllers
 - C. The cluster becomes unavailable until a majority of controllers are restored
 - D. The brokers take over the responsibilities of the controllers
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -105,6 +128,8 @@ B is incorrect because the cluster does not automatically elect a new set of con
 
 D is incorrect because the brokers do not take over the responsibilities of the controllers. In KRaft mode, the controllers are separate from the brokers and have specific roles in metadata management.
 
+</details>
+
 ## Question 6
 What is the purpose of the `kafka-storage` tool in KRaft mode?
 
@@ -112,6 +137,9 @@ What is the purpose of the `kafka-storage` tool in KRaft mode?
 - B. To manage the Kafka consumer offsets
 - C. To generate a cluster ID and format storage directories
 - D. To monitor the disk usage of Kafka brokers
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -136,6 +164,8 @@ B is incorrect because managing consumer offsets is not the purpose of the `kafk
 
 D is incorrect because monitoring the disk usage of Kafka brokers is not the responsibility of the `kafka-storage` tool. There are separate monitoring tools and metrics for tracking disk usage.
 
+</details>
+
 ## Question 7
 What is the default location for the Kafka metadata log in KRaft mode?
 
@@ -143,6 +173,9 @@ What is the default location for the Kafka metadata log in KRaft mode?
 - B. The directory specified in the `metadata.log.dir` configuration
 - C. The directory specified in the `controller.log.dir` configuration
 - D. The Kafka data directory
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -163,6 +196,8 @@ C is incorrect because `controller.log.dir` is not a valid configuration in KRaf
 
 D is incorrect because there is no specific "Kafka data directory" in KRaft mode. The metadata log is stored in the directory specified by `log.dirs` or `metadata.log.dir`.
 
+</details>
+
 ## Question 8
 What is the purpose of the `kafka-metadata-quorum` tool in KRaft mode?
 
@@ -170,6 +205,9 @@ What is the purpose of the `kafka-metadata-quorum` tool in KRaft mode?
 - B. To generate a cluster ID for the Kafka cluster
 - C. To describe the runtime status of the KRaft metadata quorum
 - D. To modify the Kafka topic configurations
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -195,6 +233,8 @@ B is incorrect because generating a cluster ID is not the responsibility of the 
 
 D is incorrect because modifying Kafka topic configurations is not the purpose of the `kafka-metadata-quorum` tool. Topic configurations can be modified using the `kafka-configs` tool.
 
+</details>
+
 ## Question 9
 Which of the following metrics is used to monitor the lag between the active KRaft controller and the last committed record in the metadata log?
 
@@ -202,6 +242,9 @@ Which of the following metrics is used to monitor the lag between the active KRa
 - B. `kafka.controller:type=ControllerEventManager,name=EventQueueTimeMs`
 - C. `kafka.controller:type=KafkaController,name=LastCommittedRecordOffset`
 - D. `kafka.controller:type=KafkaController,name=LastAppliedRecordLagMs`
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -221,6 +264,8 @@ B is incorrect because `EventQueueTimeMs` measures the time spent by requests in
 
 C is incorrect because `LastCommittedRecordOffset` represents the offset of the last committed record in the metadata log, but it does not provide information about the lag between the active controller and the metadata log.
 
+</details>
+
 ## Question 10
 What is the purpose of the `kafka.controller:type=KafkaController,name=OfflinePartitionCount` metric in KRaft mode?
 
@@ -228,6 +273,9 @@ What is the purpose of the `kafka.controller:type=KafkaController,name=OfflinePa
 - B. To monitor the number of partitions that are under-replicated
 - C. To measure the number of partitions that are not being consumed by any consumer
 - D. To count the number of partitions that have exceeded their retention time
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -243,3 +291,5 @@ B is incorrect because the number of under-replicated partitions is tracked by a
 C is incorrect because the number of partitions not being consumed by any consumer is not directly related to the `OfflinePartitionCount` metric. Consumer lag and partition consumption are monitored using different metrics.
 
 D is incorrect because the number of partitions that have exceeded their retention time is not related to the `OfflinePartitionCount` metric. Partition retention is managed based on the retention policy configuration and is not directly tied to partition leadership.
+
+</details>

@@ -9,6 +9,9 @@ Which of the following statements about `acks` and `min.insync.replicas` are tru
 - E. `acks=1` and `min.insync.replicas=2` provides the strongest durability guarantee
 - F. For `acks=all` to provide any additional durability over `acks=1`, `min.insync.replicas` must be greater than 1
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A, F
 
 **Explanation:**
@@ -23,6 +26,8 @@ For `acks=all` to provide any additional durability guarantee over `acks=1`, `mi
 - D is incorrect because `acks=all` with `min.insync.replicas=1` is no stronger than `acks=1`.
 - E is incorrect because `acks=1` does not interact with `min.insync.replicas` at all, so this combination does not provide the strongest durability guarantee.
 
+</details>
+
 ## Question 2
 
 What is the relationship between `unclean.leader.election.enable` and `min.insync.replicas`?
@@ -31,6 +36,9 @@ What is the relationship between `unclean.leader.election.enable` and `min.insyn
 - B. `unclean.leader.election.enable` overrides `min.insync.replicas`
 - C. They are independent and one does not affect the other
 - D. If `unclean.leader.election.enable=true`, `min.insync.replicas` can be violated during leader election
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -47,6 +55,8 @@ However, if `unclean.leader.election.enable` is set to `true`, this protection i
 - A and C are incorrect because the two configurations do not control the same thing and they are not completely independent.
 - B is incorrect because `unclean.leader.election.enable` does not override `min.insync.replicas`, it just allows it to be violated in certain edge cases.
 
+</details>
+
 ## Question 3
 
 A Kafka cluster has 3 brokers. You create a topic with 6 partitions and 2 consumers in a consumer group subscribed to this topic. What is the maximum number of partitions that can be assigned to a single consumer?
@@ -55,6 +65,9 @@ A Kafka cluster has 3 brokers. You create a topic with 6 partitions and 2 consum
 - B. 2
 - C. 3
 - D. 6
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -67,6 +80,8 @@ It's important to note that having more partitions than consumers is a valid and
 
 - A, B, and C are incorrect because they do not represent the maximum possible assignment. With 6 partitions and 2 consumers, it's possible for a consumer to be assigned more than 3 partitions.
 
+</details>
+
 ## Question 4
 
 A topic has 10 partitions and a replication factor of 3. There are 2 consumers in a consumer group subscribed to this topic. The cluster has 5 brokers. How would the partitions be assigned to the consumers to achieve maximum throughput?
@@ -75,6 +90,9 @@ A topic has 10 partitions and a replication factor of 3. There are 2 consumers i
 - B. Consumer 1: Partitions 0-9 and 0-1 replicas, Consumer 2: Partitions 0-9 and 3. replicas
 - C. Consumer 1: Partitions 0, 1, 2, Consumer 2: Partitions 3, 4, 5, Unassigned: 6, 7, 8, 9
 - D. Consumer 1: Partitions 0-9
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -94,6 +112,8 @@ The replication factor and the number of brokers do not directly affect the part
 - C is suboptimal because it leaves some partitions unassigned, reducing total throughput.
 - D is incorrect because it assigns all partitions to a single consumer, eliminating the benefits of parallel consumption.
 
+</details>
+
 ## Question 5
 
 Which of the following statements about Kafka topic configurations is true?
@@ -102,6 +122,11 @@ Which of the following statements about Kafka topic configurations is true?
 - B. Topic configurations can be changed dynamically using the `kafka-configs.sh` tool
 - C. Topic configurations are stored in Zookeeper and are not accessible through the Kafka broker
 - D. Topic configurations are stored in the Kafka broker's configuration file and require a broker restart to take effect
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
 
 **Explanation:**
 In Kafka, topic configurations can be changed dynamically using the `kafka-configs.sh` tool without requiring a broker restart.
@@ -122,7 +147,7 @@ Statement C is partially correct but incomplete. Topic configurations are indeed
 
 Statement D is incorrect because topic configurations are not stored in the broker's configuration file. They are stored in Zookeeper, and changes do not require a broker restart.
 
-**Answer:** B
+</details>
 
 ## Question 6
 
@@ -132,6 +157,12 @@ What is the default cleanup policy for Kafka topics?
 - B. Compact
 - C. Delete and Compact
 - D. None
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 
 **Explanation:**
 The default cleanup policy for Kafka topics is "Delete".
@@ -150,5 +181,4 @@ Statements B and C are incorrect because they do not represent the default clean
 
 Statement D is incorrect because Kafka does have a default cleanup policy, which is "Delete". It is not the case that no cleanup policy is set by default.
 
-**Answer:** A
-
+</details>

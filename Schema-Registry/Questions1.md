@@ -24,7 +24,7 @@ Confluent Schema Registry uses a special Kafka topic named `_schemas` to store t
 
 ## Question 2
 
-What serialization formats are supported by the Confluent Schema Registry for storing schemas? (Select two)
+What serialization formats are supported by the Confluent Schema Registry for storing schemas? (Select all that apply)
 
 - A. Avro
 - B. Protobuf
@@ -36,17 +36,18 @@ What serialization formats are supported by the Confluent Schema Registry for st
 <summary>Response:</summary> 
 
 **Explanation:**
-The Confluent Schema Registry currently supports two serialization formats for storing schemas:
+The Confluent Schema Registry currently supports three serialization formats for storing schemas:
 
 1. Apache Avro: Avro is a row-based serialization format that is compact, fast, and binary. It's the most commonly used format with the Schema Registry.
 2. Protocol Buffers (Protobuf): Protobuf is Google's data interchange format. It's also compact and fast, and it supports schema evolution.
+3. JSON Schema: JSON schema is a schema format for JSON, supported by the Schema Registry.
 
 The other options are not currently supported:
 
-- C (JSON Schema) and D (XML Schema) are schema formats for JSON and XML respectively, but they are not supported by the Schema Registry for schema storage.
+- D (XML Schema) is a schema format for XML, but it's not supported by the Schema Registry for schema storage.
 - E (Thrift) is another serialization format, but it's not currently supported by the Schema Registry.
 
-**Answer:** A, B
+**Answer:** A, B, C
 
 </details>
 
@@ -124,16 +125,16 @@ In Avro, what is the effect of adding a field to a record schema without a defau
 <summary>Response:</summary> 
 
 **Explanation:**
-In Avro, adding a field to a record schema without a default value is an incompatible change. It breaks both backward and forward compatibility.
+In Avro, adding a field to a record schema without a default value is a forward compatible change. It only breaks backward compatibility.
 
-- It breaks backward compatibility because data written with the new schema cannot be read by code using the old schema. The old schema will not have a definition for the new field and will not know how to handle it.
-- It breaks forward compatibility because data written with the old schema cannot be read by code using the new schema. The new schema will expect the new field to be present, but it will be missing in the old data.
+- It is forward compatible because data written with the new schema can be read by code using the old schema. The old schema will simply ignore the added field.
+- It breaks backward compatibility because data written with the old schema cannot be read by code using the new schema. The new schema will expect the new field to be present, but it will be missing in the old data.
 
-To make adding a field a compatible change, you must provide a default value for the new field. This allows old data to be read by new code (the default is used for the missing field) and new data to be read by old code (the new field is ignored).
+To make adding a field backward compatible as well, you must provide a default value for the new field. This allows old data to be read by new code (the default is used for the missing field).
 
-Therefore, statements A, B, and C are incorrect. Adding a field without a default is neither a backward nor forward compatible change in Avro.
+Therefore, statements A, C, and D are incorrect.
 
-**Answer:** D
+**Answer:** B
 
 </details>
 
@@ -150,16 +151,16 @@ What is the Avro schema evolution rule for removing a field?
 <summary>Response:</summary> 
 
 **Explanation:**
-In Avro, removing a field from a record schema is a forward compatible change, but not a backward compatible change.
+In Avro, removing a field from a record schema is a backward compatible change, but not a forward compatible change.
 
-- It is forward compatible because data written with the old schema can be read by code using the new schema. The new schema simply ignores the removed field when reading old data.
-- However, it is not backward compatible because data written with the new schema cannot be read by code using the old schema. The old schema will expect the removed field to be present, but it will be missing in the new data.
+- It is backward compatible because data written with the old schema can be read by code using the new schema. The new schema simply ignores the removed field when reading old data.
+- However, it is not forward compatible because data written with the new schema cannot be read by code using the old schema. The old schema will expect the removed field to be present, but it will be missing in the new data.
 
-Therefore, removing a field allows new code to read old data (forward compatibility), but not old code to read new data (backward compatibility).
+Therefore, removing a field allows new code to read old data (backward compatibility), but not old code to read new data (forward compatibility).
 
-Statements A and B are incorrect because removing a field is not always compatible or backward compatible. Statement D is incorrect because removing a field is forward compatible, not completely incompatible.
+Statements A and C are incorrect because removing a field is not always compatible or forward compatible. Statement D is incorrect because removing a field is backward compatible, not completely incompatible.
 
-**Answer:** C
+**Answer:** B
 
 </details>
 

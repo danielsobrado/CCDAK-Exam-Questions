@@ -7,10 +7,15 @@ What is the purpose of the Confluent Schema Registry in a Kafka ecosystem?
 - C. To handle authentication and authorization for Kafka clients
 - D. To monitor and manage Kafka clusters and their performance
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 The primary purpose of the Confluent Schema Registry in a Kafka ecosystem is to store and manage Avro schemas for Kafka messages. The Schema Registry provides a centralized repository for storing and retrieving Avro schemas, enabling schema evolution and compatibility checks. It allows Kafka producers and consumers to work with structured data in Avro format, ensuring that the data adheres to a well-defined schema. By storing schemas in the Schema Registry, producers and consumers can refer to schemas by their unique identifier, eliminating the need to include the full schema with each message. This promotes schema reuse, reduces message size, and enables schema evolution over time.
 
 **Answer:** A
+
+</details>
 
 ## Question 22
 
@@ -20,6 +25,9 @@ How does the Confluent Schema Registry ensure compatibility between different ve
 - B. By allowing schema changes that are both backward and forward compatible
 - C. By automatically generating compatibility reports for schema versions
 - D. By using a compatibility setting to define allowed schema evolution rules
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 The Confluent Schema Registry uses a compatibility setting to define allowed schema evolution rules and ensure compatibility between different versions of a schema. The compatibility setting determines how schema changes are validated and whether they are allowed or rejected. The available compatibility settings are:
@@ -33,6 +41,8 @@ The Confluent Schema Registry uses a compatibility setting to define allowed sch
 
 **Answer:** D
 
+</details>
+
 ## Question 23
 
 How can you retrieve the latest version of a schema from the Confluent Schema Registry using its REST API?
@@ -42,10 +52,15 @@ How can you retrieve the latest version of a schema from the Confluent Schema Re
 - C. Send a GET request to `/schemas/<subject>/versions/latest`
 - D. Send a POST request to `/subjects/<subject>/versions/latest`
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 To retrieve the latest version of a schema from the Confluent Schema Registry using its REST API, you need to send a GET request to the endpoint `/subjects/<subject>/versions/latest`. The `<subject>` placeholder represents the name of the schema subject for which you want to retrieve the latest version. The Schema Registry organizes schemas into subjects, typically corresponding to Kafka topic names. By making a GET request to this endpoint, the Schema Registry will respond with the latest version of the schema associated with the specified subject. The response will include the schema details, such as the schema ID, version number, and the schema definition itself.
 
 **Answer:** A
+
+</details>
 
 ## Question 24
 
@@ -56,10 +71,15 @@ What is the purpose of the `kafkastore.topic` configuration in the Confluent Sch
 - C. To set the frequency at which the Schema Registry checks for schema updates
 - D. To configure the retention period for old schema versions
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 The `kafkastore.topic` configuration in the Confluent Schema Registry is used to specify the Kafka topic where the Schema Registry stores its schema data. The Schema Registry uses Kafka as its underlying storage mechanism to persist and distribute schema information across multiple instances. By default, the Schema Registry creates a Kafka topic named `_schemas` to store the schema data. However, you can customize the topic name by setting the `kafkastore.topic` configuration property. This allows you to use a different topic name if needed, such as in cases where you have multiple Schema Registry instances or want to segregate schema data from other Kafka topics.
 
 **Answer:** A
+
+</details>
 
 ## Question 25
 
@@ -70,10 +90,15 @@ What is the default compatibility setting in the Confluent Schema Registry for s
 - C. FULL
 - D. NONE
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 The default compatibility setting in the Confluent Schema Registry for schema evolution is BACKWARD. When a new version of a schema is registered, the Schema Registry checks its compatibility with the existing schema versions based on the configured compatibility setting. The BACKWARD compatibility setting ensures that a new schema can be used to read data written by the previous schema version. In other words, consumers using the new schema can still read data produced with the old schema. This is the most commonly used compatibility setting as it allows for schema evolution while maintaining backward compatibility. If you require different compatibility rules, you can change the setting to FORWARD, FULL, or NONE based on your specific requirements.
 
 **Answer:** A
+
+</details>
 
 ## Question 26
 
@@ -84,6 +109,9 @@ How can you change the compatibility setting for a specific subject in the Confl
 - C. Send a PUT request to `/compatibility/<subject>`
 - D. Send a POST request to `/compatibility/<subject>`
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 To change the compatibility setting for a specific subject in the Confluent Schema Registry using its REST API, you need to send a PUT request to the endpoint `/config/<subject>`. The `<subject>` placeholder represents the name of the schema subject for which you want to modify the compatibility setting. In the request body, you need to provide the new compatibility setting as a JSON object. For example:
 
@@ -93,6 +121,8 @@ To change the compatibility setting for a specific subject in the Confluent Sche
 }
 ```
 
+</details>
+
 ## Question 27
 
 What is the impact of removing a required field that has a default value in an Avro schema?
@@ -101,6 +131,9 @@ What is the impact of removing a required field that has a default value in an A
 - B. It is a forward compatible change
 - C. It is both a backward and forward compatible change
 - D. It is an incompatible change
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 Removing a required field that has a default value in an Avro schema is a backward compatible change. It means that data written with the new schema can be read by applications using the old schema.
@@ -113,6 +146,8 @@ Therefore, removing a required field with a default value is a backward compatib
 
 **Answer:** A
 
+</details>
+
 ## Question 28
 
 What compatibility level is maintained when adding a new optional field to an Avro schema?
@@ -121,6 +156,9 @@ What compatibility level is maintained when adding a new optional field to an Av
 - B. Forward compatibility
 - C. Full compatibility
 - D. No compatibility
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 Adding a new optional field to an Avro schema maintains both backward and forward compatibility, which is known as full compatibility.
@@ -133,6 +171,8 @@ Since both backward and forward compatibility are maintained, adding a new optio
 
 **Answer:** C
 
+</details>
+
 ## Question 29
 
 What is the effect of changing the data type of a field in an Avro schema?
@@ -141,6 +181,9 @@ What is the effect of changing the data type of a field in an Avro schema?
 - B. It is a forward compatible change
 - C. It is both a backward and forward compatible change
 - D. It is an incompatible change
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 Changing the data type of a field in an Avro schema is an incompatible change. It breaks both backward and forward compatibility.
@@ -153,6 +196,8 @@ Therefore, changing the data type of a field in an Avro schema is an incompatibl
 
 **Answer:** D
 
+</details>
+
 ## Question 30
 
 In the Confluent Schema Registry, what is the default compatibility setting for new schemas?
@@ -161,6 +206,11 @@ In the Confluent Schema Registry, what is the default compatibility setting for 
 - B. FORWARD
 - C. FULL
 - D. NONE
+
+
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -171,3 +221,5 @@ The Confluent Schema Registry default compatibility type is BACKWARD . The main 
 - FORWARD compatibility means that data written with an old schema can be read by code using a new schema.
 - FULL compatibility means that both BACKWARD and FORWARD compatibilities are required.
 - NONE means that no compatibility checking is performed.
+
+</details>

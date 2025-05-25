@@ -7,6 +7,9 @@ What does the `acks=all` setting in the Kafka producer configuration ensure?
 - C. The producer will receive an acknowledgment only after the message is written to all in-sync replicas
 - D. The producer will not wait for any acknowledgment and will consider the write successful immediately
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 When the `acks` parameter is set to "all" in the Kafka producer configuration, the producer will receive an acknowledgment only after the message is written to all in-sync replicas (ISRs). In-sync replicas are the replicas that are currently up-to-date with the leader and are considered to have the latest data. Setting `acks=all` ensures the highest level of durability, as the producer will wait for the message to be persisted on multiple replicas before considering the write successful. However, this setting also introduces additional latency, as the producer needs to wait for acknowledgments from all ISRs before proceeding.
 
@@ -20,6 +23,9 @@ What is the purpose of the `client.id` setting in the Kafka producer and consume
 - B. To set the maximum number of requests the client can send or receive
 - C. To determine the compression type used for message production or consumption
 - D. To control the maximum amount of memory the client can use for buffering
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 The `client.id` setting in the Kafka producer and consumer configurations is used to specify a unique identifier for the client within a Kafka cluster. It is an optional setting that helps in identifying and tracking the client's activity in the cluster. When set, the `client.id` is included in the metadata of requests sent by the client, making it easier to correlate and monitor client behavior. It can be useful for debugging purposes, as it allows you to identify specific clients in the logs and metrics. The `client.id` does not have any impact on the functional behavior of the client, such as the number of requests, compression type, or memory usage. It is purely used for identification and monitoring purposes.
@@ -35,6 +41,9 @@ What happens if multiple Kafka clients use the same `client.id` value?
 - C. The behavior is undefined, and it may lead to unexpected results or errors
 - D. The Kafka brokers will reject the connection attempts from clients with duplicate `client.id`
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 If multiple Kafka clients use the same `client.id` value, the behavior is undefined, and it may lead to unexpected results or errors. The `client.id` is meant to be a unique identifier for each client, and Kafka brokers do not enforce uniqueness or perform any special handling when multiple clients have the same `client.id`. Using the same `client.id` for multiple clients can cause confusion and make it difficult to distinguish between the activities of different clients in logs and metrics. It may also lead to incorrect correlation of requests and responses, as the brokers may attribute the actions of one client to another. To avoid these issues, it is recommended to assign a unique `client.id` to each Kafka client in a cluster.
 
@@ -48,6 +57,9 @@ If a producer sends a message with a key to a topic with 5 partitions, which par
 - B. The partition is determined based on the hash of the message key
 - C. The partition is always the first partition (partition 0)
 - D. The partition is determined by the broker
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 When a producer sends a message with a key to a topic, the partition to which the message is written is determined based on the hash of the message key. Kafka's default partitioner uses the murmur2 hash function to compute the hash of the key and then maps it to a specific partition.
@@ -71,6 +83,9 @@ What happens if a producer sends a message without a key to a topic with 3 parti
 - B. The message is sent to a randomly selected partition
 - C. The message is sent to all partitions
 - D. The message is sent to the partition with the least amount of data
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 When a producer sends a message without a key to a topic, the message is sent to a randomly selected partition. In the absence of a key, Kafka's default partitioner uses a round-robin approach to distribute messages evenly across all available partitions.
@@ -96,6 +111,9 @@ Can a producer guarantee the order of messages within a partition when sending m
 - C. It depends on the configuration of the producer
 - D. It depends on the configuration of the topic
 
+<details>
+<summary>Response:</summary> 
+
 **Explanation:**
 A producer cannot guarantee the order of messages within a partition when sending messages with different keys. While Kafka guarantees the order of messages within a partition for a given key, it does not guarantee the relative order of messages across different keys.
 
@@ -115,6 +133,9 @@ What happens when a producer tries to send a message to a partition whose leader
 - B. The producer waits until the leader replica becomes in-sync before sending the message
 - C. The message is automatically routed to another in-sync replica
 - D. The producer receives a `LeaderNotAvailableException` and the message is discarded
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 When a producer tries to send a message to a partition whose leader replica is not in-sync, the producer will receive a `NotLeaderOrFollowerException`. This exception indicates that the broker the producer is connected to is not the leader for the partition and cannot accept writes.
@@ -137,6 +158,9 @@ In a topic with a replication factor of 3 and `min.insync.replicas` set to 2, wh
 - B. The producer receives a `NotEnoughReplicasException` and the message is not written
 - C. The producer waits indefinitely until at least two replicas become in-sync
 - D. The message is written to the leader replica and the producer receives an acknowledgment
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 When a topic has a replication factor of 3 and `min.insync.replicas` is set to 2, it means that at least 2 replicas (including the leader) must be in-sync for a write to be considered successful when `acks=all`.

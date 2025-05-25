@@ -1,3 +1,4 @@
+
 ## Question 1
 
 Where does Confluent Schema Registry store the registered schema information?
@@ -6,6 +7,9 @@ Where does Confluent Schema Registry store the registered schema information?
 - B. In a special Kafka topic named `_schemas`
 - C. In a relational database configured in Schema Registry
 - D. In the Kafka broker's `schema` directory on disk
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 Confluent Schema Registry uses a special Kafka topic named `_schemas` to store the registered schema information. Each schema is stored as a message in this topic, keyed by the schema ID.
@@ -16,6 +20,8 @@ Confluent Schema Registry uses a special Kafka topic named `_schemas` to store t
 
 **Answer:** B
 
+</details>
+
 ## Question 2
 
 What serialization formats are supported by the Confluent Schema Registry for storing schemas? (Select two)
@@ -25,6 +31,9 @@ What serialization formats are supported by the Confluent Schema Registry for st
 - C. JSON Schema
 - D. XML Schema
 - E. Thrift
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 The Confluent Schema Registry currently supports two serialization formats for storing schemas:
@@ -39,6 +48,8 @@ The other options are not currently supported:
 
 **Answer:** A, B
 
+</details>
+
 ## Question 3
 
 Which of the following programming languages have official client libraries for interacting with the Confluent Schema Registry? (Select three)
@@ -49,6 +60,9 @@ Which of the following programming languages have official client libraries for 
 - D. C++
 - E. JavaScript
 - F. Ruby
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 The Confluent Schema Registry provides official client libraries for the following programming languages:
@@ -63,6 +77,8 @@ The other options do not currently have official client libraries from Confluent
 
 **Answer:** A, B, C
 
+</details>
+
 ## Question 4
 
 What is the purpose of the compatibility setting in the Confluent Schema Registry?
@@ -71,6 +87,9 @@ What is the purpose of the compatibility setting in the Confluent Schema Registr
 - B. It controls how schemas can evolve over time.
 - C. It sets the compatibility between different Schema Registry versions.
 - D. It configures compatibility between the Schema Registry and Kafka brokers.
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 The compatibility setting in the Confluent Schema Registry is used to control schema evolution. It defines the rules for how a schema can change over time while still being considered compatible with previous versions.
@@ -90,6 +109,8 @@ The other options are incorrect:
 
 **Answer:** B
 
+</details>
+
 ## Question 5
 
 In Avro, what is the effect of adding a field to a record schema without a default value?
@@ -98,6 +119,9 @@ In Avro, what is the effect of adding a field to a record schema without a defau
 - B. It is a forward compatible change
 - C. It is both a backward and forward compatible change
 - D. It is an incompatible change
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 In Avro, adding a field to a record schema without a default value is an incompatible change. It breaks both backward and forward compatibility.
@@ -111,6 +135,8 @@ Therefore, statements A, B, and C are incorrect. Adding a field without a defaul
 
 **Answer:** D
 
+</details>
+
 ## Question 6
 
 What is the Avro schema evolution rule for removing a field?
@@ -119,6 +145,9 @@ What is the Avro schema evolution rule for removing a field?
 - B. It is a backward compatible change
 - C. It is a forward compatible change
 - D. It is an incompatible change
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 In Avro, removing a field from a record schema is a forward compatible change, but not a backward compatible change.
@@ -132,6 +161,8 @@ Statements A and B are incorrect because removing a field is not always compatib
 
 **Answer:** C
 
+</details>
+
 ## Question 7
 
 In Avro, what is the compatibility implication of changing the name of a record schema?
@@ -140,6 +171,9 @@ In Avro, what is the compatibility implication of changing the name of a record 
 - B. It is a forward compatible change
 - C. It is both a backward and forward compatible change
 - D. It is an incompatible change
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 In Avro, changing the name of a record schema is an incompatible change. It breaks both backward and forward compatibility.
@@ -157,6 +191,8 @@ To evolve a schema while maintaining compatibility, you should not change the na
 
 **Answer:** D
 
+</details>
+
 ## Question 8
 
 What happens when a Kafka consumer using KafkaAvroDeserializer encounters a message without a schema ID?
@@ -165,6 +201,9 @@ What happens when a Kafka consumer using KafkaAvroDeserializer encounters a mess
 - B. The consumer skips the message and moves to the next one
 - C. The consumer attempts to deserialize the message using the latest schema
 - D. The consumer falls back to using the GenericRecord deserializer
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 When a Kafka consumer using the KafkaAvroDeserializer encounters a message that does not include a schema ID, it will throw a SerializationException.
@@ -183,6 +222,8 @@ Statement D is incorrect because the consumer does not fall back to using a diff
 
 **Answer:** A
 
+</details>
+
 ## Question 9
 
 How can you handle a SerializationException thrown by the KafkaAvroDeserializer in a Kafka consumer?
@@ -191,6 +232,9 @@ How can you handle a SerializationException thrown by the KafkaAvroDeserializer 
 - B. Catch the exception and skip the problematic message by committing its offset
 - C. Catch the exception and manually retrieve the schema from the Schema Registry for deserialization
 - D. Let the exception propagate and handle it at a higher level in the consumer application
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 When a Kafka consumer using the KafkaAvroDeserializer encounters a SerializationException due to a missing schema ID or other deserialization issues, one way to handle it is to catch the exception and skip the problematic message by committing its offset.
@@ -214,6 +258,8 @@ Statement D is partially correct, as letting the exception propagate and handlin
 
 **Answer:** B
 
+</details>
+
 ## Question 10
 
 What are the benefits of using Confluent Schema Registry and KafkaAvroDeserializer in a Kafka consumer?
@@ -222,6 +268,9 @@ What are the benefits of using Confluent Schema Registry and KafkaAvroDeserializ
 - B. Improved deserialization performance compared to generic deserializers
 - C. Ability to deserialize messages without knowing the schema upfront
 - D. All of the above
+
+<details>
+<summary>Response:</summary> 
 
 **Explanation:**
 Using Confluent Schema Registry and KafkaAvroDeserializer in a Kafka consumer offers several benefits:
@@ -245,3 +294,5 @@ Using Confluent Schema Registry and KafkaAvroDeserializer in a Kafka consumer of
 - B. leveraging Confluent Schema Registry and KafkaAvroDeserializer, Kafka consumers can benefit from automatic schema evolution, improved deserialization performance, and the ability to deserialize messages without prior knowledge of the schema. These features simplify the development and maintenance of Kafka consumers while ensuring data compatibility and efficiency.
 
 **Answer:** D
+
+</details>

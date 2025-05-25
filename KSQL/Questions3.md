@@ -7,12 +7,17 @@ How can you convert a stream into a table in KSQL?
 - C. CREATE TABLE table_name FROM stream_name;
 - D. CONVERT STREAM stream_name TO TABLE table_name;
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 **Explanation:**
 The correct syntax to convert a stream into a table in KSQL is `CREATE TABLE table_name AS SELECT * FROM stream_name;`.
 
 - B, C, and D are incorrect because they are not valid syntaxes for this operation in KSQL.
 
-**Answer:** A
+</details>
 
 ## Question 22
 
@@ -23,12 +28,17 @@ What is the purpose of the `AVRO` format in KSQL?
 - C. To ensure data is stored as plain text
 - D. To simplify data parsing
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 The `AVRO` format in KSQL is used to enable complex data types and schema evolution. It is a binary serialization format that supports rich data structures and efficient data encoding.
 
 - A, C, and D are incorrect because they do not accurately describe the purpose and capabilities of the AVRO format.
 
-**Answer:** B
+</details>
 
 ## Question 23
 
@@ -39,12 +49,17 @@ Which KSQL function is used to extract the year from a timestamp?
 - C. YEAR()
 - D. EXTRACT(YEAR FROM timestamp)
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** D
+
 **Explanation:**
 The `EXTRACT(YEAR FROM timestamp)` function in KSQL is used to extract the year from a timestamp.
 
 - A, B, and C are incorrect because they are not valid KSQL functions for this operation.
 
-**Answer:** D
+</details>
 
 ## Question 24
 
@@ -55,12 +70,17 @@ How do you handle null values in KSQL?
 - C. Replace null values with default values using `COALESCE()`
 - D. Both A and C
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** D
+
 **Explanation:**
 In KSQL, you can handle null values using the `IS NULL` and `IS NOT NULL` predicates to filter records, and the `COALESCE()` function to replace null values with default values.
 
 - B is incorrect because `NULLIFY()` is not a valid KSQL function. Combining A and C provides comprehensive handling of null values.
 
-**Answer:** D
+</details>
 
 ## Question 25
 
@@ -71,12 +91,17 @@ Which KSQL function calculates the total sum of a column's values?
 - C. ADD()
 - D. AGGREGATE()
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 **Explanation:**
 The `SUM()` function in KSQL calculates the total sum of a column's values.
 
 - B, C, and D are incorrect because they are not valid KSQL functions for this operation.
 
-**Answer:** A
+</details>
 
 ## Question 26
 
@@ -86,6 +111,11 @@ What is the default retention period for KSQL streams?
 - B. 1 day
 - C. 1 week
 - D. 2 days
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A. 7 days
 
 ### Explanation:
 
@@ -115,8 +145,7 @@ CREATE STREAM my_stream (
 - **C. 1 week**: Equivalent to 7 days, but the default is specified in days.
 - **D. 2 days**: Not the default retention period but can be configured if needed.
 
-
-**A. 7 days**
+</details>
 
 ## Question 27
 
@@ -127,12 +156,17 @@ How can you filter records in a KSQL stream?
 - C. By using the `HAVING` clause
 - D. By using the `LIMIT` clause
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 Records in a KSQL stream can be filtered using the `WHERE` clause, which allows you to specify conditions that records must meet to be included in the query results.
 
 - A, C, and D are incorrect because they are not valid clauses for filtering records in a KSQL stream.
 
-**Answer:** B
+</details>
 
 ## Question 28
 
@@ -143,9 +177,15 @@ Which KSQL function can be used to format timestamps?
 - C. DATE_FORMAT()
 - D. TIMESTAMP_FORMAT()
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** C
+
 **Explanation:**
 The `DATE_FORMAT()` function in KSQL can be used to format timestamps. It allows you to specify a pattern for formatting the date and time.
 
 - A, B, and D are incorrect because they are not valid KSQL functions for formatting timestamps.
 
-**Answer:** C
+
+</details>

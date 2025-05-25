@@ -7,6 +7,9 @@ In the Kafka producer API, what is the purpose of the `acks` configuration param
 - C. To specify the number of times the producer will retry a failed request
 - D. To specify the number of partitions a topic must have for the producer to send messages to it
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
@@ -24,6 +27,8 @@ The higher the `acks` value, the stronger the durability guarantee, but also the
 - C is incorrect because `acks` is not related to the number of retries.
 - D is incorrect because `acks` is not related to the number of partitions in a topic.
 
+</details>
+
 ## Question 12
 
 How does the `min.insync.replicas` broker configuration interact with the `acks` producer configuration?
@@ -32,6 +37,9 @@ How does the `min.insync.replicas` broker configuration interact with the `acks`
 - B. `acks` must always be set to `all` for `min.insync.replicas` to have any effect
 - C. `min.insync.replicas` is only relevant if `acks` is set to `1` or `all`
 - D. If `acks` is set to `all`, writes will only succeed if the number of in-sync replicas is at least `min.insync.replicas`
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -49,6 +57,8 @@ This ensures that a minimum number of replicas have the data, providing a strong
 - B is incorrect because `min.insync.replicas` can have an effect even if `acks` is not `all`.
 - C is incorrect because `min.insync.replicas` is not directly relevant to `acks=1`, only to `acks=all`.
 
+</details>
+
 ## Question 13
 
 What happens if a Kafka producer sends a message with `acks=all` to a topic partition with 3 replicas, but only 2 replicas are currently in-sync?
@@ -57,6 +67,9 @@ What happens if a Kafka producer sends a message with `acks=all` to a topic part
 - B. The write will succeed but the producer will not receive an acknowledgment
 - C. The write will be queued until the third replica comes back in-sync
 - D. The write will fail and the producer will receive an error
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -72,6 +85,8 @@ This behavior protects against data loss by ensuring that writes are only consid
 - A and B are incorrect because the write will not succeed in this scenario.
 - C is incorrect because the write will not be queued, it will fail immediately.
 
+</details>
+
 ## Question 14
 
 Can a producer configured with `acks=all` and `retries=Integer.MAX_VALUE` ever experience data loss?
@@ -80,6 +95,9 @@ Can a producer configured with `acks=all` and `retries=Integer.MAX_VALUE` ever e
 - B. Yes, if the total number of replicas for a partition drops below `min.insync.replicas`
 - C. Yes, if `unclean.leader.election.enable=true` and all in-sync replicas fail
 - D. Yes, if the producer crashes after the broker acknowledges the write but before the producer records the acknowledgment
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B, C, D
 
@@ -96,6 +114,8 @@ So while `acks=all` and `retries=Integer.MAX_VALUE` provide a very strong durabi
 
 - A is incorrect because, as explained above, there are edge cases where data loss can still occur even with this configuration.
 
+</details>
+
 ## Question 15
 
 You want to produce messages to a Kafka topic using a Java client. Which of the following is NOT a required configuration for the producer?
@@ -104,6 +124,9 @@ You want to produce messages to a Kafka topic using a Java client. Which of the 
 - B. `key.serializer`
 - C. `value.serializer`
 - D. `partitioner.class`
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -116,6 +139,8 @@ When creating a Kafka producer in Java, there are several required configuration
 
 The `partitioner.class` configuration is optional. It specifies the partitioner class that should be used to determine which partition to send each message to. If not specified, the default partitioner will be used, which is sufficient for most use cases.
 
+</details>
+
 ## Question 16
 
 Which of the following is true about the relationship between producers and consumers in Kafka?
@@ -124,6 +149,9 @@ Which of the following is true about the relationship between producers and cons
 - B. Producers and consumers must be written in the same programming language
 - C. Producers and consumers are decoupled by the Kafka topic
 - D. Producers must know about the consumers to send messages to them
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -143,6 +171,8 @@ This decoupling allows for several benefits:
 
 Therefore, statements A, B, and D are incorrect. Producers and consumers do not need to use the same serialization format, be written in the same language, or know about each other. They are decoupled by the Kafka topic.
 
+</details>
+
 ## Question 17
 
 What happens if a Kafka producer sends a message to a topic partition and does not receive an acknowledgment from the broker?
@@ -151,6 +181,9 @@ What happens if a Kafka producer sends a message to a topic partition and does n
 - B. The producer will wait indefinitely for the acknowledgment
 - C. The producer will retry sending the message based on its retry configuration
 - D. The producer will immediately send the next message in the queue
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -170,6 +203,8 @@ Therefore, statement C is correct. The producer will retry sending the message b
 - B is incorrect because the producer will not wait indefinitely. It will timeout after `request.timeout.ms`.
 - D is incorrect because the producer will not immediately send the next message. It will attempt to retry the failed message first.
 
+</details>
+
 ## Question 18
 
 What is the purpose of the `acks` parameter in Kafka producer configuration?
@@ -178,6 +213,9 @@ What is the purpose of the `acks` parameter in Kafka producer configuration?
 - B. To specify the number of replicas that must acknowledge a write for it to be considered successful
 - C. To specify the number of times the producer should retry sending a message
 - D. To specify the maximum size of a batch of messages
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -194,6 +232,8 @@ The `acks` parameter can have the following values:
 
 The choice of the `acks` value depends on the specific requirements of your application regarding durability, latency, and throughput.
 
+</details>
+
 ## Question 19
 
 What happens if the `acks` parameter is set to `all` and the minimum in-sync replicas (`min.insync.replicas`) setting is not satisfied?
@@ -202,6 +242,9 @@ What happens if the `acks` parameter is set to `all` and the minimum in-sync rep
 - B. The producer will write the message successfully, ignoring the `min.insync.replicas` setting
 - C. The producer will receive an error indicating that the `min.insync.replicas` requirement is not met
 - D. The producer will wait indefinitely until the `min.insync.replicas` requirement is met
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -216,6 +259,8 @@ Setting `min.insync.replicas` to a value greater than 1 in combination with `ack
 
 It's important to note that setting `min.insync.replicas` too high can impact the availability of the system, as writes will fail if the required number of replicas is not available. It's recommended to find a balance between durability and availability based on the specific requirements of your application.
 
+</details>
+
 ## Question 20
 
 What is the relationship between the `acks` parameter and the `request.required.acks` parameter in Kafka?
@@ -224,6 +269,9 @@ What is the relationship between the `acks` parameter and the `request.required.
 - B. `acks` is used in the producer configuration, while `request.required.acks` is used in the consumer configuration
 - C. `acks` is used in the new producer API, while `request.required.acks` is used in the old producer API
 - D. They are completely unrelated parameters
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -245,3 +293,5 @@ In the old producer API, `request.required.acks` is used in the producer configu
 It's important to note that the old producer API and the `request.required.acks` parameter are deprecated and have been replaced by the new producer API and the `acks` parameter. It is recommended to use the new producer API and the `acks` parameter in Kafka versions 0.8.2 and later.
 
 When migrating from the old producer API to the new producer API, you should replace `request.required.acks` with the equivalent `acks` configuration.
+
+</details>

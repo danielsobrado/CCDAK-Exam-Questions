@@ -1,3 +1,5 @@
+</details>
+
 ## Question 21:
 A media company streams live video content, which generates logs of viewer interactions (e.g., play, pause, stop) in real-time. To enhance viewer experience through personalized content and advertisements, they need to analyze these logs in real-time. The logs are stored in NoSQL databases across different geographical locations. Considering the need for low-latency analysis, which setup is most appropriate?
 
@@ -6,7 +8,8 @@ A media company streams live video content, which generates logs of viewer inter
 3. Configure a network of MQTT brokers to collect logs from each location, and then use an MQTT Source Connector to consolidate logs into Kafka. Apply a Kafka Streams application to analyze viewer interactions and adjust content recommendations.
 4. Implement a batch ETL process to extract logs from NoSQL databases nightly, load them into Kafka for next-day processing with Kafka Streams, and update content recommendations based on the analysis.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **2. Directly stream logs from NoSQL databases to Kafka using log-based Change Data Capture (CDC) connectors specific to each NoSQL database type, followed by processing with ksqlDB to generate viewer insights and personalized content recommendations.**
 
@@ -16,6 +19,8 @@ The correct answer is **2. Directly stream logs from NoSQL databases to Kafka us
 - **3.** While MQTT is suitable for IoT data, using it for log data from NoSQL databases introduces unnecessary complexity and may not provide the direct integration or the efficiency of CDC connectors.
 - **4.** Batch ETL processes cannot meet the requirements for real-time analysis and dynamic content personalization due to the inherent delay in processing.
 
+</details>
+
 ## Question 22:
 An online retailer integrates user reviews from their website into Kafka to perform sentiment analysis and adjust product rankings accordingly. Reviews are initially posted to a MongoDB database. To ensure the analysis reflects recent feedback, which configuration ensures the most efficient and timely data flow into Kafka?
 
@@ -24,7 +29,8 @@ An online retailer integrates user reviews from their website into Kafka to perf
 3. Deploy log-based CDC connectors to stream only the changes (new and updated reviews) from MongoDB into Kafka, leveraging ksqlDB for continuous sentiment analysis and product ranking adjustments.
 4. Directly access the MongoDB API from Kafka Streams applications to fetch new and updated reviews, perform sentiment analysis, and update product rankings without storing reviews in Kafka.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **3. Deploy log-based CDC connectors to stream only the changes (new and updated reviews) from MongoDB into Kafka, leveraging ksqlDB for continuous sentiment analysis and product ranking adjustments.**
 
@@ -34,6 +40,8 @@ The correct answer is **3. Deploy log-based CDC connectors to stream only the ch
 - **3.** Correct. CDC connectors are specifically designed for efficient, real-time data synchronization by capturing only new and modified data. Using ksqlDB for sentiment analysis allows for real-time processing and immediate action on the insights.
 - **4.** Fetching data directly via the MongoDB API bypasses Kafka's benefits of decoupling data producers and consumers, scalability, and fault tolerance, making it less efficient for real-time analysis and adjustment of product rankings.
 
+</details>
+
 ## Question 23:
 A financial institution aims to merge transaction data from legacy systems with real-time fraud detection models running on Kafka Streams. The transaction data resides in various legacy databases and must be enriched with real-time fraud signals before being presented on a dashboard. What's the most effective architecture for this use case?
 
@@ -42,7 +50,8 @@ A financial institution aims to merge transaction data from legacy systems with 
 3. Directly connect the legacy databases to Kafka Streams applications using custom database clients. Perform the enrichment with real-time fraud detection signals in the application, then produce the enriched data to a Kafka topic for dashboard visualization.
 4. Leverage Change Data Capture (CDC) connectors to stream transaction data from legacy databases into Kafka. Use Kafka Streams for real-time enrichment with fraud detection signals and ksqlDB to further process and prepare the data for dashboard presentation.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **4. Leverage Change Data Capture (CDC) connectors to stream transaction data from legacy databases into Kafka. Use Kafka Streams for real-time enrichment with fraud detection signals and ksqlDB to further process and prepare the data for dashboard presentation.**
 
@@ -51,6 +60,8 @@ The correct answer is **4. Leverage Change Data Capture (CDC) connectors to stre
 - **2.** Implementing custom Kafka Producers requires significant development effort and might not be as efficient or scalable as using built-in Kafka Connect connectors. Additionally, enriching data in-flight before it reaches Kafka can complicate the architecture.
 - **3.** Connecting legacy databases directly to Kafka Streams applications complicates the architecture and increases the coupling between data sources and processing logic, making the system less resilient and scalable.
 - **4.** Correct. CDC connectors are ideal for capturing changes from legacy databases in real-time, minimizing latency. Kafka Streams enables sophisticated stream processing capabilities for enrichment with fraud detection signals. Using ksqlDB allows for additional processing and preparation of the enriched data in a more accessible SQL-like language, making it suitable for dynamic dashboard presentation. This option efficiently combines real-time data integration, processing, and presentation while leveraging the strengths of the Kafka ecosystem.
+
+</details>
 
 ## Question 24
 
@@ -61,7 +72,8 @@ Where are the Kafka Connect connector configurations stored?
 - 3. In Zookeeper under the `/kafka-connect` znode
 - 4. In a special Kafka topic named `connect-configs`
 
-**Answer:** 4
+<details>
+<summary>Response:</summary>  4
 
 **Explanation:**
 Kafka Connect uses a special Kafka topic named `connect-configs` to store connector and task configurations. When a connector is created or updated, the configurations are persisted in this topic.
@@ -69,6 +81,8 @@ Kafka Connect uses a special Kafka topic named `connect-configs` to store connec
 - 1 is incorrect because connector configs are not stored in separate files on the worker nodes.
 - 2 is incorrect as connector configs are not stored in the Kafka broker's config directory.
 - 3 is incorrect because while Kafka Connect uses Zookeeper for some coordination tasks, connector configs specifically are not stored in Zookeeper.
+
+</details>
 
 ## Question 25
 
@@ -79,6 +93,9 @@ You want to use Kafka Connect to export data from a Kafka topic to a relational 
 - 3. Transformation Connector
 - 4. Import Connector
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** 2
 
 **Explanation:**
@@ -87,6 +104,8 @@ In Kafka Connect, a Sink Connector is used to consume data from Kafka topics and
 - 1 Source Connector is used to import data from an external system into Kafka topics, which is the opposite of what's needed here.
 - 3 is incorrect because Transformation Connectors are not a real type in Kafka Connect. Transformations can be applied to a connector configuration, but they are not a separate connector type.
 - 4 is incorrect because "Import Connector" is not a real term in Kafka Connect.
+
+</details>
 
 ## Question 26
 
@@ -97,6 +116,9 @@ You need to stream data from a Twitter feed into a Kafka topic for real-time pro
 - 3. Transformation Connector
 - 4. Export Connector
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** 2
 
 **Explanation:**
@@ -106,6 +128,8 @@ A Kafka Connect Source Connector is used to import data from an external source,
 - 3 is incorrect because Transformation Connectors are not a real type in Kafka Connect. Transformations can be applied to a connector configuration, but they are not a separate connector type.
 - 4 is incorrect because "Export Connector" is not a real term in Kafka Connect.
 
+</details>
+
 ## Question 27
 
 You are using Kafka Connect to move data from a source system into Kafka for real-time processing with Kafka Streams. After processing, the results need to be stored in HDFS for batch analysis. Which combination of connector types will you need?
@@ -114,6 +138,9 @@ You are using Kafka Connect to move data from a source system into Kafka for rea
 - 2. Sink Connector -> Source Connector
 - 3. Source Connector -> Source Connector
 - 4. Sink Connector -> Sink Connector
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** 1
 
@@ -129,6 +156,8 @@ The other options are incorrect:
 - 2 would be importing from Kafka to the source system and then from HDFS to Kafka, which is the wrong direction.
 - 3 and 4 use the same connector type twice, which doesn't make sense for moving data from a source to Kafka to a sink.
 
+</details>
+
 ## Question 28
 
 You are using a JDBC source connector to copy data from a database table to a Kafka topic. The table has 5 columns. How many tasks will be created by the connector?
@@ -137,6 +166,9 @@ You are using a JDBC source connector to copy data from a database table to a Ka
 - 2. 5
 - 3. It depends on the `max.tasks` configuration of the connector
 - 4. It depends on the number of partitions in the Kafka topic
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** 1
 
@@ -155,6 +187,8 @@ Statement 3 is partially correct, but it doesn't apply to the JDBC connector spe
 
 Statement 4 is incorrect because the number of tasks is not related to the number of partitions in the Kafka topic. The JDBC connector's task reads data from the table and writes it to the topic, regardless of the topic's partitioning.
 
+</details>
+
 ## Question 29
 
 What happens if the `max.tasks` configuration is set to a value less than the number of tables being copied by a JDBC source connector?
@@ -163,6 +197,9 @@ What happens if the `max.tasks` configuration is set to a value less than the nu
 2. The connector will create tasks up to the `max.tasks` limit, potentially leaving some tables without dedicated tasks
 3. The connector will distribute the tables evenly among the available tasks
 4. The connector will fail with an error due to the insufficient number of tasks
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** 3
 
@@ -183,6 +220,8 @@ If there are 10 tables and `max.tasks` is set to 5:
 
 This approach ensures that all data is ingested into Kafka, maintaining data integrity and completeness while respecting the `max.tasks` limit.
 
+</details>
+
 ## Question 30
 
 How can you increase the parallelism of a JDBC source connector to improve the performance of copying data from a database to Kafka?
@@ -191,6 +230,9 @@ How can you increase the parallelism of a JDBC source connector to improve the p
 2. Increase the number of partitions in the target Kafka topic
 3. Increase the `tasks.max` configuration of the Kafka Connect workers
 4. Use multiple instances of the JDBC connector, each copying a different subset of tables
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** 1 and 4
 

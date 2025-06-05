@@ -1,6 +1,6 @@
 ## Question 11
 
-Which configuration is used to define the schema registry URL in Kafka clients?
+Which configuration is used to define the schema registry URL in Kafka clients? (Select all that apply)
 
 - A. `schema.registry.url`
 - B. `schema.registry.endpoint`

@@ -84,7 +84,7 @@ The FULL compatibility mode allows a new schema to both read data written by an 
 
 ## Question 15
 
-Which schema type is supported by Confluent Schema Registry but not by Apache Avro?
+Which schema types are supported by Confluent Schema Registry but not by Apache Avro? (Select all that apply)
 
 - A. Protobuf
 - B. Thrift

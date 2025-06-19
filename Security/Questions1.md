@@ -97,15 +97,21 @@ ACLs (Access Control Lists) in Kafka are used to authenticate clients and author
 
 How are ACLs stored and managed in Kafka for KRaft mode?
 
-A. ACLs are stored in a Controller node's local file system and managed using Kafka command-line tools
-B. ACLs are stored in the `__cluster_metadata` topic and managed using Kafka command-line tools
-C. ACLs are stored in a dedicated ACL server and managed through a REST API
-D. ACLs are stored in the Kafka broker's local file system and managed using configuration files
+- A. ACLs are stored in a Controller node's local file system and managed using Kafka command-line tools
+- B. ACLs are stored in the `__cluster_metadata` topic and managed using Kafka command-line tools
+- C. ACLs are stored in a dedicated ACL server and managed through a REST API
+- D. ACLs are stored in the Kafka broker's local file system and managed using configuration files
 
 <details>
 <summary>Response:</summary> 
 
-**Answer:** A
+**Answer:** B
+
+**Explanation:**
+The default authorizer (for ZooKeeper Kafka) is `AclAuthorizer`, which you specify in each broker's configuration: ``authorizer.class.name=kafka.security.authorizer.AclAuthorizer``.
+However, if you are using Kafka's native consensus implementation based on KRaft then you'll use a new built-in ``StandardAuthorizer`` that doesn't depend on ZooKeeper.
+``StandardAuthorizer`` accomplishes all of the same things that ``AclAuthorizer`` does for ZooKeeper-dependent clusters, and it stores its ACLs in the ``__cluster_metadata`` metadata topic.
+See [Confluent course on authorization](https://developer.confluent.io/courses/security/authorization/#:~:text=it%20stores%20its%20ACLs%20in%20the%20__cluster_metadata%20metadata%20topic)
 
 </details>
 

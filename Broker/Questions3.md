@@ -84,8 +84,8 @@ When a producer sends a message with `acks=all` to a topic that has a `min.insyn
 
 What happens if you set both `log.retention.ms` and `log.retention.minutes` configurations in Kafka?
 
-- A. The larger value will take precedence
-- B. The smaller value will take precedence
+- A. The larger unit value (minutes) will take precedence
+- B. The smaller unit value (milliseconds) will take precedence
 - C. Kafka will use an average of both values
 - D. It will result in a configuration error
 
@@ -95,7 +95,14 @@ What happens if you set both `log.retention.ms` and `log.retention.minutes` conf
 **Answer:** B
 
 **Explanation:**
-When you set both `log.retention.ms` and `log.retention.minutes` configurations in Kafka, the smaller value will take precedence. Kafka uses the smallest value among the retention configurations to determine the retention period for log segments. If `log.retention.ms` is set to a smaller value than `log.retention.minutes` (after converting minutes to milliseconds), Kafka will use the value specified in `log.retention.ms` as the retention period. Similarly, if `log.retention.minutes` is set to a smaller value, Kafka will use that value. This allows for flexibility in specifying the retention period using different units of time, while ensuring that the most restrictive value is applied.
+When you set both `log.retention.ms` and `log.retention.minutes` configurations in Kafka, the smaller unit value (milliseconds) will take precedence based on Kafka's unit-based precedence order. Kafka uses a precedence hierarchy where configurations with smaller time units override those with larger time units, regardless of their actual values.
+
+The precedence order is:
+1. `log.retention.ms` (highest precedence)
+2. `log.retention.minutes` (secondary precedence)  
+3. `log.retention.hours` (tertiary precedence)
+
+This means that if `log.retention.ms` is configured, Kafka will use that value and ignore any settings for `log.retention.minutes` or `log.retention.hours`. This design allows for precise control while maintaining a clear hierarchy of configuration precedence.
 
 
 

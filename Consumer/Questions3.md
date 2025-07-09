@@ -94,8 +94,6 @@ What happens when a Kafka consumer is marked as dead due to exceeding the `max.p
 **Explanation:**
 When a Kafka consumer is marked as dead due to exceeding the `max.poll.interval.ms` interval, the consumer is automatically rebalanced, and its partitions are reassigned to other consumers in the consumer group. The Kafka consumer group coordinator detects that the consumer has failed to poll within the specified interval and triggers a rebalance operation. During the rebalance, the partitions assigned to the dead consumer are revoked and redistributed among the remaining active consumers in the group. This ensures that the workload is evenly distributed and that the consumer group continues to make progress. The dead consumer is removed from the group, and it needs to rejoin the group and receive new partition assignments to start consuming again.
 
-Certainly! Here are 3 more questions based on question 41 in the document:
-
 </details>
 
 ## Question 26

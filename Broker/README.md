@@ -27,9 +27,9 @@ A Kafka Broker is a term for a server in a Kafka cluster that hosts topics and p
 - **Trade-offs**: A higher value increases data durability but may impact write latency.
 
 #### `unclean.leader.election.enable`
-- **Default**: true
+- **Default**: false
 - **Description**: Allows a non-synced replica to become leader. Turning it off ensures data consistency.
-- **Trade-offs**: Disabling may increase availability but risks data loss.
+- **Trade-offs**: Enabling it may increase availability but risks data loss.
 
 #### `num.replication.fetchers`
 - **Default**: 1

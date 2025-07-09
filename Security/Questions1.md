@@ -7,6 +7,9 @@ Where are the ACLs stored in a Kafka cluster by default at Zookeeper mode cluste
 - C. In Zookeeper node `/kafka-acl/`
 - D. In a separate ACL server
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
@@ -21,6 +24,8 @@ For newer versions of Kafka that operate without Zookeeper, the ACLs are stored 
 
 Therefore, for Kafka clusters that do not use Zookeeper, the correct answer would be: The Kafka topic `__cluster_metadata`.
 
+</details>
+
 ## Question 2
 
 What Kafka CLI command can be used to add new ACL rules to a running Kafka cluster?
@@ -29,6 +34,9 @@ What Kafka CLI command can be used to add new ACL rules to a running Kafka clust
 - B. `kafka-configs.sh`
 - C. `kafka-topics.sh`
 - D. `kafka-console-producer.sh`
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -39,6 +47,8 @@ The `kafka-acls.sh` CLI tool is used to manage ACLs in Kafka. It allows adding, 
 - C is used for managing topics, not ACLs.
 - D is used for producing messages, not managing ACLs.
 
+</details>
+
 ## Question 3
 
 Which of the following is NOT a valid resource type when defining ACLs in Kafka?
@@ -47,6 +57,9 @@ Which of the following is NOT a valid resource type when defining ACLs in Kafka?
 - B. Consumer Group
 - C. Cluster
 - D. Partition
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -57,6 +70,8 @@ In Kafka, ACLs can be defined for resource types like Topic, Consumer Group, Clu
 - D is invalid because ACLs are defined at the topic level, not individual partition level. The topic resource type covers all its partitions.
 
 
+</details>
+
 ## Question 4
 
 What is the purpose of ACLs (Access Control Lists) in Kafka?
@@ -66,21 +81,39 @@ What is the purpose of ACLs (Access Control Lists) in Kafka?
 - C. To compress messages for efficient storage and transmission
 - D. To validate the schema of messages produced to Kafka topics
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 ACLs (Access Control Lists) in Kafka are used to authenticate clients and authorize their access to Kafka resources. They provide a mechanism to control and restrict the actions that clients can perform on Kafka brokers, topics, and other resources. ACLs allow you to define permissions for specific users or groups, specifying which operations they are allowed to perform on particular resources. By configuring ACLs, you can enforce security policies and ensure that clients have the appropriate privileges to access and interact with Kafka. ACLs help in securing Kafka clusters by preventing unauthorized access and protecting sensitive data. They are a key component of Kafka's security model, along with other features like authentication and encryption.
 
-**Answer:** B
+
+
+</details>
 
 ## Question 5
 
 How are ACLs stored and managed in Kafka for KRaft mode?
 
-A. ACLs are stored in a Controller node's local file system and managed using Kafka command-line tools
-B. ACLs are stored in the `__cluster_metadata` topic and managed using Kafka command-line tools
-C. ACLs are stored in a dedicated ACL server and managed through a REST API
-D. ACLs are stored in the Kafka broker's local file system and managed using configuration files
+- A. ACLs are stored in a Controller node's local file system and managed using Kafka command-line tools
+- B. ACLs are stored in the `__cluster_metadata` topic and managed using Kafka command-line tools
+- C. ACLs are stored in a dedicated ACL server and managed through a REST API
+- D. ACLs are stored in the Kafka broker's local file system and managed using configuration files
 
-**Answer:** A
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
+**Explanation:**
+The default authorizer (for ZooKeeper Kafka) is `AclAuthorizer`, which you specify in each broker's configuration: ``authorizer.class.name=kafka.security.authorizer.AclAuthorizer``.
+However, if you are using Kafka's native consensus implementation based on KRaft then you'll use a new built-in ``StandardAuthorizer`` that doesn't depend on ZooKeeper.
+``StandardAuthorizer`` accomplishes all of the same things that ``AclAuthorizer`` does for ZooKeeper-dependent clusters, and it stores its ACLs in the ``__cluster_metadata`` metadata topic.
+See [Confluent course on authorization](https://developer.confluent.io/courses/security/authorization/#:~:text=it%20stores%20its%20ACLs%20in%20the%20__cluster_metadata%20metadata%20topic)
+
+</details>
 
 ## Question 6
 
@@ -91,10 +124,15 @@ What happens when a client tries to perform an operation that is not allowed by 
 - C. The operation is performed, but the message is flagged as unauthorized
 - D. The operation is delayed until the necessary ACLs are added
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 When a client tries to perform an operation that is not allowed by the configured ACLs, the operation is rejected, and the client receives an authorization error. Kafka brokers enforce the ACLs by checking the permissions of the client against the requested operation and resource. If the client does not have the necessary privileges, the broker denies the operation and returns an authorization error to the client. The client can then handle the error accordingly, such as logging the failure, retrying with different credentials, or propagating the error to the application. The unauthorized operation is not performed, and no data is processed or modified. This behavior ensures that Kafka maintains the integrity and security of the system by strictly enforcing the defined access control rules.
 
-**Answer:** B
+</details>
 
 ## Question 7
 
@@ -105,10 +143,15 @@ What is the purpose of the `CreateTopics` ACL operation in Kafka?
 - C. To grant a client permission to delete topics from a Kafka cluster
 - D. To enable a client to modify the configuration of existing topics
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 **Explanation:**
 The `CreateTopics` ACL operation in Kafka is used to allow a client to create new topics in a Kafka cluster. When a client has been granted the `CreateTopics` permission, it is authorized to send requests to the Kafka brokers to create new topics. This ACL operation is typically assigned to administrative clients or applications responsible for managing the topic lifecycle in a Kafka cluster. By default, Kafka brokers are configured to require `CreateTopics` permission for any client attempting to create a new topic. This ensures that only authorized clients can create topics and helps maintain control over the topic management process in the cluster.
 
-**Answer:** A
+</details>
 
 ## Question 8
 
@@ -119,10 +162,15 @@ What is the difference between `Read` and `Write` ACL operations in Kafka?
 - C. `Read` allows modifying topic configurations, while `Write` allows deleting topics
 - D. `Read` and `Write` are equivalent and can be used interchangeably
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 **Explanation:**
 In Kafka, the `Read` ACL operation allows a client to consume messages from a specific topic, while the `Write` ACL operation allows a client to produce messages to a specific topic. The `Read` permission grants the client the ability to read and fetch messages from the topic, including the metadata required for consumption. On the other hand, the `Write` permission authorizes the client to send messages to the topic and update its content. It's important to note that `Read` and `Write` operations are distinct and serve different purposes. A client with `Read` permission cannot produce messages, and a client with `Write` permission cannot consume messages. The permissions are specific to the respective operations and should be granted based on the client's intended actions.
 
-**Answer:** A
+</details>
 
 ## Question 9
 
@@ -133,10 +181,15 @@ How can you grant a client permission to describe topics and consumer groups in 
 - C. Provide the `AlterConfigs` ACL operation to the client
 - D. Give the `IdempotentWrite` ACL operation to the client
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 To grant a client permission to describe topics and consumer groups in a Kafka cluster, you need to assign the `Describe` ACL operation to the client. The `Describe` permission allows a client to view the metadata and details of topics and consumer groups without the ability to modify or delete them. With the `Describe` ACL, a client can send requests to the Kafka brokers to retrieve information such as the list of partitions, replica assignments, and configuration settings for topics. It can also query the state and membership of consumer groups. The `Describe` ACL is commonly used by monitoring and administrative tools to gather information about the Kafka cluster's state without making any changes to the topics or consumer groups.
 
-**Answer:** B
+</details>
 
 ## Question 10
 
@@ -147,7 +200,12 @@ What is the purpose of the `ssl.keystore.location` and `ssl.keystore.password` c
 - C. To specify the location and password of the keystore for client authentication
 - D. To specify the location and password of the truststore for broker authentication
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 In Kafka, the `ssl.keystore.location` and `ssl.keystore.password` configurations are used to specify the location and password of the keystore for broker authentication. When SSL/TLS is enabled for inter-broker communication or client-broker communication, each Kafka broker needs to have a keystore that contains its private key and certificate. The `ssl.keystore.location` configuration points to the file path of the keystore on the broker's file system, while the `ssl.keystore.password` configuration provides the password required to access the keystore. These configurations are essential for setting up SSL/TLS authentication on the broker side, allowing the broker to securely authenticate itself to clients and other brokers.
 
-**Answer:** B
+</details>

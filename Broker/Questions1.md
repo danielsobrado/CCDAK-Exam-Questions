@@ -13,7 +13,9 @@ Which of the following statements accurately describes the log retention policy 
 
 Choose the correct answer.
 
-Response:
+
+<details>
+<summary>Response:</summary>
 
 The correct answer is **2. Logs are retained for exactly one day, regardless of the size of the log.**
 
@@ -26,6 +28,8 @@ Explanation:
 3. **Incorrect**. This statement misinterprets the settings. Kafka does not use both `log.retention.ms` and `log.retention.bytes` to determine a "whichever comes first" policy. Instead, both conditions must be met for a log segment to be eligible for deletion. Given `log.retention.bytes` = -1, size-based deletion is effectively disabled, leaving time-based deletion as the operative policy. 
 
 4. **Incorrect**. The statement that logs are retained indefinitely is wrong because `log.retention.ms` is explicitly set to a finite duration (86400000 ms or 1 day), dictating a time-based retention policy. The `-1` value for `log.retention.bytes` means there is no size limit on log retention, but it does not affect or override the time-based retention set by `log.retention.ms`.
+
+</details>
 
 ## Question 2:
 Consider a Kafka topic with the following configuration:
@@ -43,7 +47,8 @@ Which of the following statements correctly describes the behavior of log compac
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **2. Log compaction will occur once 50% of the segment data is marked as dirty, and logs older than 1 day will be deleted.**
 
@@ -57,6 +62,8 @@ Explanation:
 
 4. **Incorrect**. `segment.ms` specifies the time after which Kafka will close the current log segment and create a new one. It does not dictate the maximum lifespan of any record in the log. Record lifespan is determined by the `cleanup.policy` and associated configurations like `log.retention.ms` for deletion and `min.cleanable.dirty.ratio` for compaction.
 
+</details>
+
 ## Question 3:
 In a Kafka cluster, the Controller is a critical component for managing cluster state. Which of the following statements accurately describe the role and election of the Controller? (Select two)
 
@@ -68,7 +75,9 @@ In a Kafka cluster, the Controller is a critical component for managing cluster 
 
 Choose the correct answers.
 
-### Response:
+<details>
+<summary>Response:</summary>
+
 The correct answers are **2. Elected by Zookeeper ensemble.** and **3. Responsible for partition leader election.**
 
 ### Explanation:
@@ -84,6 +93,8 @@ The correct answers are **2. Elected by Zookeeper ensemble.** and **3. Responsib
 5. **Incorrect**. Automatically assigning replicas to brokers based on load is not directly managed by the Controller. Replica assignment is typically done at topic creation time or during manual rebalancing operations. While the Controller does manage some aspects of replica management, such as initiating reassignment tasks, the automatic balancing of load is not a direct responsibility of the Controller but can be achieved through tools like Kafka's built-in partition reassignment tool or third-party solutions.
 
 Note: While this answer describes the traditional Kafka deployment using Zookeeper, newer versions of Kafka (with KIP-500/KRaft) can operate without Zookeeper, using a different controller election mechanism.
+
+</details>
 
 ## Question 4:
 In the context of Kafka's distributed architecture, broker elections are vital for cluster health and stability. Consider the following advanced scenarios where Kafka's internal mechanisms must decide on leadership roles:
@@ -102,7 +113,8 @@ Select the most accurate answers for each scenario:
 
 Choose the correct answers.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 1. **- A. The Zookeeper ensemble elects the new Controller based on ephemeral node creation sequence.**
    
@@ -118,6 +130,8 @@ Response:
 
 D and E are incorrect options based on Kafka's current architecture and leader election protocols.
 
+</details>
+
 ## Question 5:
 A Kafka producer is configured to use the `acks=all` setting while publishing messages to a topic partition that has a replication factor of 3. The topic is also configured with `min.insync.replicas=2`. Broker A hosts the current leader for this partition, while Brokers B and C host the replicas. Due to unforeseen circumstances, both Broker B and Broker C go offline simultaneously. What is the impact on the producer's ability to successfully publish messages to this partition?
 
@@ -128,7 +142,8 @@ A Kafka producer is configured to use the `acks=all` setting while publishing me
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **2. The producer will temporarily be unable to publish messages until at least one replica broker comes back online.**
 
@@ -142,6 +157,8 @@ Explanation:
 
 4. **Incorrect**. Kafka producers do not automatically switch to another topic's partition in response to issues with the current partition's replicas. The producer's target partition is determined by the partitioning logic (either default or custom) at the time of message production. Failures of replicas in a partition do not trigger automatic redirection of messages to different partitions within the same or different topics.
 
+</details>
+
 ## Question 6:
 When a Kafka broker starts up, it performs various initialization tasks. Which of the following is NOT one of these tasks?
 
@@ -152,7 +169,9 @@ When a Kafka broker starts up, it performs various initialization tasks. Which o
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
+
 
 The correct answer is **3. Creating a new Zookeeper znode for each topic it has partitions for.**
 
@@ -166,6 +185,8 @@ Explanation:
 
 4. **Incorrect**. Initializing the log directories for each partition it hosts is an essential task performed by the broker during startup. It ensures that the necessary directory structure and files are in place for storing and managing the partition data.
 
+</details>
+
 ## Question 7:
 In a Kafka cluster, the Controller is responsible for managing partition states and leadership. How does the Controller ensure that partition leadership is evenly distributed among the brokers in the cluster?
 
@@ -176,7 +197,8 @@ In a Kafka cluster, the Controller is responsible for managing partition states 
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **4. The Controller does not actively manage the distribution of partition leadership among brokers.**
 
@@ -190,6 +212,8 @@ Explanation:
 
 4. **Correct**. The Controller's primary responsibility is to manage partition states and elect partition leaders when necessary, such as when a broker fails or a new partition is created. However, it does not actively aim to evenly distribute partition leadership among brokers. The distribution of partition leadership is a result of factors like topic creation, replica assignment, and broker failures, rather than being actively managed by the Controller.
 
+</details>
+
 ## Question 8:
 Consider a Kafka cluster with 5 brokers and a topic with 10 partitions and a replication factor of 3. The cluster experiences a network partition, splitting the brokers into two groups: Group A with 2 brokers and Group B with 3 brokers. Both groups can communicate with Zookeeper. How does Kafka handle partition leadership in this scenario?
 
@@ -200,7 +224,8 @@ Consider a Kafka cluster with 5 brokers and a topic with 10 partitions and a rep
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **2. Partitions with a leader in Group B will continue to function normally, while partitions with a leader in Group A will elect new leaders from the ISRs in Group B.**
 
@@ -213,6 +238,8 @@ Explanation:
 3. **Incorrect**. Not all partitions will be offline in this scenario. As long as a group of brokers (in this case, Group B) has a majority and can communicate with Zookeeper, Kafka will allow that group to continue operating and serving client requests for the partitions they hold the leadership for.
 
 4. **Incorrect**. The behavior of partition leadership in a network partition scenario is deterministic and does not depend on which group the Controller belongs to. Kafka's partition leadership election process is designed to prioritize availability and maintain consistency based on the majority of brokers and their ability to communicate with Zookeeper, regardless of the Controller's location.
+
+</details>
 
 ## Question 9:
 In a Kafka cluster, a broker is configured with the following settings:
@@ -232,7 +259,8 @@ What do these configurations control in terms of the broker's performance and re
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **1. `num.io.threads` controls the number of threads used for disk I/O operations, `num.network.threads` controls the number of threads used for network I/O operations, and `num.replica.fetchers` controls the number of threads used for fetching messages from the leader replica.**
 
@@ -248,6 +276,8 @@ Explanation:
 3. **Incorrect**. The description of `num.replica.fetchers` is incorrect in this option. `num.replica.fetchers` controls the number of threads used for fetching messages from the leader replica, not for replicating messages to follower replicas.
 
 4. **Incorrect**. The descriptions of all three configurations are incorrect in this option. `num.io.threads` is used for disk I/O operations, `num.network.threads` is used for network I/O operations, and `num.replica.fetchers` is used for fetching messages from the leader replica.
+
+</details>
 
 ## Question 10:
 A Kafka broker is configured with the following settings:
@@ -268,7 +298,8 @@ Based on these configurations, when will Kafka start a new log segment for a par
 
 Choose the correct answer.
 
-Response:
+<details>
+<summary>Response:</summary>
 
 The correct answer is **1. Kafka will start a new log segment when the current segment reaches 1 GB in size or after 24 hours, whichever comes first. Old log segments will be retained for 7 days.**
 
@@ -287,3 +318,5 @@ Explanation:
 3. **Incorrect**. The log segment creation policy is partially correct, but it ignores the time-based limit specified by `log.segment.ms`. Additionally, the retention policy is incorrect, as `log.retention.bytes=-1` means that there is no size-based retention limit.
 
 4. **Incorrect**. The log segment creation policy is incorrect, as it ignores the size-based limit specified by `log.segment.bytes`. The retention policy is also incorrect, as `log.retention.bytes=-1` means that there is no size-based retention limit.
+
+</details>

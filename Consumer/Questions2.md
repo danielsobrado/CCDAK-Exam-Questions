@@ -7,6 +7,9 @@ What happens when a new consumer joins an existing consumer group?
 - C. The new consumer will be assigned a subset of partitions and start consuming from the last committed offset for each partition
 - D. The new consumer will wait until the next rebalance before starting to consume
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
@@ -25,6 +28,8 @@ Statement B is incorrect because the new consumer will not start from the latest
 
 Statement D is incorrect because the new consumer will not wait until the next rebalance. The joining of a new consumer itself triggers a rebalance, and the consumer starts consuming immediately after the rebalance completes.
 
+</details>
+
 ## Question 12
 
 What is the purpose of the `group.id` property in a Kafka consumer configuration?
@@ -33,6 +38,9 @@ What is the purpose of the `group.id` property in a Kafka consumer configuration
 - B. To specify the ID of the consumer group the consumer belongs to
 - C. To specify the ID of the Kafka cluster the consumer connects to
 - D. To specify the ID of the partitions the consumer should read from
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -53,6 +61,8 @@ Statement A is incorrect because the `group.id` identifies the group, not the in
 
 Statements C and D are incorrect because the `group.id` is not related to the Kafka cluster or the specific partitions to read from. It is solely used for consumer group coordination.
 
+</details>
+
 ## Question 13
 
 What is the default behavior of the auto.offset.reset configuration in Kafka consumers?
@@ -62,12 +72,17 @@ What is the default behavior of the auto.offset.reset configuration in Kafka con
 - C. It throws an exception if no committed offset is found
 - D. It waits for a committed offset to be available before starting consumption
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 The default behavior of the auto.offset.reset configuration in Kafka consumers is to set the value to "latest". This means that if there is no committed offset available for a consumer group, the consumer will start reading from the latest offset of the partition. This behavior causes the consumer to read only new messages that are produced after the consumer starts.
 
 However, it is important to note that this behavior can be changed by setting auto.offset.reset to "earliest" if you want the consumer to start reading from the beginning of the partition when no committed offset is found.
+
+</details>
 
 ## Question 14
 
@@ -77,6 +92,9 @@ What happens when a Kafka consumer with enable.auto.commit set to false calls th
 - B. The consumer commits the offsets of the messages it has fetched but not yet processed
 - C. The consumer does not commit any offsets and throws an exception
 - D. The consumer waits for the next batch of messages to be processed before committing offsets
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -95,6 +113,8 @@ It's important to note that commitSync() is a blocking call, meaning that the co
 
 - A. alternative to commitSync() is commitAsync(), which sends the commit request asynchronously and allows the consumer to continue processing messages without waiting for the commit response. However, with commitAsync(), the consumer needs to handle the commit callback to check for any commit failures.
 
+</details>
+
 ## Question 15
 
 What is the purpose of the isolation.level configuration in Kafka consumers?
@@ -103,6 +123,9 @@ What is the purpose of the isolation.level configuration in Kafka consumers?
 - B. To specify the maximum number of messages to be read in a single batch
 - C. To determine the behavior when a partition is reassigned to another consumer in the group
 - D. To set the level of consistency for reading messages from a partition
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -121,6 +144,8 @@ The choice of isolation level depends on the requirements of your application. I
 
 It's important to note that using "read_committed" isolation level may introduce some latency in message consumption, as the consumer needs to wait for transactions to be committed before processing their messages.
 
+</details>
+
 ## Question 16
 
 What happens if you try to call `poll()` on a KafkaConsumer from multiple threads simultaneously?
@@ -129,6 +154,9 @@ What happens if you try to call `poll()` on a KafkaConsumer from multiple thread
 - B. The consumer will throw a ConcurrentModificationException
 - C. The behavior is undefined and may lead to unexpected results or errors
 - D. The consumer will process messages sequentially, with each thread taking turns
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** C
 
@@ -145,6 +173,8 @@ Here are a few reasons why calling `poll()` from multiple threads simultaneously
 
 Therefore, it is important to ensure that a KafkaConsumer instance is only accessed by a single thread at a time. If you need to process messages concurrently, you should create multiple consumer instances and coordinate the work among them.
 
+</details>
+
 ## Question 17
 
 What is the recommended approach to process messages concurrently using the KafkaConsumer?
@@ -153,6 +183,9 @@ What is the recommended approach to process messages concurrently using the Kafk
 - B. Create multiple KafkaConsumer instances, each running in its own thread
 - C. Use a thread pool to process messages from a single KafkaConsumer instance
 - D. Use a lock or synchronization mechanism to coordinate access to a shared KafkaConsumer instance
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -171,6 +204,8 @@ Here's how you can implement concurrent message processing using multiple KafkaC
 
 It's important to note that when using multiple consumer instances, you should carefully consider the number of instances and the partition assignment strategy to ensure proper load balancing and avoid over-subscribing or under-utilizing the available partitions.
 
+</details>
+
 ## Question 18
 
 How does Kafka ensure that messages are processed in a balanced way when using multiple consumer instances in a consumer group?
@@ -179,6 +214,9 @@ How does Kafka ensure that messages are processed in a balanced way when using m
 - B. Kafka assigns partitions to consumer instances in a round-robin fashion
 - C. Kafka dynamically adjusts the assignment of partitions based on consumer load
 - D. Kafka relies on ZooKeeper to distribute messages evenly among consumer instances
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -199,6 +237,8 @@ Here's how Kafka achieves balanced message processing:
 
 It's important to note that the actual partition assignment strategy can be customized by implementing a custom `PartitionAssignor` if needed. However, the default round-robin assignment strategy is sufficient for most use cases and provides a balanced distribution of work among the consumer instances.
 
+</details>
+
 ## Question 19
 
 What is the primary benefit of Kafka's zero-copy optimization when sending data from producers to consumers?
@@ -207,6 +247,9 @@ What is the primary benefit of Kafka's zero-copy optimization when sending data 
 - B. It minimizes the latency by eliminating the need for data serialization and deserialization.
 - C. It improves the security by encrypting the data during transmission.
 - D. It increases the parallelism by leveraging multiple CPU cores for data transfer.
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -233,6 +276,8 @@ While zero-copy does provide some latency benefits by reducing the time spent on
 
 Zero-copy is not primarily focused on security (option C) or parallelism (option D). Its main goal is to optimize data transfer efficiency and reduce memory overhead.
 
+</details>
+
 ## Question 20
 
 What is the purpose of the `isolation.level` setting in the Kafka consumer configuration?
@@ -241,6 +286,11 @@ What is the purpose of the `isolation.level` setting in the Kafka consumer confi
 - B. To control the visibility of transactional messages
 - C. To determine the behavior of the consumer when it encounters an invalid offset
 - D. To set the maximum amount of time the consumer will wait for new messages
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
 
 **Explanation:**
 The `isolation.level` setting in the Kafka consumer configuration is used to control the visibility of transactional messages. It determines how the consumer behaves when reading messages that are part of a transaction. There are two possible values for `isolation.level`:
@@ -251,4 +301,4 @@ The `isolation.level` setting in the Kafka consumer configuration is used to con
 
 The `isolation.level` setting allows you to control the consistency and visibility of transactional messages consumed by the consumer.
 
-**Answer:** B
+</details>

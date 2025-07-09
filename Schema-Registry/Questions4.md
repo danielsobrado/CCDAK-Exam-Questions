@@ -7,6 +7,9 @@ Where does the Confluent Schema Registry store its own configuration?
 - C. On the filesystem
 - D. In a database
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
@@ -24,6 +27,8 @@ So while the Schema Registry uses a Kafka topic to store the actual schema data,
 - B is incorrect because while the Schema Registry does use a Kafka topic, it's for schema data, not its own configuration.
 - C and D are incorrect because the Schema Registry does not use the filesystem or a database for its configuration.
 
+</details>
+
 ## Question 32
 
 How does the Confluent Schema Registry ensure high availability?
@@ -32,6 +37,9 @@ How does the Confluent Schema Registry ensure high availability?
 - B. By relying on the availability of the underlying Kafka cluster
 - C. By replicating data across multiple Zookeeper instances
 - D. By using a distributed consensus protocol among instances
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -49,3 +57,5 @@ This master election process ensures that there is always one instance responsib
 - B is incorrect because while the Schema Registry does rely on Kafka, it has its own high availability mechanism beyond just relying on Kafka's availability.
 - C is incorrect because while the Schema Registry does use Zookeeper, it doesn't replicate its own data across Zookeeper instances for high availability.
 - D is incorrect because the Schema Registry doesn't use a distributed consensus protocol like Raft or Paxos among its instances. It uses a simpler master election process.
+
+</details>

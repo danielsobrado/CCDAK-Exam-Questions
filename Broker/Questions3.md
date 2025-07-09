@@ -7,6 +7,9 @@ Can Kafka's zero-copy optimization be used in combination with compression?
 - C. Zero-copy can be used with compression, but it requires additional configuration.
 - D. Zero-copy is automatically disabled when compression is enabled.
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
@@ -36,6 +39,8 @@ Using zero-copy with compression does not require any additional configuration (
 
 - B. leveraging both zero-copy and compression, Kafka can achieve efficient data transfer, reduced network bandwidth usage, and optimized storage utilization, leading to improved overall performance and scalability of the Kafka cluster.
 
+</details>
+
 ## Question 22
 
 What is the relationship between the `replication.factor` of a topic and the `min.insync.replicas` setting?
@@ -45,10 +50,15 @@ What is the relationship between the `replication.factor` of a topic and the `mi
 - C. `min.insync.replicas` and `replication.factor` are independent settings
 - D. `min.insync.replicas` must be equal to the `replication.factor`
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 **Explanation:**
 The `replication.factor` of a topic and the `min.insync.replicas` setting are related, and there is a specific requirement for their values. The `min.insync.replicas` setting specifies the minimum number of in-sync replicas that must acknowledge a write for the write to be considered successful. For the producer to successfully write messages to a topic, the number of in-sync replicas must be greater than or equal to the `min.insync.replicas` value. Therefore, `min.insync.replicas` must be less than or equal to the `replication.factor` of the topic. If `min.insync.replicas` is set higher than the `replication.factor`, writes to the topic will fail because there won't be enough in-sync replicas to satisfy the `min.insync.replicas` requirement.
 
-**Answer:** A
+</details>
 
 ## Question 23
 
@@ -59,10 +69,16 @@ What happens when a producer sends a message with `acks=all` to a topic that has
 - C. The producer will wait indefinitely until the number of in-sync replicas meets the `min.insync.replicas` requirement
 - D. The producer will ignore the `min.insync.replicas` setting and write the message successfully
 
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 When a producer sends a message with `acks=all` to a topic that has a `min.insync.replicas` value greater than the number of currently in-sync replicas, the producer will receive an error indicating that the `min.insync.replicas` requirement is not met. The write operation will fail because the number of in-sync replicas is insufficient to satisfy the durability requirement specified by `min.insync.replicas`. The producer will not wait indefinitely for the number of in-sync replicas to increase, nor will it ignore the `min.insync.replicas` setting. Instead, it will immediately return an error to the producer, indicating that the write could not be completed successfully due to the lack of enough in-sync replicas.
 
-**Answer:** B
+</details>
 
 ## Question 24
 
@@ -73,10 +89,15 @@ What happens if you set both `log.retention.ms` and `log.retention.minutes` conf
 - C. Kafka will use an average of both values
 - D. It will result in a configuration error
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
+
 **Explanation:**
 When you set both `log.retention.ms` and `log.retention.minutes` configurations in Kafka, the smaller value will take precedence. Kafka uses the smallest value among the retention configurations to determine the retention period for log segments. If `log.retention.ms` is set to a smaller value than `log.retention.minutes` (after converting minutes to milliseconds), Kafka will use the value specified in `log.retention.ms` as the retention period. Similarly, if `log.retention.minutes` is set to a smaller value, Kafka will use that value. This allows for flexibility in specifying the retention period using different units of time, while ensuring that the most restrictive value is applied.
 
-**Answer:** B
+
 
 ## Question 25
 
@@ -86,6 +107,11 @@ How can you set a retention period of 2 weeks for a specific topic in Kafka?
 - B. Set `log.retention.hours=336` in the broker configuration
 - C. Set `log.retention.ms=1209600000` in the broker configuration
 - D. Set `retention.ms=1209600000` in the broker configuration
+
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
 
 **Explanation:**
 To set a retention period of 2 weeks for a specific topic in Kafka, you need to set the `retention.ms` parameter in the topic configuration. The `retention.ms` parameter specifies the retention period in milliseconds. To calculate the value for 2 weeks, you can use the following formula:
@@ -100,7 +126,7 @@ To set a retention period of 2 weeks for a specific topic in Kafka, you need to 
 
 Therefore, setting `retention.ms=1209600000` in the topic configuration will configure a retention period of 2 weeks for that specific topic. Setting the retention period in the broker configuration using `log.retention.hours` or `log.retention.ms` would apply the retention period to all topics in the cluster, not just a specific topic.
 
-**Answer:** A
+</details>
 
 ## Question 26
 
@@ -111,7 +137,12 @@ What is the default value of the `log.retention.hours` configuration in Kafka?
 - C. 720 hours (30 days)
 - D. Infinite retention
 
+<details>
+<summary>Response:</summary> 
+
+**Answer:** A
+
 **Explanation:**
 The default value of the `log.retention.hours` configuration in Kafka is 168 hours, which is equivalent to 1 week. If no retention period is explicitly set using `log.retention.ms`, `log.retention.minutes`, or `log.retention.hours`, Kafka will retain log segments for a period of 1 week by default. This means that log segments older than 1 week will be automatically deleted by Kafka to free up storage space. However, it's important to note that the actual retention period can be influenced by other factors, such as the `log.retention.bytes` configuration, which limits the total size of log segments retained, and the `log.segment.bytes` configuration, which determines the size of individual log segments.
 
-**Answer:** A
+</details>

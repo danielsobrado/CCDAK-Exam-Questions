@@ -7,6 +7,9 @@ When using the Confluent REST Proxy to produce messages, what happens if the `va
 - C. The REST Proxy ignores the `value.schema.id` field and produces the message without any schema information
 - D. The REST Proxy returns an error indicating that the `value.schema.id` is not supported
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
@@ -27,6 +30,8 @@ Statement C is incorrect because the REST Proxy does not ignore the `value.schem
 
 Statement D is incorrect because the REST Proxy supports the `value.schema.id` field and uses it for schema validation. It does not return an error indicating that the field is not supported.
 
+</details>
+
 ## Question 2
 
 What is the purpose of the `key.converter` and `value.converter` configurations in the Confluent REST Proxy?
@@ -35,6 +40,9 @@ What is the purpose of the `key.converter` and `value.converter` configurations 
 - B. To specify the serialization format for the message key and value in the REST API requests and responses
 - C. To specify the compression type for the message key and value
 - D. To specify the schema ID for the message key and value
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -57,6 +65,8 @@ Statement C is incorrect because the converters are not related to the compressi
 
 Statement D is incorrect because the converters do not specify the schema ID for the message key and value. The schema ID is typically provided in the request payload when producing messages.
 
+</details>
+
 ## Question 3
 
 How does the Confluent REST Proxy handle authentication and authorization for production and consumption of messages?
@@ -65,6 +75,9 @@ How does the Confluent REST Proxy handle authentication and authorization for pr
 - B. The REST Proxy uses its own authentication and authorization mechanism independent of Kafka
 - C. The REST Proxy relies on the Schema Registry for authentication and authorization
 - D. The REST Proxy does not support authentication and authorization
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -86,6 +99,8 @@ Statement C is incorrect because the REST Proxy does not use the Schema Registry
 
 Statement D is incorrect because the REST Proxy does support authentication and authorization through its own mechanism. It is not true that it lacks support for these security features.
 
+</details>
+
 ## Question 4
 
 What is the purpose of the Kafka REST Proxy?
@@ -95,12 +110,17 @@ What is the purpose of the Kafka REST Proxy?
 - C. To store and retrieve Avro schemas for Kafka messages
 - D. To stream data between Kafka and external systems
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 The primary purpose of the Kafka REST Proxy is to provide a RESTful interface for producing and consuming messages in Kafka. It allows applications that are not built using Kafka's native libraries to interact with Kafka clusters using standard HTTP requests.
 
 The REST Proxy exposes endpoints for producing messages to Kafka topics and consuming messages from Kafka topics. It acts as a bridge between non-Kafka applications and Kafka, enabling seamless integration and communication.
+
+</details>
 
 ## Question 5
 
@@ -111,12 +131,17 @@ Which HTTP method is used to produce messages to a Kafka topic via the REST Prox
 - C. PUT
 - D. DELETE
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 To produce messages to a Kafka topic using the Kafka REST Proxy, you need to send a POST request to the appropriate endpoint. The POST method is used to submit data to be processed to a specified resource, which in this case is a Kafka topic.
 
 The REST Proxy expects the message data to be included in the request body, typically in JSON format. It then forwards the message to the Kafka broker, which appends it to the specified topic.
+
+</details>
 
 ## Question 6
 
@@ -127,12 +152,17 @@ How does the Kafka REST Proxy handle consumer offsets?
 - C. It relies on the Kafka brokers to store consumer offsets
 - D. It does not manage consumer offsets
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
 The Kafka REST Proxy relies on the Kafka brokers to store and manage consumer offsets. When a consumer is created through the REST Proxy, it is assigned to a consumer group, and the offsets for that consumer are stored in the Kafka brokers.
 
 Kafka brokers maintain the offsets for each consumer group in a special internal topic called `__consumer_offsets`. The REST Proxy does not directly manage or store consumer offsets itself. Instead, it leverages the native offset management mechanism provided by Kafka.
+
+</details>
 
 ## Question 7
 
@@ -143,6 +173,9 @@ What is the purpose of the `consumer.request.timeout.ms` configuration parameter
 - C. To set the maximum time to keep a consumer instance alive without further requests
 - D. To set the maximum time to wait for a consumer to join a consumer group
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** C
 
 **Explanation:**
@@ -151,6 +184,8 @@ The `consumer.request.timeout.ms` configuration parameter in the Kafka REST Prox
 When a consumer is created through the REST Proxy, it is associated with a specific consumer instance. If no further requests are made to that consumer instance within the specified timeout period, the REST Proxy considers the consumer instance to be inactive and closes it to free up resources.
 
 This configuration helps manage the lifecycle of consumer instances and prevents idle consumers from consuming resources unnecessarily.
+
+</details>
 
 ## Question 8
 
@@ -161,6 +196,9 @@ How does the Kafka REST Proxy handle authentication?
 - C. It relies on SSL/TLS for authentication
 - D. It does not provide built-in authentication mechanisms
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
@@ -170,6 +208,8 @@ To enable authentication in the REST Proxy, you need to configure the `authentic
 
 When authentication is enabled, clients must include the appropriate authentication headers in their requests to access the REST Proxy endpoints. The REST Proxy validates the provided credentials against the configured authentication mechanism before allowing access to the requested resources.
 
+</details>
+
 ## Question 9
 
 What is the role of the `id` field in the request payload when producing messages via the Kafka REST Proxy?
@@ -178,6 +218,9 @@ What is the role of the `id` field in the request payload when producing message
 - B. It represents the key of the message
 - C. It uniquely identifies the message within the Kafka cluster
 - D. It is an optional field used for client-side message tracking
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -190,6 +233,8 @@ The client can use the `id` field to assign a unique identifier to each message 
 
 The Kafka REST Proxy simply forwards the `id` field as part of the message payload to the Kafka broker, but it does not have any special meaning or impact on the message within Kafka.
 
+</details>
+
 ## Question 10
 
 How can you configure the Kafka REST Proxy to use SSL/TLS for secure communication?
@@ -198,6 +243,9 @@ How can you configure the Kafka REST Proxy to use SSL/TLS for secure communicati
 - B. Enable SSL/TLS in the Kafka broker configuration
 - C. Configure SSL/TLS in the client application code
 - D. No additional configuration is required
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -211,3 +259,5 @@ In addition to enabling SSL/TLS in the REST Proxy configuration, you also need t
 Clients communicating with the REST Proxy over SSL/TLS need to use the HTTPS protocol and ensure that they trust the SSL/TLS certificate presented by the REST Proxy.
 
 Enabling SSL/TLS in the Kafka broker configuration is not directly related to configuring SSL/TLS for the REST Proxy itself. The REST Proxy acts as a separate entity and requires its own SSL/TLS configuration.
+
+</details>

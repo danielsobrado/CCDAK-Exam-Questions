@@ -8,7 +8,10 @@ B. Use the kafka-configs.sh --describe command
 C. Use the zookeeper-shell.sh command to navigate to the topic's configuration znode
 D. Look in the Kafka broker's log files for the topic configuration
 
-**Answer: B**
+<details>
+<summary>Response:</summary> 
+
+**Answer:** B
 
 **Explanation:**
 
@@ -30,6 +33,8 @@ It retrieves and displays the configuration properties for the specified topic, 
 
 **Option D**: Topic configurations are not stored in the Kafka broker's log files. These files contain runtime logs, not configuration data.
 
+</details>
+
 ## Question 2
 
 What is the default behavior of the `kafka-console-consumer` when no consumer group is specified?
@@ -38,6 +43,9 @@ What is the default behavior of the `kafka-console-consumer` when no consumer gr
 - B. It creates a new consumer group with a generated name
 - C. It fails with an error indicating that a consumer group must be specified
 - D. It consumes messages without joining any consumer group
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -54,7 +62,9 @@ Statement C is incorrect because the tool does not fail with an error when no co
 
 Statement D is incorrect because the `kafka-console-consumer` always joins a consumer group, even if it's a newly created one with a generated name. It does not consume messages without being part of a group.
 
-## Question 3
+</details>
+
+ ## Question 3
 
 How does the `kafka-console-consumer` behave when you specify the `--from-beginning` option?
 
@@ -62,6 +72,9 @@ How does the `kafka-console-consumer` behave when you specify the `--from-beginn
 - B. It starts consuming messages from the latest available offset in the assigned partitions
 - C. It starts consuming messages from a specific offset that you provide
 - D. It starts consuming messages from a random offset in the assigned partitions
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** A
 
@@ -80,6 +93,8 @@ Statement C is incorrect because the `--from-beginning` option does not allow yo
 
 Statement D is incorrect because the `--from-beginning` option does not start consuming from a random offset. It deterministically starts from the earliest offset in each assigned partition.
 
+</details>
+
 ## Question 4
 
 What happens when you run multiple instances of the `kafka-console-consumer` with the same consumer group?
@@ -88,6 +103,9 @@ What happens when you run multiple instances of the `kafka-console-consumer` wit
 - B. The instances will collaborate and distribute the partitions among themselves for parallel consumption
 - C. The instances will compete for messages, and each message will be consumed by only one instance
 - D. The instances will consume messages in a round-robin fashion, with each instance receiving a subset of messages
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** B
 
@@ -111,6 +129,8 @@ Statement C is incorrect because the instances do not compete for messages. Each
 
 Statement D is incorrect because the instances do not consume messages in a round-robin fashion. Each instance is assigned specific partitions and consumes messages only from those partitions.
 
+</details>
+
 ## Question 5
 
 How can you create a topic named "test" with 3 partitions and a replication factor of 2 using the Kafka CLI?
@@ -120,10 +140,15 @@ How can you create a topic named "test" with 3 partitions and a replication fact
 - C. kafka-console-producer.sh --broker-list localhost:9092 --topic test --partitions 3 --replication-factor 2
 - D. kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --partitions 3 --replication-factor 2
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 To create a topic using the Kafka CLI, you should use the `kafka-topics.sh` command with the `--create` option. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, while `--zookeeper` is deprecated. The `--partitions` and `--replication-factor` options are used to set the desired number of partitions and replication factor for the topic.
+
+</details>
 
 ## Question 6
 
@@ -134,10 +159,15 @@ Which command can you use to list all the topics in a Kafka cluster?
 - C. kafka-console-producer.sh --list --broker-list localhost:9092
 - D. kafka-console-consumer.sh --list --bootstrap-server localhost:9092
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** B
 
 **Explanation:**
 To list all the topics in a Kafka cluster, you should use the `kafka-topics.sh` command with the `--list` option. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to. The `--zookeeper` option is deprecated in newer versions of Kafka.
+
+</details>
 
 ## Question 7
 
@@ -151,6 +181,9 @@ B. kafka-topics.sh --describe --topic test --bootstrap-server localhost:9092
 C. kafka-configs.sh --describe --entity-type topics --entity-name test --zookeeper localhost:2181
 
 D. kafka-configs.sh --describe --entity-type topics --entity-name test --bootstrap-server localhost:9092
+
+<details>
+<summary>Response:</summary> 
 
 **Answer:** D
 
@@ -166,6 +199,8 @@ To describe the configuration of a topic, you should use the `kafka-configs.sh` 
 
 **Option C**: This uses the correct tool (`kafka-configs.sh`) but with the deprecated `--zookeeper` option, which should not be used in current Kafka versions.
 
+</details>
+
 ## Question 8
 
 Which Kafka CLI command is used to produce messages to a topic?
@@ -175,10 +210,15 @@ Which Kafka CLI command is used to produce messages to a topic?
 - C. kafka-topics.sh
 - D. kafka-configs.sh
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To produce messages to a topic using the Kafka CLI, you should use the `kafka-console-producer.sh` command. This command reads input from the console and publishes it to the specified Kafka topic. You need to provide the `--bootstrap-server` or `--broker-list` option to specify the Kafka broker(s) to connect to, and the `--topic` option to specify the topic to produce messages to.
+
+</details>
 
 ## Question 9
 
@@ -189,10 +229,15 @@ How can you consume messages from the beginning of a topic named "test" using th
 - C. kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 - D. kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 To consume messages from the beginning of a topic using the Kafka CLI, you should use the `kafka-console-consumer.sh` command with the `--from-beginning` option. This option tells the consumer to start consuming from the earliest available offset in the topic. The `--bootstrap-server` option is used to specify the Kafka broker(s) to connect to, and the `--topic` option is used to specify the topic to consume from.
+
+</details>
 
 ## Question 10
 
@@ -203,7 +248,11 @@ What is the purpose of the `--group` option in the `kafka-console-consumer.sh` c
 - C. To specify the list of topics to consume from
 - D. To specify the bootstrap server for the consumer
 
+<details>
+<summary>Response:</summary> 
+
 **Answer:** A
 
 **Explanation:**
 The `--group` option in the `kafka-console-consumer.sh` command is used to specify the consumer group ID for the console consumer. If not specified, the console consumer will join a random consumer group. Specifying a group ID allows multiple consumer instances to coordinate and distribute the partitions of a topic among themselves for parallel consumption.
+</details>

@@ -6,9 +6,12 @@ An e-commerce company uses Kafka to process customer orders. During sales events
 3. Scale out the Kafka broker cluster by adding more brokers during high-volume periods and scale in when the volume decreases.
 4. Configure the Kafka producer to dynamically adjust batch size and linger time based on the current throughput of order messages.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **3. Scale out the Kafka broker cluster by adding more brokers during high-volume periods and scale in when the volume decreases.**
+
+</details>
 
 ## Question 12:
 
@@ -18,6 +21,9 @@ A streaming media company uses Kafka to ingest viewer watch history for real-tim
 2. Increase and decrease the number of Kafka Connect Sink Connector tasks to efficiently write watch history data into Kafka.
 3. Scale the number of Kafka Streams applications processing the watch history data according to the ingestion rate.
 4. Dynamically modify the number of partitions in the watch history topic to manage the load during peak engagement times.
+
+<details>
+<summary>Response:</summary> 
 
 **Correct Answer:** 3. Scale the number of Kafka Streams applications processing the watch history data according to the ingestion rate.
 
@@ -36,9 +42,11 @@ Key benefits of this approach:
 2. Kafka Connect Sink Connectors are used to export data from Kafka to external systems, not for ingesting data into Kafka. This option is not relevant for the given scenario of ingesting viewer watch history.
 3. Dynamically modifying the number of partitions is operationally complex and can cause data rebalancing issues. It's not recommended to change partition counts frequently in response to fluctuating loads.
 
-**Response:**
+
 
 The correct answer is **2. Increase and decrease the number of Kafka Connect Sink Connector tasks to efficiently write watch history data into Kafka.**
+
+</details>
 
 ## Question 13:
 A logistics company tracks shipping containers across the globe in real-time. This tracking information is stored in various formats across different databases. The company aims to centralize this data into Kafka for real-time visibility and to enable reactive logistics management. The IT team is proficient in SQL but new to Kafka. Which approach should they take to integrate this diverse data into Kafka efficiently?
@@ -48,9 +56,12 @@ A logistics company tracks shipping containers across the globe in real-time. Th
 3. Consolidate data in the RDBMS using SQL procedures to match the target schema required by Kafka, then use JDBC Source Connectors to stream this unified data into Kafka.
 4. Ingest raw data into Kafka using JDBC Source Connectors, then employ ksqlDB to perform SQL-like transformations and route the data to various microservices.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **4. Ingest raw data into Kafka using JDBC Source Connectors, then employ ksqlDB to perform SQL-like transformations and route the data to various microservices.**
+
+</details>
 
 ## Question 14:
 A retail company wishes to analyze customer transactions in real-time to personalize marketing efforts. Transaction data, including purchases and returns, is captured in a legacy system. The marketing team requires this data in a format that can be easily queried and joined with other customer data. Given the team's familiarity with SQL, what is the most effective way to achieve this?
@@ -60,9 +71,12 @@ A retail company wishes to analyze customer transactions in real-time to persona
 3. Ingest transaction data into Kafka using JDBC Source Connectors and leverage ksqlDB for transforming and querying the data in a SQL-like manner.
 4. Transform data within the legacy system using SQL stored procedures, then use JDBC Source Connectors to ingest the pre-transformed data into Kafka.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **3. Ingest transaction data into Kafka using JDBC Source Connectors and leverage ksqlDB for transforming and querying the data in a SQL-like manner.**
+
+</details>
 
 ## Question 15:
 An automotive manufacturer aims to optimize its supply chain by analyzing sensor data from its manufacturing equipment in real-time. The sensor data is currently logged in a proprietary format in a traditional database. The operations team, skilled in SQL, seeks to convert this data into actionable insights. Considering their expertise and requirements, which solution would best suit their needs?
@@ -72,9 +86,12 @@ An automotive manufacturer aims to optimize its supply chain by analyzing sensor
 3. Stream sensor data directly into Kafka using custom producers, followed by data transformation through SQL procedures embedded within the Kafka ecosystem.
 4. Ingest sensor data into Kafka using JDBC Source Connectors, then use ksqlDB to perform real-time analytics and transform the data for downstream processing.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **4. Ingest sensor data into Kafka using JDBC Source Connectors, then use ksqlDB to perform real-time analytics and transform the data for downstream processing.**
+
+</details>
 
 ## Question 16:
 A company plans to synchronize data between a PostgreSQL database and a Kafka cluster to enable real-time analytics. Which connector should be used to efficiently import data from PostgreSQL into Kafka?
@@ -84,7 +101,8 @@ A company plans to synchronize data between a PostgreSQL database and a Kafka cl
 3. Elasticsearch Sink Connector
 4. HDFS Sink Connector
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **1. JDBC Source Connector.**
 
@@ -94,6 +112,8 @@ The correct answer is **1. JDBC Source Connector.**
 - **3. Elasticsearch Sink Connector**: Also incorrect for the scenario. While useful for exporting data from Kafka to Elasticsearch for search and analytics, it does not facilitate data import from PostgreSQL to Kafka.
 - **4. HDFS Sink Connector**: Not applicable here. This connector exports data from Kafka to HDFS (Hadoop Distributed File System), and does not support importing data from PostgreSQL into Kafka.
 
+</details>
+
 ## Question 17:
 Your organization requires real-time text search capabilities on data streamed through Kafka. Which connector best facilitates exporting data from Kafka topics into Elasticsearch to meet this requirement?
 
@@ -102,7 +122,8 @@ Your organization requires real-time text search capabilities on data streamed t
 3. MongoDB Sink Connector
 4. Kafka Connect File Sink Connector
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **2. Elasticsearch Sink Connector.**
 
@@ -112,6 +133,8 @@ The correct answer is **2. Elasticsearch Sink Connector.**
 - **3. MongoDB Sink Connector**: Incorrect. While MongoDB offers text search capabilities, this connector focuses on exporting data to MongoDB, not Elasticsearch.
 - **4. Kafka Connect File Sink Connector**: Incorrect. This connector writes data from Kafka topics to the file system and does not integrate with Elasticsearch or support text search functionalities directly.
 
+</details>
+
 ## Question 18:
 A streaming application is designed to process events in real-time and then store processed events in an Amazon S3 bucket for long-term analysis. Which connector configuration is most appropriate for this use case?
 
@@ -120,7 +143,8 @@ A streaming application is designed to process events in real-time and then stor
 3. MQTT Source Connector
 4. File Source Connector
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **2. S3 Sink Connector.**
 
@@ -130,6 +154,8 @@ The correct answer is **2. S3 Sink Connector.**
 - **3. MQTT Source Connector**: Incorrect. This connector is utilized for ingesting data from MQTT-enabled devices into Kafka and does not facilitate data export to S3.
 - **4. File Source Connector**: Incorrect. It's used for reading data from files into Kafka topics, not for writing or storing data into Amazon S3 from Kafka.
 
+</details>
+
 ## Question 19:
 An IoT company collects temperature and humidity data from sensors deployed in various locations. The goal is to correlate this environmental data with location-specific weather forecasts retrieved from an external API. Which approach best facilitates this integration and processing within the Kafka ecosystem?
 
@@ -138,7 +164,8 @@ An IoT company collects temperature and humidity data from sensors deployed in v
 3. Use the MQTT Source Connector to ingest sensor data into Kafka. Write a Kafka Streams application that performs REST API calls to the weather forecast service for each sensor data record processed, enriching and producing enriched records to a new topic.
 4. Implement an MQTT proxy to capture sensor data into Kafka. Concurrently, utilize Kafka Connect with the JDBC Sink Connector to store sensor data in a relational database, from which an external cron job fetches weather forecasts, merges them with sensor data, and re-ingests the enriched data back into Kafka via JDBC Source Connector.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **1. Ingest sensor data into a Kafka topic using MQTT connectors. Separately, use an external service to fetch weather forecasts, storing this data in a Kafka topic via the HTTP Source Connector. Utilize Kafka Streams to join sensor data with weather forecasts based on location and timestamp, outputting enriched data to another topic.**
 
@@ -148,6 +175,8 @@ The correct answer is **1. Ingest sensor data into a Kafka topic using MQTT conn
 - **3.** Integrating external API calls directly within a Kafka Streams application for each record can introduce significant latency and potential rate limit issues with the weather API, making it less efficient for enriching streaming data at scale.
 - **4.** This method introduces unnecessary complexity and latency by cycling data through external systems and back into Kafka. It also fails to utilize Kafka's real-time streaming capabilities efficiently, such as stream processing for data enrichment without the need for intermediate storage.
 
+</details>
+
 ## Question 20:
 A retail chain wants to integrate sales data from their Point of Sale (POS) systems across multiple stores into Kafka for real-time analysis and inventory management. Each store's POS system dumps sales records into a local SQL database. The integration needs to account for network bandwidth limitations. Which strategy optimally addresses these requirements?
 
@@ -156,7 +185,8 @@ A retail chain wants to integrate sales data from their Point of Sale (POS) syst
 3. Implement custom Kafka Producers within the POS systems to directly publish sales data to Kafka, compressing messages to mitigate network bandwidth issues. Use Kafka Streams for processing and inventory management centrally.
 4. Set up a central database to aggregate sales data from all stores nightly. Use the JDBC Sink Connector to transfer this aggregated data into Kafka for next-day inventory analysis, relying on batch processing rather than real-time analysis.
 
-**Response:**
+<details>
+<summary>Response:</summary> 
 
 The correct answer is **2. Utilize log-based Change Data Capture (CDC) connectors to monitor changes in each store's SQL database, streaming only new or changed sales records into Kafka. This minimizes network usage and enables real-time central processing with Kafka Streams.**
 
@@ -165,3 +195,5 @@ The correct answer is **2. Utilize log-based Change Data Capture (CDC) connector
 - **2.** Correct. CDC connectors are designed to efficiently capture and stream only the incremental changes (new or updated sales records), significantly reducing network bandwidth requirements and enabling effective real-time data integration and processing.
 - **3.** Custom producers offer flexibility but require additional development and maintenance effort. Compressing messages addresses bandwidth concerns but doesn't reduce the volume of data sent as effectively as streaming only changes.
 - **4.** This approach shifts towards batch processing, which does not meet the requirement for real-time analysis and fails to leverage
+
+</details>

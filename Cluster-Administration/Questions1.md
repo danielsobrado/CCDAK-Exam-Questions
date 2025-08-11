@@ -33,10 +33,10 @@ The other options are stored elsewhere:
 
 In a Kafka cluster, you have a topic with 6 partitions and a replication factor of 3. How many replicas of each partition will be spread across the brokers?
 
-- A. 1 replica per broker
-- B. 2 replicas per broker
-- C. 3 replicas per broker
-- D. 6 replicas per broker
+- A. 1 replica per partition
+- B. 2 replicas per partition
+- C. 3 replicas per partition
+- D. 6 replicas per partition
 
 <details>
 <summary>Response:</summary> 

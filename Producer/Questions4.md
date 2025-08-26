@@ -15,6 +15,8 @@ When the `acks` parameter is set to "all" in the Kafka producer configuration, t
 
 **Answer:** C
 
+</details>
+
 ## Question 32
 
 What is the purpose of the `client.id` setting in the Kafka producer and consumer configurations?
@@ -32,6 +34,8 @@ The `client.id` setting in the Kafka producer and consumer configurations is use
 
 **Answer:** A
 
+</details>
+
 ## Question 33
 
 What happens if multiple Kafka clients use the same `client.id` value?
@@ -48,6 +52,8 @@ What happens if multiple Kafka clients use the same `client.id` value?
 If multiple Kafka clients use the same `client.id` value, the behavior is undefined, and it may lead to unexpected results or errors. The `client.id` is meant to be a unique identifier for each client, and Kafka brokers do not enforce uniqueness or perform any special handling when multiple clients have the same `client.id`. Using the same `client.id` for multiple clients can cause confusion and make it difficult to distinguish between the activities of different clients in logs and metrics. It may also lead to incorrect correlation of requests and responses, as the brokers may attribute the actions of one client to another. To avoid these issues, it is recommended to assign a unique `client.id` to each Kafka client in a cluster.
 
 **Answer:** C
+
+</details>
 
 ## Question 34
 
@@ -74,6 +80,8 @@ This means that messages with the same key will always be sent to the same parti
 The partition is not randomly selected, nor is it always the first partition. The broker does not determine the partition for keyed messages; it is determined by the producer based on the hash of the message key.
 
 **Answer:** B
+
+</details>
 
 ## Question 35
 
@@ -102,6 +110,8 @@ The message is not discarded, sent to all partitions, or sent to the partition w
 
 **Answer:** B
 
+</details>
+
 ## Question 36
 
 Can a producer guarantee the order of messages within a partition when sending messages with different keys?
@@ -124,6 +134,8 @@ This is because the order of messages in a partition is determined by the order 
 The configuration of the producer or the topic does not affect the ordering guarantee for messages with different keys. The order is determined by the partitioning mechanism and the timing of the write operations.
 
 **Answer:** B
+
+</details>
 
 ## Question 37
 
@@ -150,6 +162,8 @@ If the producer is unable to send the message after multiple retries, it may eve
 
 **Answer:** A
 
+</details>
+
 ## Question 38
 
 In a topic with a replication factor of 3 and `min.insync.replicas` set to 2, what happens when a producer sends a message with `acks=all` and two replicas are not in-sync?
@@ -174,3 +188,5 @@ The producer does not wait indefinitely for the replicas to become in-sync. It i
 Even though the message may be written to the leader replica, the producer does not receive an acknowledgment because the `acks=all` requirement is not satisfied. The message is not considered successfully written until the required number of in-sync replicas have acknowledged the write.
 
 **Answer:** B
+
+</details>

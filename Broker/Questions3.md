@@ -104,7 +104,7 @@ The precedence order is:
 
 This means that if `log.retention.ms` is configured, Kafka will use that value and ignore any settings for `log.retention.minutes` or `log.retention.hours`. This design allows for precise control while maintaining a clear hierarchy of configuration precedence.
 
-
+</details>
 
 ## Question 25
 

@@ -1,5 +1,7 @@
+> **Version note:** This review has been updated for **Apache Kafka 4.2.0**, where **ZooKeeper has been completely removed (since Kafka 4.0)** — KRaft is now the only supported metadata mode. The CCDAK exam was originally written against older, ZooKeeper-based Kafka versions, so ZooKeeper concepts are kept below for exam context but are now marked **(Pre-4.0/Legacy)**.
+
 ### Kafka Overview:
-- **Kafka relies on ZooKeeper** for maintaining metadata, configuration data, and providing synchronization within distributed systems.
+- **(Pre-4.0/Legacy)** Kafka relied on **ZooKeeper** for maintaining metadata, configuration data, and providing synchronization within distributed systems. **Since Kafka 4.0, ZooKeeper has been removed** and replaced by **KRaft**, where a quorum of controller nodes manages cluster metadata using the Raft consensus protocol (see the KRaft section below).
 - **Auto topic creation** depends on the broker setting `auto.create.topics.enable`.
 - **In Kafka, ordering is guaranteed** only within a partition, not across partitions.
 - **A topic partition consists of segments** with two indexes: offset to position and timestamp to offset.
@@ -12,14 +14,15 @@
 - **A Kafka Broker** is a JVM process that runs on a machine and hosts topics.
 - Any Kafka broker can provide cluster **metadata to clients**.
 - **In production, set the Java heap size to 6 GB** for optimal Kafka performance.
+- **Since Kafka 4.0, brokers, controllers, Connect, and CLI tools require Java 17+** (Java 25 is supported as of Kafka 4.2). Client libraries and Kafka Streams require Java 11+.
 - **In a multi-broker Kafka cluster**, only the `broker.id` property needs to be unique for each node.
 - **Garbage Collection** is used by Kafka brokers to handle the deletion of unused objects and tune performance.
 - **Kafka brokers** handle all read and write requests for partitions and manage replication between partitions.
 - **The Controller** is one of the brokers in a Kafka cluster responsible for managing the states of partitions and replicas.
 - **Kafka brokers** communicate with each other using the Kafka protocol over TCP.
 - **If a broker fails**, Kafka automatically fails over to one of the replicas, promoting it to be the new leader.
-- **Broker configuration** is defined in the `server.properties` file, which includes settings like `broker.id`, `port`, `log.dirs`, `zookeeper.connect`, etc.
-- **Kafka brokers** rely on ZooKeeper for maintaining their cluster state, like topics, partitions, replicas, leaders, ISRs, and more.
+- **Broker configuration** is defined in the `server.properties` file, which includes settings like `broker.id`, `port`, and `log.dirs`. **(Pre-4.0/Legacy)** ZooKeeper-based clusters also set `zookeeper.connect`. **Since Kafka 4.0 (KRaft-only), brokers instead use `process.roles`, `node.id`, and `controller.quorum.voters`.**
+- **(Pre-4.0/Legacy)** Kafka brokers relied on ZooKeeper for maintaining their cluster state, like topics, partitions, replicas, leaders, ISRs, and more. **Since Kafka 4.0, this state is maintained in the KRaft metadata log (the internal `__cluster_metadata` topic) managed by the controller quorum.**
 - **Each broker** has a unique integer identifier, the `broker.id`, which is used in various Kafka protocols and requests.
 - `min.insync.replica`s does not impact producers when `acks=1` only when `acks=all`
 - **Kafka brokers** handle authentication and authorization of clients based on the configured security protocols and ACLs.
@@ -33,18 +36,19 @@
 - **Kafka brokers** can be configured with different log cleanup policies, like deletion or compaction, to manage disk space usage.
 - **Log Segments:** Kafka brokers split log data into segments. Each segment is a large file, which is flushed to disk periodically.
 - **Replica Fetchers:** Brokers have fetcher threads to pull data from leader replicas and replicate it to follower replicas.
-- **Inter-Broker Communication:** Brokers use ZooKeeper to elect the controller and maintain metadata about the cluster.
+- **Inter-Broker Communication:** **(Pre-4.0/Legacy)** Brokers used ZooKeeper to elect the controller and maintain metadata about the cluster. **Since Kafka 4.0 (KRaft), a quorum of controller nodes elects an active controller via the Raft protocol and replicates metadata through the metadata log.**
 - **Broker Metrics:** Commonly monitored metrics include `UnderReplicatedPartitions`, `OfflinePartitionsCount`, `RequestHandlerAvgIdlePercent`, and `NetworkProcessorAvgIdlePercent`.
 - **Leader and Follower:** Each partition has a leader broker and follower brokers. The leader handles all reads and writes, while followers replicate the data.
-- **Broker Startup:** During startup, brokers register themselves with ZooKeeper and load topic metadata to prepare for handling requests.
+- **Broker Startup:** **(Pre-4.0/Legacy)** During startup, brokers registered themselves with ZooKeeper and loaded topic metadata to prepare for handling requests. **In KRaft mode (Kafka 4.0+), brokers instead register with the controller quorum and load metadata from their local replica of the metadata log.**
 - **Kafka Protocol:** Brokers use a binary protocol for communication, which clients and other brokers utilize to interact with the cluster.
 - **Broker Upgrades:** Brokers can be upgraded with zero downtime using a rolling upgrade process, ensuring continuous availability.
-- In a 5 node ZooKeeper ensemble, **up to 2 servers can fail while still maintaining a quorum**. In a 9 broker, 4 can fail and still keep voting majority.
-- ZooKeeper ensemble members communicate on **ports 2181, 2888, 3888** by default.
+- **(Pre-4.0/Legacy)** In a 5 node ZooKeeper ensemble, up to 2 servers can fail while still maintaining a quorum. In a 9 broker, 4 can fail and still keep voting majority.
+- **(Pre-4.0/Legacy)** ZooKeeper ensemble members communicate on ports 2181, 2888, 3888 by default.
+- **In KRaft mode (Kafka 4.0+)**, the same quorum math applies to the **controller quorum**: with N controllers (configured via `controller.quorum.voters`, typically 3 or 5) the cluster can tolerate `floor((N-1)/2)` controller failures while still electing an active controller.
 - The **Metadata request can be handled by any node**, enabling clients to discover the designated leader for topic partitions.
 - With `replication.factor=3`, `min.insync.replicas=2`, `acks=all`, a `NOT_ENOUGH_REPLICAS` exception is thrown if **2 brokers are down**.
 - Setting `unclean.leader.election.enable=true` allows **non-ISR replicas to become leader**, ensuring availability but risking data loss.
-- ZooKeeper's behavior is governed by the ZooKeeper configuration file, which includes keywords like **clientPort, dataDir, and tickTime**.
+- **(Pre-4.0/Legacy)** ZooKeeper's behavior is governed by the ZooKeeper configuration file, which includes keywords like **clientPort, dataDir, and tickTime**.
 - Kafka supports rack awareness for **fault tolerance** by configuring the `broker.rack` property to spread replicas across racks.
 - Garbage collection in Kafka brokers is a **JVM process that automatically frees up memory and removes unused pointers to objects**, helping to improve overall performance.
 
@@ -73,8 +77,9 @@
 - **Viewing Partition Reassignment Plans:** Use `bin/kafka-reassign-partitions.sh --generate` to generate a reassignment plan.
 - **Running a Simple Consumer Group Test:** Use `bin/kafka-consumer-groups.sh --describe --group <group-id>` to check the status of consumer groups.
 - **Listing Consumer Groups:** Use `bin/kafka-consumer-groups.sh --list` to list all consumer groups.
-- **Decommissioning Brokers:** Use `bin/kafka-preferred-replica-election.sh` to initiate a preferred replica election.
-- **Migrating ZooKeeper:** Use `bin/kafka-migration.sh` to help with migrating metadata from ZooKeeper to KRaft (Kafka's Raft-based metadata quorum).
+- **Triggering Leader Election:** Use `bin/kafka-leader-election.sh --election-type preferred` to trigger a preferred replica (leader) election. The older `kafka-preferred-replica-election.sh` was deprecated in 2.4 and **removed** in later versions. To decommission a broker, first move its partitions off with `kafka-reassign-partitions.sh`.
+- **(Pre-4.0/Legacy)** `bin/kafka-migration.sh` (or the `zookeeper.metadata.migration.enable` config) was used to migrate metadata from ZooKeeper to KRaft on **Kafka 3.x** before upgrading to 4.0+. **Kafka 4.0+ has no ZooKeeper mode**, so there is nothing left to migrate from.
+- **Since Kafka 4.2**, all CLI tools have consistent support for `--bootstrap-server` and `--command-config` flags (previously some tools only supported one or the other, or still defaulted to `--zookeeper`).
 - The Kafka CLI command to display the Kafka version is: `bin/kafka-console-producer.sh --version` or any `bin/kafka-*.sh` script with the `--version` parameter.
 - To create a topic only if it does not already exist, use the `--if-not-exists` parameter with the `kafka-topics.sh` command.
 
@@ -97,7 +102,7 @@
 - **Use `compression.type`** to enable compression for efficient storage and network usage.
 - **Monitor the Kafka cluster** using tools like Kafka Manager, Prometheus, and Grafana.
 - **Use Kafka Connect** for integrating Kafka with external systems like databases and filesystems.
-- **Configure `zookeeper.connection.timeout.ms`** to control the maximum time to wait for a ZooKeeper connection.
+- **(Pre-4.0/Legacy)** `zookeeper.connection.timeout.ms` controlled the maximum time to wait for a ZooKeeper connection. **In KRaft mode (Kafka 4.0+), look at `controller.quorum.*` settings (e.g. `controller.quorum.request.timeout.ms`) for analogous quorum communication timeouts.**
 - **Use Kafka Streams** for real-time data processing and aggregation.
 - **Configure `producer.buffer.memory` and `consumer.fetch.max.bytes`** to tune producer and consumer performance.
 - **Implement quotas** using `quota.producer.byte-rate` and `quota.consumer.byte-rate` to manage resource usage.
@@ -106,19 +111,20 @@
 - **Monitor the `UnderReplicatedPartitions` metric** to track replication health.
 - **Review and adjust JVM heap settings** to optimize broker performance (`-Xmx` and `-Xms` settings).
 - **Implement rack awareness** by setting `broker.rack` to improve fault tolerance.
-- **Regularly back up ZooKeeper data** to protect against data loss.
+- **(Pre-4.0/Legacy)** Regularly back up ZooKeeper data to protect against data loss. **In KRaft mode (Kafka 4.0+), back up the metadata log directory (`metadata.log.dir`) on controller nodes instead.**
 - **Enable TLS/SSL** for secure communication between brokers and clients.
 - **Use `security.inter.broker.protocol`** to configure secure communication between brokers.
-- **Configure `zookeeper.session.timeout.ms`** to manage ZooKeeper session timeouts.
+- **(Pre-4.0/Legacy)** `zookeeper.session.timeout.ms` managed ZooKeeper session timeouts; not applicable in KRaft-only Kafka 4.0+.
 - **Use `advertised.listeners`** to ensure brokers can be reached by clients.
 - **Enable and monitor JMX** for broker metrics and performance data.
 
 ### Consumer:
 
 - Consumers can **manually assign partitions using `assign()`** and **seek to specific offsets using `seek()`**.
-- **The first consumer to join a group** becomes the group leader.
+- **The first consumer to join a group** becomes the group leader. **This "client-side leader" concept applies to the classic rebalance protocol; see the new consumer group protocol note below.**
 - **Consumer group rebalancing** reassigns partitions for a proportional share when members join/leave.
-- **Kafka consumer partition assignment strategies** include `RangeAssignor`, `RoundRobinAssignor`, `StickyAssignor`, and `CooperativeStickyAssignor`.
+- **Kafka consumer partition assignment strategies** include `RangeAssignor`, `RoundRobinAssignor`, `StickyAssignor`, and `CooperativeStickyAssignor`. **These client-side assignors are part of the "classic" group protocol.**
+- **Since Kafka 4.0, the new consumer group protocol (KIP-848) is GA.** Set `group.protocol=consumer` to opt in: the **broker-side group coordinator** performs partition assignment using server-side assignors, eliminating the "stop-the-world" rebalance and the client-side group leader. The **classic protocol remains the default** and is still fully supported.
 - **Committed consumer group offsets** take precedence over `auto.offset.reset`.
 - **For at-most-once**, commit offsets before processing messages.
 - For at-least-once processing, **commit offsets after processing messages**.
@@ -166,6 +172,7 @@
 - **Connectors** in Kafka Connect are responsible for breaking down the data copying job into **tasks** that can be distributed to workers. There are two types of connectors: **SourceConnectors for importing data and SinkConnectors for exporting data**.
 - Confluent Cloud offers **fully managed connectors**, which can be leveraged by using the `ccloud-stack` utility to create a new Confluent Cloud instance.
 - **Kafka Connect simplifies connector development**, deployment, and management, supporting distributed and standalone modes.
+- **Since Kafka Connect 4.1 (KIP-891)**, multiple versions of the same connector, converter, or transformation plugin can be loaded and run simultaneously on the same worker, simplifying upgrades and rollbacks without needing separate clusters.
 - **Distributed mode in Kafka Connect** handles automatic work balancing, scaling, and fault tolerance. Topics for offsets, configs, and statuses should be manually created.
 - **Connector configurations** must include a unique name, max tasks, and the connector class.
 - **Kafka Connect Source** is used to import data from external systems into Kafka.
@@ -200,6 +207,7 @@
 
 ### Streams:
 
+- **Since Kafka Streams 4.2 (KIP-1071)**, a new broker-managed **Streams rebalance protocol** (built on the KIP-848 consumer group protocol) is GA with a limited feature set, moving more rebalance logic to the broker-side group coordinator. Streams also gained **Dead Letter Queue (DLQ)** support in exception handlers and **anchored wall-clock punctuation** for deterministic scheduling.
 - **Tumbling time windows in Kafka Streams** are fixed-size, non-overlapping, and gap-less.
 - **Kafka Streams achieves parallelism** by splitting the topology into tasks that handle a subset of partitions independently.
 - The **maximum parallelism** of a Kafka Streams application is determined by the **number of partitions of the input topic(s)** being read.
@@ -293,7 +301,7 @@
 - **Monitor the `RequestQueueSize` and `ResponseQueueSize` metrics** to ensure brokers can keep up with client requests.
 - **The `ProduceTotalTimeMs` and `FetchTotalTimeMs` metrics** track the total time taken for produce and fetch requests, respectively.
 - **Use the `FetchMessageConversionsPerSec` metric** to monitor the rate of message format conversions during fetch requests.
-- **The `ZooKeeperRequestLatencyMs` metric** tracks the latency of ZooKeeper requests made by Kafka.
+- **(Pre-4.0/Legacy)** The `ZooKeeperRequestLatencyMs` metric tracked the latency of ZooKeeper requests made by Kafka. **In KRaft mode (Kafka 4.0+), monitor KRaft quorum metrics instead** (e.g., `kafka.controller:type=KafkaController,name=MetadataLag`, `append-records-rate`, `commit-latency-avg`).
 - **Monitor the `NetworkProcessorAvgIdlePercent` metric** to ensure the network thread is not a bottleneck.
 - **The `ControllerState` metric** indicates whether a broker is currently the active controller.
 - **Use Prometheus and Grafana** for collecting, storing, and visualizing Kafka metrics.
@@ -310,7 +318,7 @@
 - **Set `bootstrap.servers` to multiple host:port pairs** for Kafka broker fault tolerance.
 - **bootstrap.servers, key.serializer and value.serializer** are mandatory for producers.
 - **Setting `max.in.flight.requests.per.connection > 1`** with retries enabled can lead to out-of-order messages.
-- **linger.ms increases the chance of batching** in producers.
+- **linger.ms increases the chance of batching** in producers. **Since Kafka 4.0, the default `linger.ms` changed from `0` to `5`**, so producers batch slightly by default out of the box.
 - The `send()` method returns a **Future object with RecordMetadata**. Using `Future.get()` **waits for a reply from Kafka** before continuing and **throws an exception if the record is not sent successfully**.
 - Setting `enable.idempotence=true` is a producer configuration that can be used to **guarantee a stable and safe pipeline without processing duplicate messages**.
 - To send binary data through the REST Proxy, the **producer** needs to encode the data into base64.
@@ -373,12 +381,12 @@
 - **Kafka security features are optional**, supporting a mix of authenticated, unauthenticated, encrypted, and non-encrypted clients.
 - **To allow a user to read/write a topic**, add an ACL with `--allow-principal` and `--allow-host` for read/write operations.
 - **SASL can be used with PLAINTEXT or SSL**. If `SASL_SSL`, SSL must also be configured.
-- **ACLs are stored in the Zookeeper node /kafka-acls/ by default**.
-- **SAML is not a valid authentication mechanism in Kafka**. Valid options are SASL/GSSAPI, SASL/SCRAM, and SSL.
+- **(Pre-4.0/Legacy)** ACLs were stored in the ZooKeeper node `/kafka-acls/` by default. **Since Kafka 4.0 (KRaft-only), ACLs are stored in the KRaft metadata log and managed via `kafka-acls.sh --bootstrap-server`.**
+- **SAML is not a valid authentication mechanism in Kafka**. Valid options are SASL/GSSAPI, SASL/SCRAM, SASL/OAUTHBEARER, and SSL.
 - **Kafka clients use HTTPS (SSL/TLS) to securely connect to the Confluent REST Proxy**.
 - **Enabling SSL encryption in Kafka disables the zero-copy optimization** since data must be loaded into the JVM to encrypt/decrypt.
-- Kafka supports authentication using **SSL certificates, SASL/PLAIN, SASL/SCRAM, SASL/GSSAPI (Kerberos)**.
-- **SASL/PLAIN and SASL/SCRAM** provide username/password-based authentication, while **SASL/GSSAPI** integrates with Kerberos.
+- Kafka supports authentication using **SSL certificates, SASL/PLAIN, SASL/SCRAM, SASL/GSSAPI (Kerberos), and SASL/OAUTHBEARER (OAuth 2.0 / OIDC)**.
+- **SASL/PLAIN and SASL/SCRAM** provide username/password-based authentication, while **SASL/GSSAPI** integrates with Kerberos. **SASL/OAUTHBEARER** integrates with OAuth 2.0/OIDC providers; **since Kafka 4.1 (KIP-1139)**, it also supports the `jwt-bearer` grant type alongside `client_credentials`, allowing secrets to be omitted from client configuration.
 - The security protocol of each listener is defined in the `listener.security.protocol.map` configuration, with options like **PLAINTEXT, SSL, SASL_PLAINTEXT, SASL_SSL**.
 - **Kafka supports authorization using ACLs (Access Control Lists)** to control access to resources like topics and consumer groups.
 - **Encryption of data at rest can be achieved using disk encryption** or by configuring Kafka to encrypt its data files.
@@ -392,10 +400,12 @@
 - **The Confluent Platform Security Plugin** provides additional security features like Audit Logs, Quotas, and LDAP integration.
 - When securing a running Kafka cluster, the **recommended approach** is to enable security in phases: **client-broker connection first, then broker-broker, and finally closing the PLAINTEXT port**.
 - **Host name verification** in Kafka is the process of checking the certificate presented by the server against the actual hostname or IP address to prevent man-in-the-middle attacks. It can be disabled by setting `ssl.endpoint.identification.algorithm` to an empty string.
-- Kafka supports authenticating to ZooKeeper with **SASL and mTLS individually or both together**. When using mTLS alone, every broker and CLI tool should identify itself with the **same Distinguished Name (DN)** for proper ACL'ing.
+- **(Pre-4.0/Legacy)** Kafka supported authenticating to ZooKeeper with **SASL and mTLS individually or both together**. When using mTLS alone, every broker and CLI tool needed the **same Distinguished Name (DN)** for proper ACL'ing. Not applicable in KRaft-only Kafka 4.0+.
 - The Confluent Server **Authorizer** can be used to capture, protect, and preserve authorization activity into topics in a Kafka cluster, helping to track user and application access across the platform through **audit logs**.
 
-### ZooKeeper:  (Being replaced by KRaft, less important now)
+### ZooKeeper (Legacy — removed entirely in Kafka 4.0):
+> The bullets below describe **pre-4.0 ZooKeeper-based Kafka**. Kept for CCDAK exam context since older-version questions may still reference it, but **Kafka 4.x clusters do not use ZooKeeper at all** — see the KRaft section below for the current architecture.
+
 - **ZooKeeper keeps track of znodes**, which have a path, can store data, and be persistent or ephemeral. Renaming znodes is not supported.
 - **In a 5 node ZooKeeper ensemble, up to 2 servers can fail while still maintaining a quorum**.
 - **ZooKeeper ensemble members communicate on ports 2181, 2888, 3888 by default**.
@@ -420,15 +430,22 @@
 - In a ZooKeeper ensemble with 9 servers, **up to 4 servers can fail** while still maintaining a quorum.
 - The command to start the ZooKeeper service is: `bin/zookeeper-server-start.sh config/zookeeper.properties`.
 
-### KRaft Configuration in Confluent Platform
+### KRaft (Kafka's Raft-based metadata quorum — the only mode since Kafka 4.0)
+
+> **KRaft is no longer "the new thing"** — as of Kafka 4.0 it's the *only* supported metadata mode (ZooKeeper mode has been removed). The notes below (originally written for Confluent Platform's KRaft setup) remain the primary reference for cluster coordination.
 
 #### Hardware and JVM Requirements
 - **Minimum of 4 GB of RAM**
 - **Dedicated CPU core** should be considered when the server is shared
 - An **SSD disk at least 64 GB** in size is highly recommended
 - **JVM heap size of at least 1 GB** is recommended
+- **Since Kafka 4.0, brokers/controllers require Java 17+** (Java 25 supported as of Kafka 4.2)
+#### Controller Quorum Sizing
+- Use an **odd number of controller nodes** (typically **3** for most clusters, **5** for very large/critical ones), configured via `controller.quorum.voters` (or `controller.quorum.bootstrap.servers` in newer versions using KIP-853 dynamic quorums).
+- A quorum of N controllers tolerates `floor((N-1)/2)` failures while still electing an active controller.
+- **Dedicated controller nodes** (`process.roles=controller`) are recommended for production over the combined `broker,controller` mode.
 ### Configuration Files
-- Example KRaft configuration files are located in `/etc/kafka/kraft/` after installing Confluent Platform
+- Apache Kafka 4.0+ **consolidated the old `config/kraft/` example files into the main `config/` directory** (since there's no separate ZooKeeper-mode config anymore). Confluent Platform examples were historically under `/etc/kafka/kraft/`:
  - `broker.properties`: Settings for broker-only servers
  - `controller.properties`: Settings for controller-only servers
  - `server.properties`: Settings for combined broker and controller servers (not supported for production)
@@ -439,7 +456,7 @@
 - `listeners`: Must be configured for controllers, consistent with `controller.quorum.voters` value
 - `controller.listener.names`: Required for KRaft mode, specifying listeners used by the controller
 #### Log Settings
-- `log.dirs`: Should list only one log directory for KRaft mode, as JBOD is not currently supported
+- `log.dirs`: **Since Kafka 3.8 (KIP-858), JBOD/multiple log directories are production-ready in KRaft mode** — `log.dirs` can list multiple directories, and the cluster can survive a single log directory failure without taking the whole broker offline.
 - `num.partitions`: Sets the default number of log partitions per topic for brokers (ignored by controllers)
 #### Metadata Retention Settings
 - `metadata.log.dir`: Specifies the location of the metadata log for KRaft clusters (defaults to the first `log.dirs` directory if not set)
@@ -464,10 +481,14 @@
  - KRaft quorum metrics (e.g., `append-records-rate`, `commit-latency-avg`)
  - Controller metrics (e.g., `ActiveBrokerCount`, `LastAppliedRecordOffset`)
  - Broker metadata metrics (e.g., `last-applied-record-offset`, `metadata-load-error-count`)
+#### Queues for Kafka / Share Groups (KIP-932)
+- **Production-ready as of Kafka 4.2.** Share groups are an alternative to consumer groups: multiple consumers can cooperatively fetch and process records from the **same partition concurrently**, with per-record acknowledgement and broker-tracked delivery attempts (acquisition locks).
+- Kafka 4.2 added the **`RENEW` acknowledgement type** (for extending processing time on a record), adaptive batching in share coordinators, and additional lag metrics for share groups.
+- Share groups do **not** replace consumer groups for ordered, partition-per-consumer processing — they're for queue-like, competing-consumers workloads.
 
 ### Topic:
 - **Auto topic creation** uses broker config for `num.partitions` and `default.replication.factor`.
-- **Dynamic topic configs are stored in Zookeeper**.
+- **(Pre-4.0/Legacy)** Dynamic topic configs were stored in ZooKeeper. **Since Kafka 4.0 (KRaft-only), all metadata — including dynamic topic configs — is stored in the KRaft metadata log.**
 - **Kafka Connect supports up to 1 task per input topic partition**.
 - **Producing with keys** allows influencing the partitioning of messages to ensure ordering within each partition.
 - **To produce data to a topic**, a producer must provide any broker from the cluster and the topic name. The partitions list is not required.
@@ -489,7 +510,7 @@
 - **With 5 brokers, 10 partitions, 3 replicas, a client is allowed 5 MB/s maximum throughput** if each broker has a 1 MB/s quota.
 - **Any broker can handle metadata requests**.
 - **Consumers commit offsets by interacting with the Group Coordinator broker**, not by writing directly to the `consumer_offsets` topic.
-- **The Controller is a broker elected by ZooKeeper** to be responsible for partition leadership assignment (in addition to normal tasks).
+- **(Pre-4.0/Legacy)** The Controller was a broker elected via ZooKeeper to be responsible for partition leadership assignment (in addition to normal tasks). **Since Kafka 4.0 (KRaft), the active controller is elected by the controller quorum itself via the Raft protocol**, and in larger deployments runs on dedicated controller-only nodes (`process.roles=controller`) separate from the brokers.
 - **Producers automatically handle broker leader changes** by requesting new leaders from any broker and resuming production.
 - `unclean.leader.election.enable=true` allows non ISR replicas to become leader, ensuring availability but losing consistency as data loss might occur
 - A Kafka broker automatically creates a topic if a producer sends a message, a consumer reads a message, or a client requests metadata for the topic, when `auto.create.topics.enable` is set to **true**.

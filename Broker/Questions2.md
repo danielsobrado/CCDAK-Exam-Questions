@@ -139,7 +139,7 @@ Assuming a topic has a constant message production rate, which of the following 
 
 1. The log segment is older than 48 hours.
 2. The log segment size exceeds 536870912 bytes (512 MB).
-3. The total size of all log segments for the topic exceeds 1073741824 bytes (1 GB).
+3. The total size of all log segments for one of the topic partitions exceeds 1073741824 bytes (1 GB).
 4. All of the above.
 
 Choose the correct answer.
@@ -180,12 +180,13 @@ A client connects to a broker in a Kafka cluster and sends a produce request for
 <details>
 <summary>Response:</summary>
 
-**Answer:** B
+**Answer:** A
 
 **Explanation:**
 When a Kafka client receives a 'Not Enough Replicas' error from a broker, it means the broker doesn't have enough in-sync replicas to satisfy the request. The client's next step is to refresh its metadata by sending a metadata request to the same broker. This will provide the client with the most up-to-date information about the cluster, including the current leader for the partition.
 
-- A is incorrect because retrying the same request without refreshing metadata is likely to result in the same error.
+- A is correct. In the Kafka protocol, a `NotEnoughReplicasException` (or `NotEnoughReplicasAfterAppendException`) is explicitly classified as a **retriable error**.
+- B is incorrect. Sends metadata request to refresh: The client only invalidates its cache and requests a metadata refresh when it receives a routing-related error, such as `NotLeaderOrFollowerException` or `UnknownTopicOrPartitionException`. In this scenario, the client knows it has the right leader, so refreshing metadata is unnecessary.
 - C is incorrect because the client doesn't directly send requests to the controller broker.
 - D is incorrect because the client communicates with Zookeeper only for the initial bootstrap, not for regular operations.
 

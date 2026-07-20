@@ -227,17 +227,16 @@ Choose the correct answer.
 <details>
 <summary>Response:</summary>
 
-The correct answer is **2. Partitions with a leader in Group B will continue to function normally, while partitions with a leader in Group A will elect new leaders from the ISRs in Group B.**
+The correct answer is **4. The behavior is non-deterministic and depends on which group the Controller belongs to.**
 
 Explanation:
 
-1. **Incorrect**. In a network partition scenario where both groups can communicate with Zookeeper, Kafka prioritizes availability and allows the larger group (Group B in this case) to continue operating normally. Partitions with a leader in Group A will not continue to function normally, as they do not have a majority of ISRs available.
-
-2. **Correct**. Kafka's partition leadership election process is designed to ensure that the cluster remains available and functional in the presence of network partitions. When a network partition occurs, Kafka follows the "majority rule" to determine which group of brokers should remain active. In this scenario, Group B has a majority of brokers (3 out of 5) and can communicate with Zookeeper. Therefore, partitions with a leader in Group B will continue to function normally. For partitions with a leader in Group A, the brokers in Group B will detect the loss of the leader and elect a new leader from the available ISRs within Group - B. This ensures that all partitions have a functioning leader and can continue to serve client requests.
+1. **Incorrect**. assume a deterministic outcome where one specific group automatically "wins." Since Zookeeper sees all brokers as alive, neither group is inherently prioritized.
+2. **Incorrect**. same as 1
 
 3. **Incorrect**. Not all partitions will be offline in this scenario. As long as a group of brokers (in this case, Group B) has a majority and can communicate with Zookeeper, Kafka will allow that group to continue operating and serving client requests for the partitions they hold the leadership for.
 
-4. **Incorrect**. The behavior of partition leadership in a network partition scenario is deterministic and does not depend on which group the Controller belongs to. Kafka's partition leadership election process is designed to prioritize availability and maintain consistency based on the majority of brokers and their ability to communicate with Zookeeper, regardless of the Controller's location.
+4. **Correct**. In a Zookeeper-based Kafka architecture, cluster membership and broker liveness are determined entirely by each broker's session with Zookeeper — not by direct broker-to-broker connectivity. Because both Group A and Group B can still successfully communicate with Zookeeper, no broker sessions will expire. As a result, the active Kafka Controller still views all 5 brokers as "alive" and will not proactively trigger any partition leader elections. However, the cluster's ability to process data will degrade asymmetrically based on exactly which broker is currently serving as the Controller. Followers in one group will be unable to fetch data from partition leaders in the opposite group. The leaders will detect this lag and attempt to remove the unreachable followers from the In-Sync Replicas (ISR) list. In modern Zookeeper-based Kafka releases (since KIP-497), a partition leader cannot update Zookeeper directly. It must send an AlterIsr (now AlterPartition) RPC request directly to the Controller broker to shrink the ISR. If the Controller resides in Group A, the partition leaders in Group A can successfully communicate with the Controller, shrink their ISRs, and continue functioning normally only if the current ISR is bigger than the minISR. However, leaders in Group B will be unable to reach the Controller. Their ISR updates will timeout. If producers are configured with acks=all, those partitions in Group B will effectively stop accepting writes because the offline replicas in Group A cannot be successfully removed from the ISR. If the Controller resides in Group B, the exact opposite occurs (Group B leaders can update the ISR and function, while Group A leaders block).
 
 </details>
 
